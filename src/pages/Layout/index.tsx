@@ -1,9 +1,9 @@
 import { Outlet } from "react-router";
 import Sidebar from "../Sidebar";
-import ChangeLocaleDropDown from "../components/ChangeLocaleDropDown";
+import ChangeLocaleDropDown from "../components/LocaleDropDownButton";
 import { useSettingStore } from "../../store";
 import { MdMenu, MdRefresh } from 'react-icons/md'
-import CustomDatePicker from "../components/DatePicker";
+import CustomDatePicker from "../components/LotteryDatePicker";
 import ThemeModeSwitcher from "../components/ThemeModeSwitch";
 
 const Header = () => {
@@ -71,7 +71,7 @@ function Drawer(props: React.PropsWithChildren) {
 const Layout = () => (
 
     <div className="flex h-screen w-screen bg-gray-200">
-        {/* sidebar */}
+    {/* sidebar */}
         <Drawer>
             <Sidebar />
         </Drawer>

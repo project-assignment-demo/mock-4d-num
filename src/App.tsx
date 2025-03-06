@@ -34,7 +34,7 @@ const App = () => {
         <Route path="jackpot" element={<Jackpot />} />
         <Route path="special-date" element={<SpecialDate />} />
         <Route path="number-analysis" element={<NumberAnalysis />} />
-        <Route path="lucky-book" element={<SpinMyLuck />} />
+        <Route path="spin-my-luck" element={<SpinMyLuck />} />
         <Route path="hot-dddd-num" element={<Hot4DNumber />} />
         <Route path="lucky-book" element={<LuckyBook />} />
       </Route>

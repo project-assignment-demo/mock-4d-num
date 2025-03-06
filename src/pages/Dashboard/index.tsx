@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import Card from "../components/Card";
+import Card from "../components/LotteryInfoCard";
 
 const DashBoard = () => {
     return (
