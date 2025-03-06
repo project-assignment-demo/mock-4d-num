@@ -71,7 +71,7 @@ interface SidebarSectionProps extends PropsWithChildren {
 const SidebarSection = (props: SidebarSectionProps) => {
   return (
     <div>
-      <p className="font-bold text-md ml-2">{props.title}</p>
+      <p className="font-bold text-md">{props.title}</p>
       {props.children}
     </div>
   );
@@ -91,7 +91,7 @@ const SidebarAction = (props: SidebarAction) => {
   );
 
   const labelClassName = cs(
-    "text-sm font-medium",
+    "text-[12px] font-semibold",
     props.isActive ? "text-[rgb(38,76,170)]" : ""
   );
 
@@ -131,7 +131,7 @@ const Sidebar = () => {
       ],
     },
     {
-        title: "Toolbox",
+      title: "Toolbox",
       actions: [
         {
           value: messages.specialDrawDate,
@@ -182,8 +182,14 @@ const Sidebar = () => {
 
   return (
     <section className="bg-white h-full rounded-r-[35px] w-full px-4">
-      {/* Result section */}
 
+      {/* title */}
+      <div className="flex justify-start gap-2 py-4 ml-1 cursor-pointer">
+        <img className="w-[35px] rounded-full" alt="4dnum-logo" src="https://4dnum.com/assets/logo-223c3117.png" />
+        <img className="w-[80px]" alt="4dnum" src="https://4dnum.com/assets/4dnumText-a6b770e8.svg" />
+      </div>
+
+      {/* section */}
       {sideNavData.map((section) => {
         const actions = section.actions;
         return (
@@ -203,18 +209,6 @@ const Sidebar = () => {
           </SidebarSection>
         );
       })}
-
-
-      {/* <SideSection onClick={() => navigate('/')} name={intl.formatMessage(messages.dashboard)} />
-        <SideSection onClick={() => navigate('/jackpot')} name={intl.formatMessage(messages.jackpot)} />
-        <SideSection onClick={() => navigate('/special-date')} name={intl.formatMessage(messages.specialDrawDate)} />
-        <SideSection onClick={() => navigate('/number-analysis')} name={intl.formatMessage(messages.fourDNumberAnalysis)} />
-        <SideSection onClick={() => navigate('/lucky-book')}  name={intl.formatMessage(messages.luckyBook)}/>
-        <SideSection onClick={() => navigate('/hot-dddd-num')}  name={intl.formatMessage(messages.hot4DNumber)} />
-        <SideSection onClick={() => navigate('/lucky-book')} name={intl.formatMessage(messages.luckyBook)}  />
-
-        <hr />
-        <ChangeLocaleDropDown className="hidden md:block"/> */}
     </section>
   );
 };

@@ -75,7 +75,7 @@ const Layout = () => (
         <Drawer>
             <Sidebar />
         </Drawer>
-        <section className="w-[0px] sm:w-[300px] h-screen">
+        <section className="w-[0px] sm:w-[250px] h-screen">
             <Sidebar />
         </section>
         <main className="flex-auto h-full w-full overflow-y-scroll">
