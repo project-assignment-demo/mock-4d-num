@@ -182,23 +182,31 @@ const Sidebar = () => {
 
   return (
     <section className="bg-white h-full rounded-r-[35px] w-full px-4">
-
       {/* title */}
       <div className="flex justify-start gap-2 py-4 ml-1 cursor-pointer">
-        <img className="w-[35px] rounded-full" alt="4dnum-logo" src="https://4dnum.com/assets/logo-223c3117.png" />
-        <img className="w-[80px]" alt="4dnum" src="https://4dnum.com/assets/4dnumText-a6b770e8.svg" />
+        <img
+          className="w-[35px] rounded-full"
+          alt="4dnum-logo"
+          src="https://4dnum.com/assets/logo-223c3117.png"
+        />
+        <img
+          className="w-[80px]"
+          alt="4dnum"
+          src="https://4dnum.com/assets/4dnumText-a6b770e8.svg"
+        />
       </div>
 
       {/* section */}
       {sideNavData.map((section) => {
         const actions = section.actions;
         return (
-          <SidebarSection title={section.title}>
-            {actions.map((action) => {
+          <SidebarSection key={section.title} title={section.title}>
+            {actions.map((action, index) => {
               const isActive = location.pathname === action.path;
 
               return (
                 <SidebarAction
+                  key={action.value}
                   onClick={() => navigate(action.path)}
                   icon={action.icon()}
                   name={action.value}

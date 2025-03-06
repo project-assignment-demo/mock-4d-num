@@ -1,39 +1,9 @@
 import { Outlet } from "react-router";
 import Sidebar from "../Sidebar";
-import ChangeLocaleDropDown from "../components/LocaleDropDownButton";
 import { useSettingStore } from "../../store";
-import { MdMenu, MdRefresh } from 'react-icons/md'
-import CustomDatePicker from "../components/LotteryDatePicker";
-import ThemeModeSwitcher from "../components/ThemeModeSwitch";
+import Nav from "../Nav";
 
-const Header = () => {
 
-    const openDrawer = useSettingStore(state => state.updateDrawer);
-
-    return (
-        <nav className="flex justify-between gap-2 px-2 py-4">
-            <div className="block sm:hidden" onClick={() => openDrawer(true)}>
-                <MdMenu className="text-[20px]" />
-            </div>
-            <div className="w-[300px] bg-white drop-shadow-md rounded-xl flex items-center justify-between" >
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-                <div>4</div>
-            </div>
-            <div>
-                <CustomDatePicker />
-            </div>
-            <div className="bg-white rounded-full w-[30px] h-[30px] flex items-center justify-center drop-shadow-md">
-                <MdRefresh className="text-[20px]" />
-            </div>
-            <div className="hidden sm:block">
-                <ChangeLocaleDropDown />
-            </div>
-
-        </nav>
-    );
-}
 
 function Drawer(props: React.PropsWithChildren) {
 
@@ -79,7 +49,7 @@ const Layout = () => (
             <Sidebar />
         </section>
         <main className="flex-auto h-full w-full overflow-y-scroll">
-            <Header />
+            <Nav/>
             <Outlet />
         </main>
     </div>
