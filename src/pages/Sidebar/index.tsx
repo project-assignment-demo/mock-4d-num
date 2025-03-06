@@ -79,7 +79,7 @@ const Sidebar = () => {
     let navigate = useNavigate();
 
     return (
-       <section>
+       <section className="bg-white h-full rounded-r-[35px] w-full">
         <SideSection onClick={() => navigate('/')} name={intl.formatMessage(messages.dashboard)} />
         <SideSection onClick={() => navigate('/jackpot')} name={intl.formatMessage(messages.jackpot)} />
         <SideSection onClick={() => navigate('/special-date')} name={intl.formatMessage(messages.specialDrawDate)} />

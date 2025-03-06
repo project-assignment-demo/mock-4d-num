@@ -1,30 +1,92 @@
 import { Outlet } from "react-router";
 import Sidebar from "../Sidebar";
 import ChangeLocaleDropDown from "../components/ChangeLocaleDropDown";
+import { useSettingStore } from "../../store";
+import { MdMenu, MdRefresh } from 'react-icons/md'
+import CustomDatePicker from "../components/DatePicker";
+import ThemeModeSwitcher from "../components/ThemeModeSwitch";
 
 const Header = () => {
+
+    const openDrawer = useSettingStore(state => state.updateDrawer);
+
     return (
-        <nav className="flex justify-between px-2 py-4">
-            <div>三</div>
-            <div>DAMACAI</div>
-            <div>Date Picker</div>
-            <div>O</div>
-            <ChangeLocaleDropDown className="block md:hidden"/>
+        <nav className="flex justify-between gap-2 px-2 py-4">
+            <div className="block sm:hidden" onClick={() => openDrawer(true)}>
+                <MdMenu className="text-[20px]" />
+            </div>
+            <div className="w-[300px] bg-white drop-shadow-md rounded-xl flex items-center justify-between" >
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+            </div>
+            <div>
+                <CustomDatePicker />
+            </div>
+            <div className="bg-white rounded-full w-[30px] h-[30px] flex items-center justify-center drop-shadow-md">
+                <MdRefresh className="text-[20px]" />
+            </div>
+            <div className="hidden sm:block">
+                <ChangeLocaleDropDown />
+            </div>
+
         </nav>
+    );
+}
+
+function Drawer(props: React.PropsWithChildren) {
+
+    const isOpen = useSettingStore(state => state.openDrawer);
+    const setIsOpen = useSettingStore(state => state.updateDrawer);
+    return (
+        <>
+
+            {/* Overlay */}
+            {isOpen && (
+                <div
+                    className="fixed inset-0 bg-black opacity-[.25] z-40"
+                    onClick={() => setIsOpen(false)}
+                />
+            )}
+
+            {/* Drawer */}
+            <div
+                className={`fixed top-0 left-0 h-full w-[50%] shadow-lg transform transition-transform duration-300 z-50
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+            >
+                <button
+                    onClick={() => setIsOpen(false)}
+                    className="absolute top-4 right-4"
+                >
+                    {/* <X size={24} /> */}
+                </button>
+
+                {props.children}
+            </div>
+        </>
     );
 }
 
 const Layout = () => (
 
-    <div className="flex h-screen">
-        <section className="flex-1 bg-red-400">
-            <Sidebar/>
+    <div className="flex h-screen w-screen bg-gray-200">
+        {/* sidebar */}
+        <Drawer>
+            <Sidebar />
+        </Drawer>
+        <section className="w-[0px] sm:w-[300px] h-screen">
+            <Sidebar />
         </section>
-        <main className="flex-4 bg-blue-500">
+        <main className="flex-auto h-full w-full overflow-y-scroll">
             <Header />
             <Outlet />
         </main>
-    </div> 
-  );
+    </div>
 
-  export default Layout;
+    // <div className="h-screen w-screen flex justify-center items-center flex-col">
+    //     <ThemeModeSwitcher />
+    // </div>
+);
+
+export default Layout;

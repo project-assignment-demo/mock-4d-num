@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+.half-circle-background {
+    @apply w-full h-32 bg-red-500;
+    /* background: radial-gradient(circle at top, rgb(183, 149, 149) 50%, transparent 50%); */
+  }

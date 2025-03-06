@@ -1,8 +1,33 @@
+import { Col, Row } from "antd";
+import Card from "../components/Card";
+
 const DashBoard = () => {
     return (
-        <div>
-            <p>Dashboard</p>
-        </div>
+      <div className="max-w-[70%] ml-[10%]">
+          <Row gutter={[16,24]} justify="center" align="top">
+            <Col sm={24} md={12} lg={8} span={24}>
+                <Card />
+            </Col>
+            <Col sm={24} md={12} lg={8} span={24}>
+                <Card />
+            </Col>
+            <Col sm={24} md={12} lg={8} span={24}>
+                <Card />
+            </Col>
+            <Col sm={24} md={12} lg={8} span={24}>
+                <Card />
+            </Col>
+            <Col sm={24} md={12} lg={8} span={24}>
+                <Card />
+            </Col>
+            <Col sm={24} md={12} lg={8} span={24}>
+                <Card />
+            </Col>
+            <Col sm={24} md={12} lg={8} span={24}>
+                <Card />
+            </Col>
+        </Row>
+      </div>
     )
 }
 

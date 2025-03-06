@@ -1,6 +1,11 @@
+import CustomSiwper from "../Dashboard/components/Swiper";
+
 const Jackpot = () => {
     return (
-        <p>JackPot</p>
+        <div>
+            <p>JackPot</p>
+            <CustomSiwper/>
+        </div>
     )
 }
 
