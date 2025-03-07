@@ -38,10 +38,10 @@ const Layout = () => {
   return (
     <div className="flex h-screen w-screen bg-gray-200">
       {/* sidebar */}
-      <Drawer>
+      {/* <Drawer>
         <Sidebar />
-      </Drawer>
-      <section className="w-[0px] sm:w-[250px] h-screen">
+      </Drawer> */}
+      <section className="hidden lg:w-[250px] lg:block h-screen">
         <Sidebar />
       </section>
       <main className="flex-auto h-full w-full overflow-y-scroll">
