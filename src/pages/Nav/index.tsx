@@ -10,7 +10,7 @@ interface LotteryTabProps {
 }
 const LotteryTab = (props: LotteryTabProps) => {
 
-  const { isPending, error, data } = useQuery({
+  const { isPending, error, data: lotteries } = useQuery({
     queryKey: ['repoData'],
     queryFn: getCompanyIcon
       
@@ -20,15 +20,9 @@ const LotteryTab = (props: LotteryTabProps) => {
 
   if (error) return 'An error has occurred: ' + error.message
 
-  const lotteries = data;
-
-  // const lotteries = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_) => ({
-  //   source: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
-  // }));
-
   return (
     <div className="flex justify-between gap-3 p-2">
-      {lotteries.map((lottery, index) => {
+      {lotteries.map((lottery) => {
         return (
           <img
             key={lottery.id}
