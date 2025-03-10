@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import LotteryInfoCard from "../components/LotteryInfoCard";
 import { LotteryInfoCardProps } from "../components/LotteryInfoCard/types";
+import Dinero from "dinero.js";
 
 const items: LotteryInfoCardProps[] = Array.from({ length: 25 }, (_, i) => ({
   header: {
@@ -15,7 +16,7 @@ const items: LotteryInfoCardProps[] = Array.from({ length: 25 }, (_, i) => ({
   },
   video:
     i == 0
-      ? "https://www.youtube.com/embed/YXJ3l-Fk1xU?autoplay=1&mute=1&controls=1&origin=https%3A%2F%2F4dnum.com&playsinline=1&showinfo=1&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1&widgetid=17&forigin=https%3A%2F%2F4dnum.com%2F&aoriginsup=1&vf=1"
+      ? "https://www.youtube.com/embed/-2wVuzpWTA8?autoplay=1&mute=1&controls=1&origin=https%3A%2F%2F4dnum.com&playsinline=1&showinfo=1&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1&widgetid=9&forigin=https%3A%2F%2F4dnum.com%2F&aoriginsup=1&vf=1"
       : undefined,
   prizes: {
     primary: {
@@ -69,14 +70,15 @@ const items: LotteryInfoCardProps[] = Array.from({ length: 25 }, (_, i) => ({
   jackpot: {
     pool: {
       title: "Jackpot Pool",
-      amount: "8,542,093.00"
+      amount: Dinero({amount: 854209300, currency: "USD"})
     },
     jackpots:[
       {
         title: "Jackpot A Result",
         noBonus: {
           title: "No bonus",
-          amount: "8,542,093.00"
+          // amount: "8,542,093.00"
+          amount: Dinero({amount: 854209300, currency: "USD"})
         },
         extra: [
           "No Prize (0%)",
@@ -88,7 +90,7 @@ const items: LotteryInfoCardProps[] = Array.from({ length: 25 }, (_, i) => ({
         title: "Jackpot B Result",
         noBonus: {
           title: "No bonus",
-          amount: "8,542,093.00"
+          amount: Dinero({amount: 854209300, currency: "USD"})
         },
         extra: [
           "No Prize (0%)",
