@@ -4,24 +4,36 @@ import CustomDatePicker from "../components/LotteryDatePicker";
 import ChangeLocaleDropDown from "../components/LocaleDropDownButton";
 import { useQuery } from '@tanstack/react-query';
 import { getCompanyIcon } from "../../api/companyIcon";
+import { useLocation } from "react-router";
 
 interface LotteryTabProps {
   onClick: (id: string) => void;
 }
 const LotteryTab = (props: LotteryTabProps) => {
 
-  const { isPending, error, data: lotteries } = useQuery({
-    queryKey: ['repoData'],
+  const { isPending, error, data:iconSources } = useQuery({
+    queryKey: ['site-logo'],
     queryFn: getCompanyIcon
       
   })
 
   if (isPending) return <div></div>
 
-  if (error) return 'An error has occurred: ' + error.message
+  if (error) return 'An error has occurred: ' + error.message;
+
+  const location = useLocation();
+  const isJackpotPath = location.pathname === "/jackpot";
+  const lotteries = iconSources.filter((source) => {
+    if (isJackpotPath) {
+      const includeList = ["M", "PMP", "ST", "SG", "EE", "H", 'WB']
+      return includeList.includes(source.id)
+    } else {
+      return source.id !== "GD";
+    }
+  })
 
   return (
-    <div className="flex justify-between gap-3 p-2">
+    <div className="flex justify-center gap-3 p-2 max-w-[700px] w-full">
       {lotteries.map((lottery) => {
         return (
           <img

@@ -201,7 +201,7 @@ const Sidebar = () => {
         const actions = section.actions;
         return (
           <SidebarSection key={section.title} title={section.title}>
-            {actions.map((action, index) => {
+            {actions.map((action) => {
               const isActive = location.pathname === action.path;
 
               return (
