@@ -4,6 +4,7 @@ import { LotteryInfoCardProps } from "../components/LotteryInfoCard/types";
 import Dinero from "dinero.js";
 
 const items: LotteryInfoCardProps[] = Array.from({ length: 25 }, (_, i) => ({
+  id: i.toString(),
   header: {
     logo: {
       url: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
@@ -103,13 +104,24 @@ const items: LotteryInfoCardProps[] = Array.from({ length: 25 }, (_, i) => ({
 }));
 
 const DashBoard = () => {
+
+
+  // const { isPending, error, data: results } = useQuery({
+  //   queryKey: ['result'],
+  //   queryFn: () => getResuls("2025-03-10")
+  // })
+
   return (
-    <div className="max-w-[1280px] w-full mx-auto px-4 flex justify-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+    <div className="flex justify-center flex-wrap gap-[0.5rem] px-6">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"> */}
         {items.map((item, index) => (
-          <LotteryInfoCard key={index} {...item} />
+
+         
+          <div className="max-w-[370px] sm:max-w-[400px]">
+              <LotteryInfoCard key={index} {...item} />
+          </div>
         ))}
-      </div>
+      {/* </div> */}
     </div>
   );
 };

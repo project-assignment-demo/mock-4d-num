@@ -36,7 +36,7 @@ const Layout = () => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-gray-200">
+    <div className="flex h-screen w-screen bg-[#F3F3F3]">
       {/* sidebar */}
       {/* <Drawer>
         <Sidebar />
@@ -44,15 +44,25 @@ const Layout = () => {
       <section className="hidden lg:w-[250px] lg:block h-screen">
         <Sidebar />
       </section>
-      <main className="flex-auto h-full w-full overflow-y-scroll">
-        <Nav />
+      <main className="flex flex-col h-full w-full ">
+        <div className=" w-full bg-[#F3F3F3]">
+          <Nav />
+        </div>
+
+        <div className="overflow-scroll scrollbar-hidden">
         <Outlet />
+        </div>
+
+        {/* <div className="flex flex-row h-full w-full">
+        <div className="h-full flex-grow overflow-scroll scrollbar-hidden">
+           <Outlet />
+        </div>
+        <div className="bg-red-300 h-screen w-[250px]">
+123 
+        </div>
+        </div> */}
       </main>
     </div>
-
-    // <div className="h-screen w-screen flex justify-center items-center flex-col">
-    //     <ThemeModeSwitcher />
-    // </div>
   );
 };
 

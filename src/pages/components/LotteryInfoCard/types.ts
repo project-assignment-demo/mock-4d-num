@@ -7,6 +7,7 @@ export type SecondaryPrizes<T> = [ T, ...T[], T] & { length: 15 };
 // export type SecondaryPrizes<T> = T[];
 
 export interface LotteryInfoCardProps {
+  id: string;
   header: LotteryInfoHeaderProps;
   video?: string;
   prizes: LotteryPrize;
