@@ -11,6 +11,7 @@ import LuckyBook from "./pages/LuckyBook";
 import { IntlProvider } from 'react-intl'
 import { useSettingStore } from "./store/index.ts";
 import { en, ms, zh } from "./locale/index.ts";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 
 
@@ -20,13 +21,16 @@ const messages: Record<string, any> = {
   "ms": ms,
 }
 
+const queryClient = new QueryClient()
+
 
 const App = () => {
 
   const locale = useSettingStore(state => state.locale)
 
   return (
-    <IntlProvider messages={messages[locale]} locale={locale} defaultLocale="en">
+   <QueryClientProvider  client={queryClient}>
+     <IntlProvider messages={messages[locale]} locale={locale} defaultLocale="en">
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -41,6 +45,7 @@ const App = () => {
     </Routes>
   </BrowserRouter>
   </IntlProvider>
+   </QueryClientProvider>
   )
 };
 

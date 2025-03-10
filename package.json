@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.9",
+    "@tanstack/react-query": "^5.67.2",
     "antd": "^5.24.2",
+    "axios": "^1.8.2",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
+    "dinero.js": "^1.9.1",
     "locale-data": "link:@formatjs/intl-numberformat/locale-data",
     "path": "^0.12.7",
     "react": "^19.0.0",
@@ -30,6 +33,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@types/dinero.js": "^1.9.4",
     "@types/node": "^22.13.9",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",

@@ -2,21 +2,36 @@ import { MdMenu, MdRefresh } from "react-icons/md";
 import { useSettingStore } from "../../store";
 import CustomDatePicker from "../components/LotteryDatePicker";
 import ChangeLocaleDropDown from "../components/LocaleDropDownButton";
+import { useQuery } from '@tanstack/react-query';
+import { getCompanyIcon } from "../../api/companyIcon";
 
 interface LotteryTabProps {
   onClick: (id: string) => void;
 }
 const LotteryTab = (props: LotteryTabProps) => {
-  const lotteries = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_) => ({
-    source: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
-  }));
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ['repoData'],
+    queryFn: getCompanyIcon
+      
+  })
+
+  if (isPending) return <div></div>
+
+  if (error) return 'An error has occurred: ' + error.message
+
+  const lotteries = data;
+
+  // const lotteries = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_) => ({
+  //   source: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
+  // }));
 
   return (
     <div className="flex justify-between gap-3 p-2">
       {lotteries.map((lottery, index) => {
         return (
           <img
-            key={index}
+            key={lottery.id}
             onClick={() => props.onClick(lottery.source)}
             className="w-[40px] h-[40px] cursor-pointer"
             src={lottery.source}
@@ -52,3 +67,4 @@ const Nav = () => {
 };
 
 export default Nav;
+
