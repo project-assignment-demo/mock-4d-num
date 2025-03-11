@@ -10,19 +10,18 @@ interface LotteryTabProps {
   onClick: (id: string) => void;
 }
 const LotteryTab = (props: LotteryTabProps) => {
-
+  const location = useLocation();
   const { isPending, error, data:iconSources } = useQuery({
     queryKey: ['site-logo'],
     queryFn: getCompanyIcon
-      
   })
 
   if (isPending) return <div></div>
 
   if (error) return 'An error has occurred: ' + error.message;
 
-  const location = useLocation();
   const isJackpotPath = location.pathname === "/jackpot";
+  
   const lotteries = iconSources.filter((source) => {
     if (isJackpotPath) {
       const includeList = ["M", "PMP", "ST", "SG", "EE", "H", 'WB']
@@ -31,7 +30,7 @@ const LotteryTab = (props: LotteryTabProps) => {
       return source.id !== "GD";
     }
   })
-
+  
   return (
     <div className="flex justify-center gap-3 p-2 max-w-[700px] w-full">
       {lotteries.map((lottery) => {
