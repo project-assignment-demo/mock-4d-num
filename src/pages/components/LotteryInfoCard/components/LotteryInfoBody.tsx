@@ -1,16 +1,3 @@
-import {
-  LotteryPrize,
-  LotteryPrizeInfo,
-  PrimaryPrize,
-  SecondaryPrizeInfo,
-  SecondaryPrizes,
-} from "../types";
-
-interface PrizeTableProps {
-  title: string;
-  prizes: SecondaryPrizes<LotteryPrizeInfo>;
-}
-
 interface PrizeContentProps {
   value: string;
   id: string;
@@ -35,7 +22,7 @@ const PrizeInnerContent = (props: PrizeContentProps) => {
   );
 };
 
-const PrizeTable = (props: PrizeTableProps) => {
+const PrizeTable = (props: {title: string; prizes: {position: string; value: string }[]}) => {
   const { title, prizes } = props;
 
   return (
@@ -46,7 +33,7 @@ const PrizeTable = (props: PrizeTableProps) => {
       <div className=" grid grid-cols-5">
         {prizes.map((prize, index) => (
           <div className="border border-gray-100 bg-white" key={index}>
-            <PrizeInnerContent id={prize.prefix} value={prize.value} />
+            <PrizeInnerContent id={prize.position} value={prize.value} />
           </div>
         ))}
       </div>
@@ -54,21 +41,22 @@ const PrizeTable = (props: PrizeTableProps) => {
   );
 };
 
-const LotteryInfoBody = (props: LotteryPrize) => {
-  const { primary, secondary } = props;
-
-  const LotteryPrizesSection = (lotteryPrizeSectionProps: PrimaryPrize) => {
-    const prizeTitles = Object.values(lotteryPrizeSectionProps).map(
-      (prize) => prize.label
-    );
-
-    const prizes = Object.values(lotteryPrizeSectionProps).map(
-      (prize) => prize.prize
-    );
+const LotteryInfoBody = (props: 
+  {
+    winningPrize: [{ key: string; position: string; value: string }, { key: string; position: string; value: string }, { key: string; position: string; value: string }];
+    special: {position: string; value: string }[];
+    consolation: {position: string; value: string }[];
+  }
+) => {
+  const { winningPrize, special, consolation } = props;
+  const LotteryPrizesSection = (props: { prizes: [{ key: string; position: string; value: string }, { key: string; position: string; value: string }, { key: string; position: string; value: string }]}) => {
+    const { prizes } = props;
+    const titles = prizes.map(prize => prize.key);
+    
     return (
       <>
         <div className="flex gap-[20px] justify-center items-center">
-          {prizeTitles.map((title) => (
+          {titles.map((title) => (
             <div
               key={title}
               className="max-w-[109px] w-full bg-[#F5C500] rounded-lg px-[6px] py-[10px]"
@@ -87,7 +75,7 @@ const LotteryInfoBody = (props: LotteryPrize) => {
               className="max-w-[105px] w-full bg-white shadow-md rounded-sm p-[2px] relative"
             >
               <p className="text-[10px] text-red-400 font-bold absolute top-[4px] left-[4px]">
-                {prize.prefix}
+                {prize.position}
               </p>
               <p className="text-[28px] font-semibold">{prize.value}</p>
             </div>
@@ -97,22 +85,24 @@ const LotteryInfoBody = (props: LotteryPrize) => {
     );
   };
 
-  const SecondaryPrizeSection = (props: SecondaryPrizeInfo) => {
-    const { label, prizes } = props;
+  const SecondaryPrizeSection = (props: {
+    prizes: {position: string; value: string }[],
+    title: string;
+  }) => {
+    const { title, prizes } = props;
 
     return (
       <div className="px-2">
-        <PrizeTable title={label} prizes={prizes} />
+        <PrizeTable title={title} prizes={prizes} />
       </div>
     );
   };
 
   return (
     <div className="flex flex-col gap-2">
-      <LotteryPrizesSection {...primary} />
-      {Object.values(secondary).map((prize) => (
-        <SecondaryPrizeSection {...prize} />
-      ))}
+      <LotteryPrizesSection prizes={winningPrize} />
+      <SecondaryPrizeSection title={"Special"} prizes={special} />
+      <SecondaryPrizeSection title={"Consolation"} prizes={consolation} />
     </div>
   );
 };

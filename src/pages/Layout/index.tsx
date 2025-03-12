@@ -49,7 +49,7 @@ const Layout = () => {
           <Nav />
         </div>
 
-        <div className="overflow-scroll scrollbar-hidden">
+        <div className="overflow-scroll scrollbar-hidden max-w-[1440px]">
         <Outlet />
         </div>
 

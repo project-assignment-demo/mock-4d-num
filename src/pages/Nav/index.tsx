@@ -5,23 +5,28 @@ import ChangeLocaleDropDown from "../components/LocaleDropDownButton";
 import { useQuery } from '@tanstack/react-query';
 import { getCompanyIcon } from "../../api/companyIcon";
 import { useLocation } from "react-router";
+import { useEffect } from "react";
 
-interface LotteryTabProps {
-  onClick: (id: string) => void;
-}
-const LotteryTab = (props: LotteryTabProps) => {
+const LotteryTab = () => {
   const location = useLocation();
+  const updateIcons = useSettingStore(state => state.updateIcons);
   const { isPending, error, data:iconSources } = useQuery({
     queryKey: ['site-logo'],
     queryFn: getCompanyIcon
   })
+
+  useEffect(() => {
+    if (iconSources) {
+      updateIcons(iconSources);
+    }
+  }, [iconSources, updateIcons])
 
   if (isPending) return <div></div>
 
   if (error) return 'An error has occurred: ' + error.message;
 
   const isJackpotPath = location.pathname === "/jackpot";
-  
+
   const lotteries = iconSources.filter((source) => {
     if (isJackpotPath) {
       const includeList = ["M", "PMP", "ST", "SG", "EE", "H", 'WB']
@@ -30,6 +35,14 @@ const LotteryTab = (props: LotteryTabProps) => {
       return source.id !== "GD";
     }
   })
+
+  const companyIconHandler = (id: string) => {
+    const element = document.getElementById(id);
+    console.log(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start"});
+    }
+  }
   
   return (
     <div className="flex justify-center gap-3 p-2 max-w-[700px] w-full">
@@ -37,7 +50,7 @@ const LotteryTab = (props: LotteryTabProps) => {
         return (
           <img
             key={lottery.id}
-            onClick={() => props.onClick(lottery.source)}
+            onClick={() => companyIconHandler(lottery.id)}
             className="w-[40px] h-[40px] cursor-pointer"
             src={lottery.source}
           />
@@ -56,7 +69,7 @@ const Nav = () => {
         <MdMenu className="text-[20px]" />
       </div>
       <div className="bg-white drop-shadow-md rounded-xl flex items-center justify-between">
-        <LotteryTab onClick={(id) => console.log(id)} />
+        <LotteryTab />
       </div>
       <div>
         <CustomDatePicker />

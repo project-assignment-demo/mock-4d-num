@@ -2,7 +2,7 @@ import { Dayjs } from "dayjs";
 import { Dinero } from 'dinero.js';
 export type PrimaryPrize = Required<Record<"1" | "2" | "3", PrimaryPrizeInfo>>;
 export type SecondaryPrize = Required<Record<"1" | "2", SecondaryPrizeInfo>>;
-export type SecondaryPrizes<T> = [ T, ...T[], T] & { length: 15 };
+export type SecondaryPrizes<T> = T[];
 
 // export type SecondaryPrizes<T> = T[];
 
@@ -12,6 +12,7 @@ export interface LotteryInfoCardProps {
   video?: string;
   prizes: LotteryPrize;
   jackpot?: LotteryJackpot;
+  jackpotPrize: [string, string] 
 }
 
 export interface LotteryJackpot {
@@ -48,7 +49,7 @@ export interface PrimaryPrizeInfo {
 
 export interface SecondaryPrizeInfo {
   label: string;
-  prizes: SecondaryPrizes<LotteryPrizeInfo>;
+  prizes: LotteryPrizeInfo[];
 }
 
 export interface LotteryInfoHeaderProps {
