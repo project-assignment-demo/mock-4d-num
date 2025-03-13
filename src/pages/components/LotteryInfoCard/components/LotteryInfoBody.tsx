@@ -1,57 +1,19 @@
-interface PrizeContentProps {
-  value: string;
-  id: string;
-  fontSize?: number;
-}
+import LotteryInfoPrizeTable from "./LotteryInfoTable";
+import { LotteryInfoBodyProps } from "./type";
 
-const PrizeInnerContent = (props: PrizeContentProps) => {
-  const fontSize = props.fontSize ?? 36;
-
-  return (
-    <div className="relative w-full h-full">
-      <p className="absolute top-0 left-0 text-[12px] text-red-500 font-semibold">
-        {props.id}
-      </p>
-      <p
-        className="font-bold text-center px-2 py-2"
-        style={{ fontSize: `${fontSize} px` }}
-      >
-        {props.value}
-      </p>
-    </div>
-  );
-};
-
-const PrizeTable = (props: {title: string; prizes: {position: string; value: string }[]}) => {
-  const { title, prizes } = props;
-
-  return (
-    <div className="w-full rounded-md mt-[10px] overflow-hidden">
-      <div className="bg-black py-[8px]">
-        <p className="text-white font-bold text-center text-[14px]">{title}</p>
-      </div>
-      <div className=" grid grid-cols-5">
-        {prizes.map((prize, index) => (
-          <div className="border border-gray-100 bg-white" key={index}>
-            <PrizeInnerContent id={prize.position} value={prize.value} />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const LotteryInfoBody = (props: 
-  {
-    winningPrize: [{ key: string; position: string; value: string }, { key: string; position: string; value: string }, { key: string; position: string; value: string }];
-    special: {position: string; value: string }[];
-    consolation: {position: string; value: string }[];
-  }
+const LotteryInfoBody = (props: LotteryInfoBodyProps
+  
 ) => {
-  const { winningPrize, special, consolation } = props;
-  const LotteryPrizesSection = (props: { prizes: [{ key: string; position: string; value: string }, { key: string; position: string; value: string }, { key: string; position: string; value: string }]}) => {
-    const { prizes } = props;
+  const { winningPrize, special, consolation, primaryColor, secondaryColor } = props;
+  const LotteryPrizesSection = (props: { 
+    prizes: [{ key: string; position: string; value: string }, 
+      { key: string; position: string; value: string }, { key: string; position: string; value: string }],
+      backgroundColor: string
+    }) => {
+    const { prizes, backgroundColor } = props;
     const titles = prizes.map(prize => prize.key);
+
+    const textColor = 'text-white';
     
     return (
       <>
@@ -59,9 +21,10 @@ const LotteryInfoBody = (props:
           {titles.map((title) => (
             <div
               key={title}
-              className="max-w-[109px] w-full bg-[#F5C500] rounded-lg px-[6px] py-[10px]"
+              className="max-w-[109px] w-full rounded-lg px-[6px] py-[10px]"
+              style={{backgroundColor: backgroundColor }}
             >
-              <p className="font-extralight text-[12px]">
+              <p className={`font-extralight text-[12px] ${textColor}`}>
                 <span className="font-bold mr-1">{title}</span>
                 Prize
               </p>
@@ -88,21 +51,22 @@ const LotteryInfoBody = (props:
   const SecondaryPrizeSection = (props: {
     prizes: {position: string; value: string }[],
     title: string;
+    primaryColor: string;
   }) => {
     const { title, prizes } = props;
 
     return (
       <div className="px-2">
-        <PrizeTable title={title} prizes={prizes} />
+        <LotteryInfoPrizeTable primaryColor={primaryColor} title={title} prizes={prizes} />
       </div>
     );
   };
 
   return (
     <div className="flex flex-col gap-2">
-      <LotteryPrizesSection prizes={winningPrize} />
-      <SecondaryPrizeSection title={"Special"} prizes={special} />
-      <SecondaryPrizeSection title={"Consolation"} prizes={consolation} />
+      <LotteryPrizesSection backgroundColor={secondaryColor} prizes={winningPrize} />
+      <SecondaryPrizeSection primaryColor={primaryColor} title={"Special"} prizes={special} />
+      <SecondaryPrizeSection  primaryColor={primaryColor} title={"Consolation"} prizes={consolation} />
     </div>
   );
 };

@@ -1,20 +1,10 @@
 import classNames from "classnames";
-import { Dayjs } from "dayjs";
 import { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
-import { MdShare } from 'react-icons/md';
+import { MdShare } from "react-icons/md";
+import { LotteryInfoHeaderProps } from "./type";
 
-const LotteryInfoHeader = (props: {
-  logo: string;
-  drawNo: string;
-  label: string;
-  date: Dayjs;
-  showTimeSelection: boolean;
-  selectedTimeIndex: number;
-  primaryColor: string;
-  secondaryColor: string;
-  onUpdateTime?: (ibdex: number) => void;
-}) => {
+const LotteryInfoHeader = (props: LotteryInfoHeaderProps) => {
   const {
     logo,
     drawNo,
@@ -23,7 +13,6 @@ const LotteryInfoHeader = (props: {
     selectedTimeIndex,
     label,
     primaryColor,
-    secondaryColor,
     onUpdateTime,
   } = props;
 
@@ -87,7 +76,6 @@ const LotteryInfoHeader = (props: {
                     />
                   );
                 })}
-              
               </div>
             )}
             <div className="h-[40%] border-l border-gray-300"></div>
@@ -101,14 +89,16 @@ const LotteryInfoHeader = (props: {
     );
   };
 
-   const cs = classNames("h-[160px] rounded-t-2xl rounded-b-4xl relative mb-[70px]")
   return (
-    <div className={cs} style={{backgroundColor: primaryColor}}>
+    <div
+      className="h-[160px] rounded-t-2xl rounded-b-4xl relative mb-[70px]"
+      style={{ backgroundColor: primaryColor }}
+    >
       <div className="flex items-center justify-center py-[16px]">
         <LotteryIcon />
       </div>
       <div className="absolute right-[15px] top-[15px] text-white text-[24px] rounded-full hover:bg-gray-400 p-[4px] flex justify-center items-center">
-        <MdShare/>
+        <MdShare />
       </div>
 
       <div className="flex justify-center items-center">

@@ -1,9 +1,27 @@
-import axios from "axios";
-import { LotteryInfoCardProps } from "../../pages/components/LotteryInfoCard/types";
-import Dinero from "dinero.js";
 import dayjs from "dayjs";
-import { FilteredResultDTO, Result, ResultDTO } from "./type";
+import {
+  FourDJackpot,
+  Result,
+  ResultDTO,
+  ResultItem,
+  ResultPrize,
+  ResultWiningPrize,
+} from "./type";
 import { useSettingStore } from "../../store";
+import createApiClient, { API_BASE_URL } from "../utils";
+
+interface MapResultItemConfig {
+  source: ResultDTO;
+  key: string;
+}
+
+interface MapSpecialPrizesConfig {
+  source: string[];
+  type: string;
+}
+
+const specialPositionIndex = 65;
+const consolationPositionIndex = specialPositionIndex + 13;
 
 const supportedLotteries = [
   "M",
@@ -18,40 +36,26 @@ const supportedLotteries = [
   "WB",
 ];
 
-// Create an Axios instance
-const api = axios.create({
-  baseURL:
-    import.meta.env.VITE_API_BASE_URL || "https://dev.backend.4dnum.com/",
-  timeout: 5000, // 5 seconds timeout
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+const api = createApiClient(API_BASE_URL);
 
-// Define TypeScript type for the response
-interface ApiResponse {
-  data: any; // Adjust this to match the expected API response
-}
-
-export const getResults = async (
-  date: string
-): Promise<FilteredResultDTO[]> => {
+export const getResults = async (date: string): Promise<Result[]> => {
   try {
     const rawResults = await api.get<ResultDTO[]>(`api/v1/result/${date}`);
-    return formatToLotteryResultDto(rawResults.data);
+    return mapToResult(rawResults.data);
   } catch (error) {
     console.error("Error fetching result:", error);
     throw error;
   }
 };
 
-function formatResult(data: { source: ResultDTO; key: string }): Result {
+function mapToResultItem(data: MapResultItemConfig): ResultItem {
   const { source, key } = data;
   const { fdData } = source;
 
-  const lessSpecialPrizelotteries = ["PMP", "SG", "CS"];
+  const fourDJackpot: FourDJackpot | undefined =
+    key === "M" ? [fdData.jp1, fdData.jp2] : undefined;
 
-  const rawSpecialPrzies = [
+  const rawSpecialPrizes = [
     fdData.s1,
     fdData.s2,
     fdData.s3,
@@ -78,9 +82,31 @@ function formatResult(data: { source: ResultDTO; key: string }): Result {
     fdData.c9,
     fdData.c10,
   ];
-  const specialPrizes = lessSpecialPrizelotteries.includes(key)
-    ? rawSpecialPrzies.splice(0, 10)
-    : rawSpecialPrzies;
+
+  const specials = mapSpecialPrizes({
+    source: rawSpecialPrizes,
+    type: key,
+  });
+
+  const consolations = mapConsolationPrizes(rawConsolationPrizes);
+
+  const winningPrizes: ResultWiningPrize = [
+    {
+      key: "1ST",
+      position: fdData.n1_pos,
+      value: fdData.n1,
+    },
+    {
+      key: "2ND",
+      position: fdData.n2_pos,
+      value: fdData.n2,
+    },
+    {
+      key: "3RD",
+      position: fdData.n3_pos,
+      value: fdData.n3,
+    },
+  ];
 
   const jackpot = fdData.jackpotAmount
     ? {
@@ -101,44 +127,22 @@ function formatResult(data: { source: ResultDTO; key: string }): Result {
         ],
       }
     : undefined;
+
   return {
     id: data.key,
     date: dayjs(new Date(fdData.dd)),
     drawNo: fdData.dn,
     video: fdData.videoUrl,
-    winningPrize: [
-      {
-        key: "1ST",
-        position: fdData.n1_pos,
-        value: fdData.n1,
-      },
-      {
-        key: "2ND",
-        position: fdData.n2_pos,
-        value: fdData.n2,
-      },
-      {
-        key: "3RD",
-        position: fdData.n3_pos,
-        value: fdData.n3,
-      },
-    ],
-    special: specialPrizes.map((value, index) => {
-      const position = String.fromCharCode(65 + index);
-      return { position, value };
-    }),
-    consolation: rawConsolationPrizes.map((value, index) => {
-      const step = 13;
-      const position = String.fromCharCode(65 + step + index);
-      return { position, value };
-    }),
-    fourDJackpot: key === "M" ? [fdData.jp1, fdData.jp2] : undefined,
+    winningPrizes,
+    specials,
+    consolations,
+    fourDJackpot,
     jackpot,
   };
 }
 
-function formatToLotteryResultDto(origin: ResultDTO[]): FilteredResultDTO[] {
-  const summaryResults = origin.reduce<FilteredResultDTO[]>((acc, curr) => {
+function mapToResult(source: ResultDTO[]): Result[] {
+  const results = source.reduce<Result[]>((acc, curr) => {
     const matchedType = supportedLotteries.find(
       (item) => curr.type === item || curr.type.startsWith(`${item}T`)
     );
@@ -153,16 +157,52 @@ function formatToLotteryResultDto(origin: ResultDTO[]): FilteredResultDTO[] {
       (item) => curr.type === item.type || curr.type.startsWith(`${item.type}T`)
     );
 
-    const result = formatResult({ source: curr, key: matchedType });
+    const result = mapToResultItem({ source: curr, key: matchedType });
 
     if (existingItem) {
       existingItem.children.push(result);
     } else {
-      acc.push({ label: logo.label, type: matchedType, children: [result], logo: logo.source, primaryColor: matchedType === 'M'? '#000000': '#EC2024' });
+      acc.push({
+        label: logo.label,
+        type: matchedType,
+        children: [result],
+        logo: logo.source,
+      });
     }
 
     return acc;
   }, []);
+  return results;
+}
 
- return summaryResults;
+function mapSpecialPrizes(config: MapSpecialPrizesConfig): ResultPrize[] {
+  let prizes: { key: number | null; value: string }[] = [];
+  const lessSpecialPrizelotteries = ["PMP", "SG", "CS"];
+  const isonly10Prizes = lessSpecialPrizelotteries.includes(config.type);
+  const source = config.source.map<{ key: number | null; value: string }>(
+    (value, key) => ({ key, value })
+  );
+  if (isonly10Prizes) {
+    prizes = source.splice(0, 10);
+  } else {
+    const emptyData = { key: null, value: "" };
+    source.splice(10, 0, emptyData);
+    source.push(emptyData);
+    prizes = source;
+  }
+
+  return prizes.map(({ key, value }) => {
+    return {
+      position:
+        key !== null ? String.fromCharCode(specialPositionIndex + key) : "",
+      value,
+    };
+  });
+}
+
+function mapConsolationPrizes(source: string[]): ResultPrize[] {
+  return source.map<ResultPrize>((value, index) => {
+    const position = String.fromCharCode(consolationPositionIndex + index);
+    return { position, value };
+  });
 }

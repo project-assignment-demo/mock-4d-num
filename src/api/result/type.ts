@@ -79,31 +79,41 @@ export interface ResultDTO {
   };
 }
 
-export interface FilteredResultDTO {
+export interface Result {
   type: string;
   logo: string;
   label: string;
-  primaryColor: string;
-  children: Result[];
+  children: ResultItem[];
 }
 
-export interface Result {
+export interface ResultItem {
   id: string;
   date: Dayjs;
   drawNo: string;
   // timeSelection?: [string, string];
   video: string;
-  winningPrize: [{ key: string; position: string; value: string }, { key: string; position: string; value: string }, { key: string; position: string; value: string }];
-  special: {position: string; value: string }[];
-  consolation: {position: string; value: string }[];
-  fourDJackpot?: [string, string];
-  jackpot?: {
-    poolAmount: string;
-    results: {
-      amount: string;
-      noPrize: string;
-      totalWinerUnit: string;
-      usdUnit: string;
-    }[];
-  };
+  winningPrizes: ResultWiningPrize;
+  specials: ResultPrize[];
+  consolations: ResultPrize[];
+  fourDJackpot?: FourDJackpot;
+  jackpot?: ResultJackpot;
+}
+
+
+export type ResultWiningPrize =  [{ key: string; position: string; value: string }, { key: string; position: string; value: string }, { key: string; position: string; value: string }];
+
+export interface ResultPrize {position: string; value: string};
+
+export type FourDJackpot = [string, string];
+
+export interface ResultJackpot {
+  poolAmount: string;
+    results: ResultJackpotResult[];
+}
+
+export interface ResultJackpotResult {
+  amount: string;
+  noPrize: string;
+  totalWinerUnit: string;
+  usdUnit: string;
 }

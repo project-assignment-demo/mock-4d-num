@@ -2,10 +2,10 @@ import LotteryInfoVideoSection from "./components/LotteryInfoVideoSection";
 import LotteryJackpotSection from "./components/LotteryJackpotSection";
 import LotteryInfoHeader from "./components/LotteryInfoHeader";
 import LotteryInfoBody from "./components/LotteryInfoBody";
-import { FilteredResultDTO } from "../../../api/result/type";
 import { useState } from "react";
+import { Result } from "../../../api/result/type";
 
-const LotteryInfoCard = (props: FilteredResultDTO) => {
+const LotteryInfoCard = (props: Result) => {
   const getPrimaryColor = (id: string): string => {
     switch (id) {
       case "M":
@@ -91,7 +91,7 @@ const LotteryInfoCard = (props: FilteredResultDTO) => {
   const hasMoreTimeSelect = children.length > 1;
   const [selectedIndex, setSelectedIndex] = useState(0);
   const info = children[selectedIndex];
-  const { video, winningPrize, special, consolation, fourDJackpot, jackpot } =
+  const { video, winningPrizes, specials, consolations, fourDJackpot, jackpot } =
     info;
   return (
     <div
@@ -100,7 +100,6 @@ const LotteryInfoCard = (props: FilteredResultDTO) => {
     >
       <LotteryInfoHeader
         primaryColor={primaryColor}
-        secondaryColor={secondaryColor}
         label={label}
         selectedTimeIndex={selectedIndex}
         onUpdateTime={(index) => setSelectedIndex(index)}
@@ -109,22 +108,24 @@ const LotteryInfoCard = (props: FilteredResultDTO) => {
         drawNo={info.drawNo}
         showTimeSelection={hasMoreTimeSelect}
       />
-      {video && (
+      {video.length > 1 && (
         <div className="px-[15px]">
           {" "}
           <LotteryInfoVideoSection url={video} />
         </div>
       )}
       <LotteryInfoBody
-        winningPrize={winningPrize}
-        special={special}
-        consolation={consolation}
+        primaryColor={primaryColor}
+       secondaryColor={secondaryColor}
+        winningPrize={winningPrizes}
+        special={specials}
+        consolation={consolations}
       />
 
       {jackpot && (
         <div className="px-[15px]">
           {" "}
-          <LotteryJackpotSection {...jackpot} />{" "}
+          <LotteryJackpotSection {...jackpot} primaryColor={primaryColor} secondaryColor={secondaryColor} />{" "}
         </div>
       )}
 

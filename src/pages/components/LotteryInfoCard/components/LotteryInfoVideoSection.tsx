@@ -1,4 +1,7 @@
-const LotteryInfoVideoSection = (props: { url: string }) => {
+import { LotteryInfoVideoSectionProps } from "./type";
+
+const LotteryInfoVideoSection = (props: LotteryInfoVideoSectionProps) => {
+  console.log(props.url);
   return (
     <div className="w-full pt-[20px] pb-[15px] flex flex-col bg-blue-500 rounded-2xl">
         <p className="text-white text-[14px] font-bold"> view draw video</p>
