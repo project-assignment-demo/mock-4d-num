@@ -7,9 +7,12 @@ import { MdShare } from 'react-icons/md';
 const LotteryInfoHeader = (props: {
   logo: string;
   drawNo: string;
+  label: string;
   date: Dayjs;
   showTimeSelection: boolean;
   selectedTimeIndex: number;
+  primaryColor: string;
+  secondaryColor: string;
   onUpdateTime?: (ibdex: number) => void;
 }) => {
   const {
@@ -18,6 +21,9 @@ const LotteryInfoHeader = (props: {
     date,
     showTimeSelection,
     selectedTimeIndex,
+    label,
+    primaryColor,
+    secondaryColor,
     onUpdateTime,
   } = props;
 
@@ -29,7 +35,7 @@ const LotteryInfoHeader = (props: {
           <img src={logo} alt="site-logo" />
         </div>
         {/* icon text */}
-        <p className="text-center text-white font-bold">{"Magnum 4D"}</p>
+        <p className="text-center text-white font-bold">{label}</p>
       </div>
     );
   };
@@ -95,8 +101,9 @@ const LotteryInfoHeader = (props: {
     );
   };
 
+   const cs = classNames("h-[160px] rounded-t-2xl rounded-b-4xl relative mb-[70px]")
   return (
-    <div className="bg-black h-[160px] rounded-t-2xl rounded-b-4xl relative mb-[70px]">
+    <div className={cs} style={{backgroundColor: primaryColor}}>
       <div className="flex items-center justify-center py-[16px]">
         <LotteryIcon />
       </div>

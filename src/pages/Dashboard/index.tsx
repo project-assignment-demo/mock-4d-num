@@ -1,15 +1,20 @@
 import LotteryInfoCard from "../components/LotteryInfoCard";
 import { useQuery } from "@tanstack/react-query";
 import { getResults } from "../../api/result";
+import { useSettingStore } from "../../store";
+import dayjs from "dayjs";
 
 const Dashboard = () => {
+
+  const selectedDate = useSettingStore(state => state.selectedDate);
+
   const {
     isPending,
     error,
     data: results,
   } = useQuery({
-    queryKey: ["result"],
-    queryFn: () => getResults("2025-03-10"),
+    queryKey: ["result", selectedDate],
+    queryFn: () => getResults(dayjs(selectedDate).format('YYYY-MM-DD')),
     refetchOnReconnect: false,
   });
 
@@ -18,14 +23,12 @@ const Dashboard = () => {
   if (error) return <div>Error !! {error.message}</div>;
 
   return (
-    <div className="flex justify-center flex-wrap gap-[0.5rem] px-6">
-      {/* <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"> */}
+    <div className="flex justify-center flex-wrap gap-[0.5rem] px-6 h-full">
       {results.map((result) => (
-        <div className="max-w-[370px] sm:max-w-[400px]">
-          <LotteryInfoCard key={result.id} {...result} />
+        <div className="max-w-[370px] sm:max-w-[400px] min-h-full">
+          <LotteryInfoCard key={result.type} {...result} />
         </div>
       ))}
-      {/* </div> */}
     </div>
   );
 };

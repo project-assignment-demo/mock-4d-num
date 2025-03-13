@@ -82,6 +82,8 @@ export interface ResultDTO {
 export interface FilteredResultDTO {
   type: string;
   logo: string;
+  label: string;
+  primaryColor: string;
   children: Result[];
 }
 

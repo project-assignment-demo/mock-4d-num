@@ -158,7 +158,7 @@ function formatToLotteryResultDto(origin: ResultDTO[]): FilteredResultDTO[] {
     if (existingItem) {
       existingItem.children.push(result);
     } else {
-      acc.push({ type: matchedType, children: [result], logo: logo.source });
+      acc.push({ label: logo.label, type: matchedType, children: [result], logo: logo.source, primaryColor: matchedType === 'M'? '#000000': '#EC2024' });
     }
 
     return acc;

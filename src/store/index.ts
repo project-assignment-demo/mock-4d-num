@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CompanyIcon } from "../api/companyIcon/type";
+import { LotteryIcon } from "../api/companyIcon/type";
 
 export type SupportLocales = 'zh' | 'ms' | 'en';
 
@@ -8,8 +8,10 @@ interface Setting {
     updateLocale: (locale: SupportLocales) => void;
     openDrawer: boolean;
     updateDrawer: (val: boolean) => void;
-    icons: CompanyIcon[];
-    updateIcons: (icons: CompanyIcon[]) => void;
+    icons: LotteryIcon[];
+    updateIcons: (icons: LotteryIcon[]) => void;
+    selectedDate: Date;
+    updateSelectedDate: (date: Date) => void;
 }
 
 
@@ -20,4 +22,6 @@ export const useSettingStore = create<Setting>((set) => ({
     updateDrawer: (val: boolean) => set({openDrawer: val}),
     icons: [],
     updateIcons: (icons) => set({icons}),
+    selectedDate: new Date(),
+    updateSelectedDate: (date) => set({selectedDate: date})
 }))
