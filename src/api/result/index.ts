@@ -148,8 +148,8 @@ function mapToResult(source: ResultDTO[]): Result[] {
     );
     if (!matchedType) return acc;
 
-    const icons = useSettingStore.getState().icons;
-    const logo = icons.find((icon) => icon.id === matchedType);
+    const companies = useSettingStore.getState().companies;
+    const logo = companies.find((company) => company.id === matchedType);
 
     if (!logo) throw Error("invalid logo");
 

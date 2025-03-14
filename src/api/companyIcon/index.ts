@@ -1,6 +1,6 @@
 import { CompanyIcon, LotteryIcon } from "./type";
-export async function getCompanyIcon(): Promise<LotteryIcon[]> {
-  const source = {
+export async function fetchIcons(): Promise<CompanyIcon[]> {
+  const icons = {
     M: "https://qa.4dnum.com/s3/site-logo/4Dlogo-01.png",
     PMP: "https://qa.4dnum.com/s3/site-logo/4Dlogo-02.png",
     ST: "https://qa.4dnum.com/s3/site-logo/4Dlogo-03.png",
@@ -13,53 +13,12 @@ export async function getCompanyIcon(): Promise<LotteryIcon[]> {
     GD: "https://qa.4dnum.com/s3/site-logo/4Dlogo-09.png",
     WB: "https://qa.4dnum.com/s3/site-logo/4Dlogo-11.png",
   };
-  return Object.entries(source).map(([id, source]) => ({
+  return Object.entries(icons).map(([id, source]) => ({
     id,
     source,
-    label: getCompanyLabelById(id),
   }));
 }
 
-const getCompanyLabelById = (id: string): string => {
-  switch (id) {
-    case "M": {
-      return "Magnum 4D";
-    }
-    case "PMP": {
-      return "Da Ma Cai 1+3D";
-    }
-    case "ST": {
-      return "SportsToto 4D";
-    }
-    case "SG": {
-      return "Singapore 4D";
-    }
-    case "CS": {
-      return "Special CashSweep";
-    }
-    case "STC": {
-      return "Sandakan 4D";
-    }
-    case "EE":
-      {
-      }
-      return "Sabah 88 4D";
-    case "H": {
-      return "8LUCKY";
-    }
-    case "P": {
-      return "Perdana Lottery";
-    }
-    case "GD": {
-      return "Grand Dragon 4D";
-    }
-    case "WB": {
-      return "9 Winbox";
-    }
-    default: {
-      throw Error(
-        "invalid lottery key                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "
-      );
-    }
-  }
-};
+
+
+

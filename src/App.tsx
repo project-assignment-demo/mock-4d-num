@@ -12,6 +12,7 @@ import { useSettingStore } from "./store/index.ts";
 import { en, ms, zh } from "./locale/index.ts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Dashboard from "./pages/Dashboard";
+import { SwiperProvider } from "./context/SwiperContext.tsx";
 
 const messages: Record<string, any> = {
   en: en,
@@ -31,19 +32,21 @@ const App = () => {
         locale={locale}
         defaultLocale="en"
       >
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="jackpot" element={<Jackpot />} />
-              <Route path="special-date" element={<SpecialDate />} />
-              <Route path="number-analysis" element={<NumberAnalysis />} />
-              <Route path="spin-my-luck" element={<SpinMyLuck />} />
-              <Route path="hot-dddd-num" element={<Hot4DNumber />} />
-              <Route path="lucky-book" element={<LuckyBook />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <SwiperProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="jackpot" element={<Jackpot />} />
+                <Route path="special-date" element={<SpecialDate />} />
+                <Route path="number-analysis" element={<NumberAnalysis />} />
+                <Route path="spin-my-luck" element={<SpinMyLuck />} />
+                <Route path="hot-dddd-num" element={<Hot4DNumber />} />
+                <Route path="lucky-book" element={<LuckyBook />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </SwiperProvider>
       </IntlProvider>
     </QueryClientProvider>
   );

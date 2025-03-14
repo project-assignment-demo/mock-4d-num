@@ -96,7 +96,7 @@ const LotteryInfoCard = (props: Result) => {
   return (
     <div
       id={type}
-      className="w-[400px] text-center rounded-2xl bg-white pb-[20px] flex flex-col gap-2"
+      className="w-full text-center rounded-2xl bg-white pb-[20px] flex flex-col gap-2"
     >
       <LotteryInfoHeader
         primaryColor={primaryColor}

@@ -16,7 +16,7 @@ const LotteryInfoBody = (props: LotteryInfoBodyProps
     const textColor = 'text-white';
     
     return (
-      <>
+      <div className="px-2">
         <div className="flex gap-[20px] justify-center items-center">
           {titles.map((title) => (
             <div
@@ -34,7 +34,7 @@ const LotteryInfoBody = (props: LotteryInfoBodyProps
         <div className="flex gap-[20px] justify-evenly items-center mt-2">
           {prizes.map((prize) => (
             <div
-              key={prize.value}
+              key={prize.position ? prize.position : prize.value}
               className="max-w-[105px] w-full bg-white shadow-md rounded-sm p-[2px] relative"
             >
               <p className="text-[10px] text-red-400 font-bold absolute top-[4px] left-[4px]">
@@ -44,7 +44,7 @@ const LotteryInfoBody = (props: LotteryInfoBodyProps
             </div>
           ))}
         </div>
-      </>
+      </div>
     );
   };
 
