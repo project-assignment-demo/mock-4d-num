@@ -2,13 +2,11 @@ import { Outlet, useLocation } from "react-router";
 import Sidebar from "../Sidebar";
 import { useSettingStore } from "../../store";
 import Nav from "../Nav";
-import { useSwiperControl } from "../../context/SwiperContext";
 import { useEffect } from "react";
 import { fetchIcons } from "../../api/companyIcon";
 import { useQuery } from "@tanstack/react-query";
 
 const Layout = () => {
-  const { next } = useSwiperControl();
   const location = useLocation();
   const updateCompanies = useSettingStore((state) => state.upateCompanies);
 

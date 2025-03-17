@@ -1,10 +1,9 @@
-import CustomSiwper from "../Dashboard/components/Swiper";
+import JackpotCard from "./components/JackpotCard";
 
 const Jackpot = () => {
     return (
-        <div>
-            <p>JackPot</p>
-            <CustomSiwper/>
+        <div className="mx-4 w-[400px]">
+           <JackpotCard/>
         </div>
     )
 }
