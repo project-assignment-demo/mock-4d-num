@@ -99,16 +99,22 @@ export interface ResultItem {
   jackpot?: ResultJackpot;
 }
 
+export type ResultWiningPrize = [
+  { key: string; position: string; value: string },
+  { key: string; position: string; value: string },
+  { key: string; position: string; value: string }
+];
 
-export type ResultWiningPrize =  [{ key: string; position: string; value: string }, { key: string; position: string; value: string }, { key: string; position: string; value: string }];
-
-export interface ResultPrize {position: string; value: string};
+export interface ResultPrize {
+  position: string;
+  value: string;
+}
 
 export type FourDJackpot = [string, string];
 
 export interface ResultJackpot {
   poolAmount: string;
-    results: ResultJackpotResult[];
+  results: ResultJackpotResult[];
 }
 
 export interface ResultJackpotResult {
@@ -117,3 +123,69 @@ export interface ResultJackpotResult {
   totalWinerUnit: string;
   usdUnit: string;
 }
+
+export interface BaseJackpot {
+  type: string;
+  date: Dayjs;
+  drawNo: string;
+  title: string;
+  logo: string;
+}
+
+export interface MagnumJackpot extends BaseJackpot {
+  magnumLife: {
+    winningNumbers: string[];
+    bonusNumbers: string[];
+  };
+  goldJackpot: string[][][];
+  jackpotPrize: [string, string];
+}
+
+export interface DaMaCaiJackpot extends BaseJackpot {
+  threeDBonus: [string, string, string];
+  special: string[];
+  consolation: string[];
+}
+
+type ToToSixD = string | string[];
+
+export interface SportToToJackpot extends BaseJackpot {
+  totoJackpot: {
+    label: string;
+    jackpot: string[];
+    prizes: string[];
+  }[];
+  fiveD: string[];
+  sixD: ToToSixD[];
+}
+
+export interface Singapor4DJackpot extends BaseJackpot {
+  winningNumbers: string[];
+  winningShares: { amount: string; shares: string }[];
+}
+
+export interface SabahJackpot extends BaseJackpot {
+  winningNumbers: {
+    jackpot: string[];
+    prizes: string[];
+  };
+}
+
+export interface EightLuckyJackpot extends BaseJackpot {
+  sixDPrizes: string[][];
+}
+
+export interface NineWinBoxJackpot extends BaseJackpot {
+  sixDPrizes: string[][];
+}
+
+export type JackpotKey = "M" | "PMP" | "ST" | "SG" | "EE" | "H" | "WB";
+export type JackpotType =
+  | MagnumJackpot
+  | DaMaCaiJackpot
+  | SportToToJackpot
+  | Singapor4DJackpot
+  | SabahJackpot
+  | EightLuckyJackpot
+  | NineWinBoxJackpot;
+export type Jackpots = Record<JackpotKey, JackpotType>;
