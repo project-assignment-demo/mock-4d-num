@@ -8,7 +8,7 @@ import {
   ResultPrize,
   ResultWiningPrize,
 } from "./type";
-import { useSettingStore } from "../../store";
+import { useSiteStore } from "../../store";
 import createApiClient, { API_BASE_URL } from "../utils";
 
 interface MapResultItemConfig {
@@ -39,10 +39,11 @@ const supportedLotteries = [
 
 const api = createApiClient(API_BASE_URL);
 
-export const getResults = async (date: string): Promise<Result[]> => {
+export const getResults = async (date: string): Promise<ResultDTO[]> => {
   try {
     const rawResults = await api.get<ResultDTO[]>(`api/v1/result/${date}`);
-    return mapToResult(rawResults.data);
+    // return mapToResult(rawResults.data);
+    return rawResults.data;
   } catch (error) {
     console.error("Error fetching result:", error);
     throw error;
@@ -142,39 +143,39 @@ function mapToResultItem(data: MapResultItemConfig): ResultItem {
   };
 }
 
-function mapToResult(source: ResultDTO[]): Result[] {
-  const results = source.reduce<Result[]>((acc, curr) => {
-    const matchedType = supportedLotteries.find(
-      (item) => curr.type === item || curr.type.startsWith(`${item}T`)
-    );
-    if (!matchedType) return acc;
+// function mapToResult(source: ResultDTO[]): Result[] {
+//   const results = source.reduce<Result[]>((acc, curr) => {
+//     const matchedType = supportedLotteries.find(
+//       (item) => curr.type === item || curr.type.startsWith(`${item}T`)
+//     );
+//     if (!matchedType) return acc;
 
-    const companies = useSettingStore.getState().companies;
-    const logo = companies.find((company) => company.id === matchedType);
+//     const companies = useSiteStore.getState().companies;
+//     const logo = companies.find((company) => company.id === matchedType);
 
-    if (!logo) throw Error("invalid logo");
+//     if (!logo) throw Error("invalid logo");
 
-    const existingItem = acc.find(
-      (item) => curr.type === item.type || curr.type.startsWith(`${item.type}T`)
-    );
+//     const existingItem = acc.find(
+//       (item) => curr.type === item.type || curr.type.startsWith(`${item.type}T`)
+//     );
 
-    const result = mapToResultItem({ source: curr, key: matchedType });
+//     const result = mapToResultItem({ source: curr, key: matchedType });
 
-    if (existingItem) {
-      existingItem.children.push(result);
-    } else {
-      acc.push({
-        label: logo.label,
-        type: matchedType,
-        children: [result],
-        logo: logo.source,
-      });
-    }
+//     if (existingItem) {
+//       existingItem.children.push(result);
+//     } else {
+//       acc.push({
+//         label: logo.label,
+//         type: matchedType,
+//         children: [result],
+//         logo: logo.source,
+//       });
+//     }
 
-    return acc;
-  }, []);
-  return results;
-}
+//     return acc;
+//   }, []);
+//   return results;
+// }
 
 function mapSpecialPrizes(config: MapSpecialPrizesConfig): ResultPrize[] {
   let prizes: { key: number | null; value: string }[] = [];
@@ -208,143 +209,4 @@ function mapConsolationPrizes(source: string[]): ResultPrize[] {
   });
 }
 
-export const fetchJackpots = async (): Promise<Jackpots> => {
-  return {
-    M: {
-      type: "M",
-      date: dayjs(),
-      drawNo: "",
-      title: "Magnum 4D",
-      logo: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
-      magnumLife: {
-        winningNumbers: ["01", "03", "08", "13", "19", "24", "25", "32"],
-        bonusNumbers: ["06", "22"],
-      },
-      goldJackpot: [
-        [["4", "6", "7", "5", "3", "1", "+", "0", "9"]],
-        [
-          ["4", "6", "7", "5", "3", "", "+", "0", "9"],
-          ["", "6", "7", "5", "3", "1", "+", "0", "9"],
-        ],
-      ],
-      jackpotPrize: ["123", "123"],
-    },
-    PMP: {
-      type: "M",
-      date: dayjs(),
-      drawNo: "",
-      title: "Da Ma Cai 1+3D",
-      logo: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
-      threeDBonus: ["415 133", "135 678", "833 636"],
-      special: Array.from({ length: 12 }).map((_, index) => {
-        if (index === 9 || index === 11) {
-          return "";
-        }
-        return "139 677";
-      }),
-      consolation: Array.from({ length: 12 }).map((_, index) => {
-        if (index === 9 || index === 11) {
-          return "";
-        }
-        return "139 677";
-      }),
-    },
-    ST: {
-      type: "ST",
-      date: dayjs(),
-      drawNo: "",
-      title: "SportsToto 4D",
-      logo: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
-      totoJackpot: [
-        {
-          label: "6/58",
-          jackpot: ["5", "14", "15", "25", "44", "46"],
-          prizes: ["26,552,279.90"],
-        },
-        {
-          label: "6/55",
-          jackpot: ["5", "14", "15", "25", "44", "46"],
-          prizes: ["26,552,279.90"],
-        },
-        {
-          label: "6/50",
-          jackpot: ["5", "14", "15", "25", "44", "46"],
-          prizes: ["26,552,279.90", "26,552,279.90"],
-        },
-      ],
-      fiveD: ["04615", "04615", "04615", "04615", "04615", "04615"],
-      sixD: [
-        "798 431",
-        ["798 431", "798 431"],
-        ["798 431", "798 431"],
-        ["798 431", "798 431"],
-        ["798 431", "798 431"],
-      ],
-    },
-    SG: {
-      type: "M",
-      date: dayjs(),
-      drawNo: "",
-      title: "Singapore 4D",
-      logo: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
-      winningNumbers: ["7", "30", "39", "42", "43", "48", "+", "33"],
-      winningShares: [
-        {
-          amount: "3,172,134",
-          shares: "1",
-        },
-        {
-          amount: "-",
-          shares: "-",
-        },
-        {
-          amount: "3,172,134",
-          shares: "1",
-        },
-        {
-          amount: "3,172,134",
-          shares: "1",
-        },
-        {
-          amount: "3,172,134",
-          shares: "1",
-        },
-        {
-          amount: "3,172,134",
-          shares: "1",
-        },
-        {
-          amount: "10",
-          shares: "129,785",
-        },
-      ],
-    },
-    EE: {
-      type: "EE",
-      date: dayjs(),
-      drawNo: "",
-      title: "Sabah 88 4D",
-      logo: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
-      winningNumbers: {
-        jackpot: ["01", "06", "11", "29", "35", "36", "+", "24"],
-        prizes: ["7,398,334.72", "131,188.47"],
-      },
-    },
-    H: {
-      type: "H",
-      date: dayjs(),
-      drawNo: "",
-      title: "8LUCKY",
-      logo: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
-      sixDPrizes: [[""]],
-    },
-    WB: {
-      type: "WB",
-      date: dayjs(),
-      drawNo: "",
-      title: "9 Winbox",
-      logo: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
-      sixDPrizes: [[""]],
-    },
-  };
-};
+

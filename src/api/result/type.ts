@@ -3,6 +3,7 @@ import { Dayjs } from "dayjs";
 export interface ResultDTO {
   type: string;
   fdData: {
+    jp_type: string | null;
     n1: string;
     n1_pos: string;
     n2: string;
@@ -75,7 +76,7 @@ export interface ResultDTO {
     jackpot_per_share2: string;
     jackpot_percent2: string;
     count: string;
-    others: null;
+    others: string | null;
   };
 }
 
@@ -126,7 +127,8 @@ export interface ResultJackpotResult {
 
 export interface BaseJackpot {
   type: string;
-  date: Dayjs;
+  date: string;
+  day: string;
   drawNo: string;
   title: string;
   logo: string;
@@ -161,6 +163,11 @@ export interface SportToToJackpot extends BaseJackpot {
 
 export interface Singapor4DJackpot extends BaseJackpot {
   winningNumbers: string[];
+  toto: {
+    date: string;
+    day: string;
+    drawNo: string;
+  }
   winningShares: { amount: string; shares: string }[];
 }
 
@@ -171,13 +178,12 @@ export interface SabahJackpot extends BaseJackpot {
   };
 }
 
-export interface EightLuckyJackpot extends BaseJackpot {
-  sixDPrizes: string[][];
+export interface SixDJackpot extends BaseJackpot {
+  datas: {
+    sixDPrizes: string[][];
+  }[]
 }
 
-export interface NineWinBoxJackpot extends BaseJackpot {
-  sixDPrizes: string[][];
-}
 
 export type JackpotKey = "M" | "PMP" | "ST" | "SG" | "EE" | "H" | "WB";
 export type JackpotType =
@@ -186,6 +192,6 @@ export type JackpotType =
   | SportToToJackpot
   | Singapor4DJackpot
   | SabahJackpot
-  | EightLuckyJackpot
-  | NineWinBoxJackpot;
+  | SixDJackpot;
+
 export type Jackpots = Record<JackpotKey, JackpotType>;

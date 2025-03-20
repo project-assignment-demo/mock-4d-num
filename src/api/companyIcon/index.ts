@@ -1,5 +1,6 @@
-import { CompanyIcon, LotteryIcon } from "./type";
-export async function fetchIcons(): Promise<CompanyIcon[]> {
+import { CompanyDTO } from "./type";
+
+export async function fetchIcons(): Promise<CompanyDTO[]> {
   const icons = {
     M: "https://qa.4dnum.com/s3/site-logo/4Dlogo-01.png",
     PMP: "https://qa.4dnum.com/s3/site-logo/4Dlogo-02.png",

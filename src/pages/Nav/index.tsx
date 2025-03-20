@@ -1,12 +1,13 @@
 import { MdMenu, MdRefresh } from "react-icons/md";
-import { useSettingStore } from "../../store";
+import { useCompanies, useSiteStore } from "../../store";
 import CustomDatePicker from "../components/LotteryDatePicker";
 import ChangeLocaleDropDown from "../components/LocaleDropDownButton";
 import { useSwiperControl } from "../../context/SwiperContext";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 const CompanyTabBar = () => {
-  const companies = useSettingStore((state) => state.companies);
+  const location = useLocation();
+  const companies = useCompanies(location.pathname)
 
   const { goTo } = useSwiperControl();
 
@@ -37,7 +38,7 @@ const CompanyTabBar = () => {
 };
 
 const Nav = () => {
-  const openDrawer = useSettingStore((state) => state.updateDrawer);
+  const openDrawer = useSiteStore((state) => state.updateDrawer);
 
   const navigate = useNavigate();
 

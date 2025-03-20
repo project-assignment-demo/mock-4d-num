@@ -1,8 +1,4 @@
-export interface CompanyIcon {
+export interface CompanyDTO {
     id: string;
     source: string;
-}
-
-export interface LotteryIcon extends CompanyIcon {
-    label: string;
 }

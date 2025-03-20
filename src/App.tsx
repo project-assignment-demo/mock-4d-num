@@ -8,7 +8,7 @@ import Hot4DNumber from "./pages/Hot4DNumber";
 import LuckyBook from "./pages/LuckyBook";
 
 import { IntlProvider } from "react-intl";
-import { useSettingStore } from "./store/index.ts";
+import { useSiteStore } from "./store/index.ts";
 import { en, ms, zh } from "./locale/index.ts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Dashboard from "./pages/Dashboard";
@@ -23,7 +23,7 @@ const messages: Record<string, any> = {
 const queryClient = new QueryClient();
 
 const App = () => {
-  const locale = useSettingStore((state) => state.locale);
+  const locale = useSiteStore((state) => state.locale);
 
   return (
     <QueryClientProvider client={queryClient}>

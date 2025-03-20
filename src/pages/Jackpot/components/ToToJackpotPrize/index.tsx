@@ -11,7 +11,7 @@ const ToToJackpotPrize = (props: ToToJackpotPrizeProps) => {
           <p className="text-center text-[16px] font-bold">{props.label}</p>
         </div>
         <div className="w-[70%] bg-[rgb(234,234,234)] rounded-[8px] p-[5px]">
-          <p className="text-center text-[16px] font-bold">RM {props.value}</p>
+          <p className="text-center text-[16px] font-bold">{props.value}</p>
         </div>
       </div>
     </div>

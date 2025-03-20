@@ -1,5 +1,5 @@
 import { PropsWithChildren, useState } from "react";
-import { SupportLocales, useSettingStore } from "../../../store";
+import { SupportLocales, useSiteStore } from "../../../store";
 import cs from 'classnames';
 import { CircleFlag } from 'react-circle-flags';
 import { FaChevronDown } from 'react-icons/fa';
@@ -36,7 +36,7 @@ interface LanguageSectionProps extends React.PropsWithChildren {
 }
 
 const LanguageSection = (props: LanguageSectionProps) => {
-    const selectedLocale = useSettingStore(state => state.locale);
+    const selectedLocale = useSiteStore(state => state.locale);
     const isCurrentLocale = selectedLocale === props.locale;
     const currentClassName = cs(isCurrentLocale ? 'text-purple-500': '');
     return (
@@ -56,8 +56,8 @@ const ChangeLocaleDropDown = (props: PropsWithChildren & { className?: string, s
         updateOpen(false);
     }
     const [open, updateOpen] = useState(false);
-    const updateLocale = useSettingStore(state => state.updateLocale);
-    const selectedLocale = useSettingStore(state => state.locale);
+    const updateLocale = useSiteStore(state => state.updateLocale);
+    const selectedLocale = useSiteStore(state => state.locale);
     const classname = cs('flex flex-col items-end gap-1.5');
     const selectionClassName = cs(open ? 'block' : 'hidden', 'bg-white p-[6px] rounded-md w-[100px]')
     const rotateClassName = cs(open ? 'rotate-180' : 'rotate-0', 'transform transition-transform duration-300')

@@ -1,36 +1,68 @@
+import { PropsWithChildren } from "react";
+
 type PrizeType = string | string[];
 
 interface JackpotPrizeLayoutProps {
   prizes: PrizeType[];
   primaryColor: string;
+  layout?: "flex" | "grid";
 }
 
 interface JackpotPrimaryPrize {
   label: string;
   prize: PrizeType;
   primaryColor: string;
+  prefixWidth: 20 | 40;
 }
-const PrimaryJackpotPrizes = (props: JackpotPrizeLayoutProps) => {
-  const { prizes } = props;
+const PrimaryJackpotPrizes = ({
+  prizes,
+  layout = "flex",
+  primaryColor,
+}: JackpotPrizeLayoutProps) => {
   const prizesLabels = ["ST", "ND", "RD", "TH"];
+
+  const PrizesLayout = ({
+    layout,
+    children,
+  }: PropsWithChildren & { layout: "flex" | "grid" }) => {
+    switch (layout) {
+      case "flex": {
+        return <div className="flex flex-col gap-[5px]">{children}</div>;
+      }
+      case "grid": {
+        return (
+          <div className="grid gap-2 grid-cols-2 w-full mt-[8px]">
+            {children}
+          </div>
+        );
+      }
+    }
+  };
   return (
-    <div className="flex flex-col gap-[5px]">
+    <PrizesLayout layout={layout}>
       {prizes.map((prize, index) => (
         <JackpotPrimaryPrize
-          primaryColor={props.primaryColor}
+          prefixWidth={layout === "flex" ? 20 : 40}
+          primaryColor={primaryColor}
           label={`${index + 1}${prizesLabels[index > 3 ? 3 : index]}`}
           prize={prize}
         />
       ))}
-    </div>
+    </PrizesLayout>
   );
 };
 
-export const JackpotPrimaryPrize = (props: JackpotPrimaryPrize) => {
-  const { label, prize } = props;
+const JackpotPrimaryPrize = (props: JackpotPrimaryPrize) => {
+  const { label, prize, prefixWidth } = props;
   return (
     <div className="flex items-center w-full gap-[10px] h-[42px]">
-      <div className="w-[20%] rounded-md h-full flex justify-center items-center" style={{backgroundColor: props.primaryColor}}>
+      <div
+        className="rounded-md h-full flex justify-center items-center"
+        style={{
+          backgroundColor: props.primaryColor,
+          width: `${prefixWidth}%`,
+        }}
+      >
         <p className="text-white text-center font-semibold text-[16px]">
           {label}
         </p>
