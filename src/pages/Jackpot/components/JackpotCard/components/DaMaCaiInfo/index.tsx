@@ -1,6 +1,6 @@
 import JackpotTable from "../../../../JackpotTable";
 import JackpotInfoCard from "../../../JackpotInfoCard";
-import PrimaryJackpotPrizes from "../../../JackpotPrizeLayout";
+import PrimaryJackpotPrizes from "../../../PrimaryJackpotPrizes";
 import SecondaryPrizes from "../../../SecondaryPrizes";
 import { DaMaCaiInfoProps } from "./type";
 
@@ -10,13 +10,13 @@ const DaMaCaiInfo = ({
   secondaryColor,
   textColor: settingTextColor,
 }: DaMaCaiInfoProps) => {
-  const { threeDBonus, special, consolation, title } = data;
+  const { threeDBonus, special, consolation, title, logo } = data;
 
   const textColor = settingTextColor ?? "#ffffff";
 
   return (
     <>
-      <JackpotTable primaryColor={primaryColor} title={title}>
+      <JackpotTable primaryColor={primaryColor} title={title} icon={logo}>
         <div className="flex flex-col gap-2 mt-2">
           <PrimaryJackpotPrizes
             prizes={threeDBonus}

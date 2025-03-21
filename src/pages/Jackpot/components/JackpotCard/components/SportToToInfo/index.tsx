@@ -1,7 +1,7 @@
 import JackpotTable from "../../../../JackpotTable";
 import JackpotInfoCard from "../../../JackpotInfoCard";
 import JackpotInfoContent from "../../../JackpotInfoContent";
-import PrimaryJackpotPrizes from "../../../JackpotPrizeLayout";
+import PrimaryJackpotPrizes from "../../../PrimaryJackpotPrizes";
 import ToToJackpotPrize from "../../../ToToJackpotPrize";
 import { SportToToInfoProps } from "./type";
 
@@ -11,17 +11,18 @@ const SportToToInfo = ({
   secondaryColor,
   textColor: settingTextColor,
 }: SportToToInfoProps) => {
-  const { totoJackpot, fiveD, sixD, title } = data;
+  const { totoJackpot, fiveD, sixD, title, logo } = data;
 
   const textColor = settingTextColor ?? "#ffffff";
 
   return (
     <>
-      <JackpotTable primaryColor={primaryColor} title={title}>
+      <JackpotTable primaryColor={primaryColor} title={title} icon={logo}>
         <div className="flex flex-col gap-2 mt-2">
           {totoJackpot.map((jackpot) => {
             return (
               <JackpotInfoCard
+                key={jackpot.label}
                 title={jackpot.label}
                 primaryColor={secondaryColor}
                 textColor={textColor}
@@ -30,6 +31,7 @@ const SportToToInfo = ({
                 {jackpot.prizes.map((prize, index) => {
                   return (
                     <ToToJackpotPrize
+                      key={prize}
                       label={`Jackpot ${index + 1}`}
                       value={prize}
                     />
@@ -40,14 +42,14 @@ const SportToToInfo = ({
           })}
         </div>
       </JackpotTable>
-      <JackpotTable primaryColor={primaryColor} title="Toto 5D">
+      <JackpotTable primaryColor={primaryColor} title="Toto 5D" icon={logo}>
         <PrimaryJackpotPrizes
           layout="grid"
           prizes={fiveD}
           primaryColor={secondaryColor}
         />
       </JackpotTable>
-      <JackpotTable primaryColor={primaryColor} title="Toto 6D">
+      <JackpotTable primaryColor={primaryColor} title="Toto 6D" icon={logo}>
         <div className="mt-2">
           <PrimaryJackpotPrizes prizes={sixD} primaryColor={secondaryColor} />
         </div>

@@ -19,7 +19,7 @@ const JackpotInfoCard = (props: JackpotInfoCard) => {
         {props.title.length > 1 && Array.isArray(props.title) ? (
           props.title.map((t) => {
             return (
-              <div className="flex-1 border-r border-[rgb(94,94,94)] last:border-none">
+              <div key={t} className="flex-1 border-r border-[rgb(94,94,94)] last:border-none">
                 <p
                 className="text-center font-bold text-[14px]"
                 style={{ color: textColor }}

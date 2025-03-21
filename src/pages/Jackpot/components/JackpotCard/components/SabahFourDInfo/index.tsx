@@ -11,11 +11,11 @@ const SabahFourDInfo = ({
   secondaryColor,
   textColor: settingTextColor,
 }: SabahFourDInfoProps) => {
-  const { winningNumbers } = data;
+  const { winningNumbers, logo } = data;
   const textColor = settingTextColor ?? "#ffffff";
   return (
     <>
-      <JackpotTable title="Sabah Lotto Jackpot" primaryColor={primaryColor}>
+      <JackpotTable title="Sabah Lotto Jackpot" primaryColor={primaryColor} icon={logo}>
         <div className="flex flex-col gap-2 mt-2">
           <JackpotInfoCard
             title="Wining Numbers"
@@ -24,9 +24,11 @@ const SabahFourDInfo = ({
           >
             <JackpotInfoContent prizes={winningNumbers.prizes} />
             {winningNumbers.jackpot.map((prize, index) => {
+              const label = `Jackpot ${index + 1}`
               return (
                 <ToToJackpotPrize
-                  label={`Jackpot ${index + 1}`}
+                  key={label}
+                  label={label}
                   value={prize}
                 />
               );

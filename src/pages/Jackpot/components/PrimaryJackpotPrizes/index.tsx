@@ -40,14 +40,18 @@ const PrimaryJackpotPrizes = ({
   };
   return (
     <PrizesLayout layout={layout}>
-      {prizes.map((prize, index) => (
-        <JackpotPrimaryPrize
-          prefixWidth={layout === "flex" ? 20 : 40}
-          primaryColor={primaryColor}
-          label={`${index + 1}${prizesLabels[index > 3 ? 3 : index]}`}
-          prize={prize}
-        />
-      ))}
+      {prizes.map((prize, index) => {
+        const label = `${index + 1}${prizesLabels[index > 3 ? 3 : index]}`;
+        return (
+          <JackpotPrimaryPrize
+            key={label}
+            prefixWidth={layout === "flex" ? 20 : 40}
+            primaryColor={primaryColor}
+            label={label}
+            prize={prize}
+          />
+        );
+      })}
     </PrizesLayout>
   );
 };

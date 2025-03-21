@@ -27,7 +27,7 @@ const JackpotInfoContent = (props: {
   );
   return (
     <div className={wrappercs}>
-      {prizes.map((prize) => {
+      {prizes.map((prize, index) => {
         const cs = classNames(
           "flex justify-center items-center w-full",
           hasItemSpace ? "rounded-sm" : "",
@@ -37,7 +37,7 @@ const JackpotInfoContent = (props: {
           prize === "" ? "bg-[#EAEAEA]" : ""
         );
         return (
-          <div className={cs}>
+          <div key={index} className={cs}>
             {prize === "|" ? (
               <hr className="h-[26px] w-px border-l border-[#EAEAEA] opacity-60" />
             ) : (

@@ -9,13 +9,13 @@ const MagnumInfo = ({
   secondaryColor,
   textColor: settingTextColor,
 }: MagnumInfoProps) => {
-  const { magnumLife, goldJackpot, jackpotPrize, title } = data;
+  const { magnumLife, goldJackpot, jackpotPrize, title, logo } = data;
 
   const textColor = settingTextColor ?? "#ffffff";
 
   return (
     <>
-      <JackpotTable primaryColor={primaryColor} title={title}>
+      <JackpotTable primaryColor={primaryColor} title={title} icon={logo}>
         <div className="flex flex-col gap-2 mt-2">
           <JackpotInfoCard title="Winning Number" primaryColor={secondaryColor}>
             <JackpotInfoContent prizes={magnumLife.winningNumbers} />
@@ -32,7 +32,7 @@ const MagnumInfo = ({
           </JackpotInfoCard>
         </div>
       </JackpotTable>
-      <JackpotTable primaryColor="#000000" title="Gold Jackpot">
+      <JackpotTable primaryColor="#000000" title="Gold Jackpot" icon={logo}>
         <div className="flex flex-col gap-2 mt-2">
           {goldJackpot.map((jackpots, index) => {
             const label = `Jackpot ${index}`;
@@ -44,7 +44,7 @@ const MagnumInfo = ({
               >
                 {jackpots.map((jackpot, index) => {
                   return (
-                    <>
+                    <div key={index}>
                       <JackpotInfoContent
                         prizes={jackpot}
                         hasItemSpace={true}
@@ -52,7 +52,7 @@ const MagnumInfo = ({
                       {index < jackpots.length - 1 && (
                         <hr className="text-[rgb(233,233,233)] my-[4px]" />
                       )}
-                    </>
+                    </div>
                   );
                 })}
               </JackpotInfoCard>

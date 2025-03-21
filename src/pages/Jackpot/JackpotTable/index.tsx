@@ -4,6 +4,7 @@ import { PropsWithChildren, ReactNode } from "react";
 export interface JackpotTableProps extends PropsWithChildren {
   title: string;
   primaryColor: string;
+  icon: string;
   extras?: ReactNode | undefined;
 }
 
@@ -26,7 +27,7 @@ const JackpotTable = (props: JackpotTableProps) => {
           >
             <div className="bg-white p-1 rounded-full">
               <img
-                src="https://share.4dnum.com/site-logo/4Dlogo-01.png"
+                src={props.icon}
                 alt=""
               />
             </div>

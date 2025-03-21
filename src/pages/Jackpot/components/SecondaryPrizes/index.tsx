@@ -11,8 +11,8 @@ const SecondaryPrizes = (props: SecondaryPrizesProps) => {
 
   return (
     <div className="grid grid-cols-3 gap-0 w-full h-[152px]">
-      {prizes.map((prize) => {
-        return <SecondaryPrize value={prize} />;
+      {prizes.map((prize, index) => {
+        return <SecondaryPrize key={index} value={prize} />;
       })}
     </div>
   );

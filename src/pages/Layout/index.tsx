@@ -51,34 +51,6 @@ const Layout = () => {
     Content = () => <Error />;
   }
 
-  // const {
-  //   isPending,
-  //   error,
-  //   data: icons,
-  // } = useQuery({
-  //   queryKey: ["site-logo"],
-  //   queryFn: fetchIcons,
-  // });
-
-  // useEffect(() => {
-  //   if (icons) updateCompanies({ currentPath: location.pathname, icons });
-  // }, [icons, updateCompanies, location.pathname]);
-
-  // const {
-  //   data: results,
-  // } = useQuery({
-  //   queryKey: ["results", selectedDate],
-  //   queryFn: () => getResults(dayjs(selectedDate).format("YYYY-MM-DD")),
-  // });
-
-  // console.log(results);
-
-  // useEffect(() => {
-  //   if (results) {
-  //     updateResults(results);
-  //   }
-  // }, [selectedDate, results]);
-
   return (
     <div className="flex h-screen w-full bg-[#F3F3F3]">
       {/* Sidebar */}

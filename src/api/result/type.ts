@@ -179,9 +179,7 @@ export interface SabahJackpot extends BaseJackpot {
 }
 
 export interface SixDJackpot extends BaseJackpot {
-  datas: {
-    sixDPrizes: string[][];
-  }[]
+  prizes: Record<string, string[][]>;
 }
 
 

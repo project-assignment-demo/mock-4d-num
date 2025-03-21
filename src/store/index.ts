@@ -29,9 +29,7 @@ type SiteAction = {
 const useSiteStore = create<SiteState & SiteAction>((set) => ({
   locale: "en",
   sourceResults: [],
-  // jackpots: fetchJackpots(get().sourceResults),
   updateResults: (results) => {
-    console.log("update global");
     set({ sourceResults: results });
   },
   updateLocale: (locale: SupportLocales) => set({ locale }),

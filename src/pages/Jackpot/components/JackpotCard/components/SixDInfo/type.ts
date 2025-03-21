@@ -6,6 +6,7 @@ interface SixDInfoProps {
     secondaryColor: string;
     textColor?: string;
     title: string;
+    selectedTime: string | undefined;
 }
 
 export type { SixDInfoProps }

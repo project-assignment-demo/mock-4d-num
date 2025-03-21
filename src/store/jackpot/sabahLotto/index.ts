@@ -48,11 +48,6 @@ function getSabahLottoJackpot({ results, companies }: GetJackpotConfig) {
       data: sabahToToSource.fdData,
       companies: companies,
     }),
-    // type: "EE",
-    // date: dayjs(),
-    // drawNo: "",
-    // title: "Sabah 88 4D",
-    // logo: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
     winningNumbers,
   };
 }

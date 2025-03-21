@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { ResultDTO, SixDJackpot } from "../../../api/result/type";
 import { GetJackpotConfig } from "../type";
 import { getBaseResultInfo } from "../baseJackpot";
@@ -24,7 +23,6 @@ function generatePrizes(start: string[], end?: string[]) {
 }
 
 function getSixDPrizes(source: ResultDTO["fdData"]) {
-
   return [
     generatePrizes(source.n1?.split("") ?? []),
     generatePrizes(source.n2?.split("") ?? [], source.n3?.split("") ?? []),
@@ -37,30 +35,45 @@ function getSixDPrizes(source: ResultDTO["fdData"]) {
   ];
 }
 
-function getSixDJackpot({ results, type, companies }: GetSixDJackpotConfig): SixDJackpot {
+function getSixDJackpot({
+  results,
+  type,
+  companies,
+}: GetSixDJackpotConfig): SixDJackpot {
   const sources = results.filter((result) =>
     result.type.startsWith(`${type}JPT`)
   );
 
-  const datas: {
-    sixDPrizes: string[][];
-  }[] = sources.map<{
-    sixDPrizes: string[][];
-  }>((source) => {
-    const sixDPrizes: string[][] = getSixDPrizes(source.fdData);
+  // const prizes: {
+  //   sixDPrizes: string[][];
+  // }[] = sources.map<{
+  //   sixDPrizes: string[][];
+  // }>((source) => {
+  //   const sixDPrizes: string[][] = getSixDPrizes(source.fdData);
+  //   return {
+  //     sixDPrizes,
+  //   };
+  // });
+
+  const prizes = sources.reduce<Record<string, string[][]>>((acc, curr) => {
+    const match = curr.type.match(/\d{2}:\d{2}/);
+    const type = match ? match[0] : null;
+
+    if (!type) throw Error("invalid prize time");
+
     return {
-      sixDPrizes,
+      ...acc,
+      [type]: getSixDPrizes(curr.fdData),
     };
-  });
+  }, {});
 
   return {
-
     ...getBaseResultInfo({
       type,
       data: sources[0].fdData,
       companies: companies,
     }),
-    datas,
+    prizes,
   };
 }
 

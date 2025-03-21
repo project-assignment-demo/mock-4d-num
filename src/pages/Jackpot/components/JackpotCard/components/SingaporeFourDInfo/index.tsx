@@ -10,7 +10,6 @@ const SingaporeFourDInfo = ({
   secondaryColor,
   textColor: settingTextColor,
 }: SingaporeFourDInfoProps) => {
-
   const textColor = settingTextColor ?? "#ffffff";
 
   const Extra = () => {
@@ -32,9 +31,13 @@ const SingaporeFourDInfo = ({
       </div>
     );
   };
+
+  const { logo, winningNumbers, winningShares } = data;
+
   return (
     <>
       <JackpotTable
+        icon={logo}
         title="Singapore Toto"
         primaryColor={primaryColor}
         extras={<Extra />}
@@ -44,9 +47,13 @@ const SingaporeFourDInfo = ({
         primaryColor={secondaryColor}
         textColor={textColor}
       >
-        <JackpotInfoContent prizes={data.winningNumbers} />
+        <JackpotInfoContent prizes={winningNumbers} />
       </JackpotInfoCard>
-      <JackpotShare values={data.winningShares} primaryColor={primaryColor} secondaryColor={secondaryColor} />
+      <JackpotShare
+        values={winningShares}
+        primaryColor={primaryColor}
+        secondaryColor={secondaryColor}
+      />
     </>
   );
 };

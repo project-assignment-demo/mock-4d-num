@@ -27,7 +27,7 @@ const JackpotShare = ({ values, primaryColor, secondaryColor}: JackpotShareProps
       </div>
       {values.map((val, index) => {
         return (
-          <div className="w-full flex flex-row items-center justify-between h-[34px] gap-1.5">
+          <div key={`${index}-${val.amount}-${val.shares}`} className="w-full flex flex-row items-center justify-between h-[34px] gap-1.5">
             <div className="w-[23vw] shadow-md rounded-[10px]"  style={{backgroundColor: secondaryColor}}>
               <p className="text-center text-[18px] leading-4 p-2 font-[400] text-white">
                 {index + 1}

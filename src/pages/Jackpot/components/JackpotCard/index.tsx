@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   DaMaCaiJackpot,
   JackpotKey,
@@ -8,7 +9,7 @@ import {
   SixDJackpot,
   SportToToJackpot,
 } from "../../../../api/result/type";
-import JackpotHeader from "../JackpotHeader";
+import CardHeader from "../../../components/ResultCardHeader";
 import DaMaCaiInfo from "./components/DaMaCaiInfo";
 import EightLuckyInfo from "./components/EighLuckyInfo";
 import MagnumInfo from "./components/MagnumInfo";
@@ -17,6 +18,7 @@ import SabahFourDInfo from "./components/SabahFourDInfo";
 import SingaporeFourDInfo from "./components/SingaporeFourDInfo";
 import SportToToInfo from "./components/SportToToInfo";
 import { JackpotComponentProps } from "./type";
+import { isSixDJackpot } from "../../../../store/jackpot/utils";
 
 interface JackpotCardProps {
   jackpotKey: JackpotKey;
@@ -27,13 +29,29 @@ const JackpotCard = (props: JackpotCardProps) => {
   const { jackpotKey, jackpotData } = props;
   const Component = jackpotComponentMap[jackpotKey];
   const colors = jackpotComponentColorMap[jackpotKey];
+  const [selectedTime, setSelectedTime] = useState<string | undefined>(
+    undefined
+  );
+
+  const times = isSixDJackpot(jackpotData)
+    ? Object.keys(jackpotData.prizes)
+    : undefined;
 
   return (
     <div className="w-full rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full">
-      <JackpotHeader title={jackpotData.title} logo={jackpotData.logo} />
+      <CardHeader
+        title={jackpotData.title}
+        logo={jackpotData.logo}
+        date={jackpotData.date}
+        day={jackpotData.day}
+        primaryColor={colors.primaryColor}
+        drawNo={jackpotData.drawNo}
+        availableTimes={times}
+        setSelectedTime={setSelectedTime}
+      />
 
       <div className="mt-[20px] flex flex-col gap-[40px] px-5">
-        <Component data={jackpotData} {...colors} />
+        <Component data={jackpotData} {...colors} selectedTime={selectedTime} />
       </div>
     </div>
   );
@@ -41,7 +59,12 @@ const JackpotCard = (props: JackpotCardProps) => {
 
 const jackpotComponentMap: Record<
   JackpotKey,
-  React.FC<JackpotComponentProps<JackpotType>>
+  React.FC<
+    JackpotComponentProps<JackpotType> & {
+      primaryColor: string;
+      secondaryColor: string;
+    } & { selectedTime: string | undefined }
+  >
 > = {
   M: (props) => <MagnumInfo {...props} data={props.data as MagnumJackpot} />,
   PMP: (props) => (
@@ -53,7 +76,9 @@ const jackpotComponentMap: Record<
   SG: (props) => (
     <SingaporeFourDInfo {...props} data={props.data as Singapor4DJackpot} />
   ),
-  EE: (props) => <SabahFourDInfo {...props} data={props.data as SabahJackpot} />,
+  EE: (props) => (
+    <SabahFourDInfo {...props} data={props.data as SabahJackpot} />
+  ),
   H: (props) => <EightLuckyInfo {...props} data={props.data as SixDJackpot} />,
   WB: (props) => <NineWinBoxInfo {...props} data={props.data as SixDJackpot} />,
 };

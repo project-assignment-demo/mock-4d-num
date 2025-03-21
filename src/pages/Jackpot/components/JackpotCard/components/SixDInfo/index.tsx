@@ -3,28 +3,30 @@ import JackpotInfoCard from "../../../JackpotInfoCard";
 import JackpotInfoContent from "../../../JackpotInfoContent";
 import type { SixDInfoProps } from "./type";
 
-
-
 const SixDInfo = ({
   data,
   primaryColor,
   secondaryColor,
   textColor,
   title,
+  selectedTime,
 }: SixDInfoProps) => {
   const defaultTextColor = textColor ?? "#ffffff";
 
   const titles = ["ST", "ND", "RD", "TH"];
-  const { datas } = data;
-  const currentDataIndex = 0;
-  const prizes = datas[currentDataIndex].sixDPrizes;
+  const defaultSelectedTime = "15:30";
+  const { prizes, logo } = data;
+  const currentSelectedTime = selectedTime ?? defaultSelectedTime;
+  const prize = prizes[currentSelectedTime];
   return (
-    <JackpotTable title={title} primaryColor={primaryColor}>
+    <JackpotTable title={title} primaryColor={primaryColor} icon={logo}>
       <div className="mt-2 flex flex-col gap-2">
-        {prizes.map((prize, index) => {
+        {prize.map((prize, index) => {
+          const title = `${index + 1}${titles[index > 3 ? 3 : index]}`
           return (
             <JackpotInfoCard
-              title={`${index + 1}${titles[index > 3 ? 3 : index]}`}
+              key={title}
+              title={title}
               primaryColor={index === 0 ? secondaryColor : primaryColor}
               textColor={defaultTextColor}
             >
