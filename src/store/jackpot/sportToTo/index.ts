@@ -77,7 +77,6 @@ function getSportToToJackpot({ results, companies }: GetJackpotConfig): SportToT
       data: fiveDAndSixDSource.fdData,
       companies: companies,
     }),
-    logo: "https://share.4dnum.com/site-logo/4Dlogo-01.png",
     totoJackpot,
     ...fiveDAndSixD,
   };
