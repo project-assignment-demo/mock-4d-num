@@ -1,4 +1,3 @@
-import { SabahJackpot } from "../../../../../../api/result/type";
 import JackpotTable from "../../../../JackpotTable";
 import JackpotInfoCard from "../../../JackpotInfoCard";
 import JackpotInfoContent from "../../../JackpotInfoContent";
