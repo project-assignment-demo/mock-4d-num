@@ -1,5 +1,8 @@
 import { LotteryResultChild } from "../../type";
+import { GetLotteryConfig } from "../type";
 
 type SportToToLottery = LotteryResultChild;
 
-export type { SportToToLottery }
+type GetSportToToConfig = GetLotteryConfig;
+
+export type { SportToToLottery, GetSportToToConfig }

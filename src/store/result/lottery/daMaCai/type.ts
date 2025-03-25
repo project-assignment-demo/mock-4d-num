@@ -1,5 +1,8 @@
 import { LotteryResultChild } from "../../type";
+import { GetLotteryConfig } from "../type";
 
 type DaMaCaiLottery = LotteryResultChild;
 
-export type { DaMaCaiLottery }
+type GetDaMaCaiConfig = GetLotteryConfig;
+
+export type { DaMaCaiLottery, GetDaMaCaiConfig }

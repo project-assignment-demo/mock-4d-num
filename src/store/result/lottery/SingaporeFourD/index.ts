@@ -1,9 +1,9 @@
 import { getBaseLotteryInfo } from "../baseLotteryInfo";
-import { GetGetSabahFourDLotteryLotteryConfig, SabahFourDLottery } from "./type";
+import { GetSingaporeFourDLotteryConfig, SingaporeFourDLottery } from "./type";
 
 function getSportToToLottery(
-  config: GetGetSabahFourDLotteryLotteryConfig
-): SabahFourDLottery[] {
+  config: GetSingaporeFourDLotteryConfig
+): SingaporeFourDLottery[] {
   return [getBaseLotteryInfo(config)];
 }
 

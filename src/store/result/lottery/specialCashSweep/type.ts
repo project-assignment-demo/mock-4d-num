@@ -1,5 +1,8 @@
 import { LotteryResultChild } from "../../type";
+import { GetLotteryConfig } from "../type";
 
 type SpecialCashSweepLottery = LotteryResultChild;
 
-export type { SpecialCashSweepLottery }
+type GetSpecialCashSweepLotteryConfig = GetLotteryConfig;
+
+export type { SpecialCashSweepLottery, GetSpecialCashSweepLotteryConfig }

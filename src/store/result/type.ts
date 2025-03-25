@@ -20,7 +20,7 @@ interface ResultChild extends ResultChildBaseInfo {
 }
 
 interface LotteryResultChild extends ResultChild {
-  video: string;
+  video?: string | undefined;
   primaryPrizes: PrimaryPrize[];
   specials: SecondaryPrize[];
   consolations: SecondaryPrize[];
@@ -40,7 +40,7 @@ interface PrimaryPrize extends SecondaryPrize {
 }
 
 interface SecondaryPrize extends Prize {
-  postion: string;
+  position: string;
 }
 
 interface JackpotResult {
