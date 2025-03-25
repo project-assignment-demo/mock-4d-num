@@ -1,20 +1,12 @@
 import SixDInfo from "../SixDInfo";
 import { EighLuckyInfoProps } from "./type";
 
-const EightLuckyInfo = ({
-  data,
-  primaryColor,
-  secondaryColor,
-  selectedTime
-}: EighLuckyInfoProps) => {
+const EightLuckyInfo = (props: EighLuckyInfoProps) => {
   const title = "8LUCKY 6D";
   return (
     <SixDInfo
-      selectedTime={selectedTime}
+      {...props}
       title={title}
-      primaryColor={primaryColor}
-      secondaryColor={secondaryColor}
-      data={data}
     />
   );
 };

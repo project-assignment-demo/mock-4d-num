@@ -1,8 +1,6 @@
-import { SixDJackpot } from "../../../../../../api/result/type";
+import { NineWinJackpot } from "../../../../../../store/result/jackpot/nineWin/type";
 import { JackpotComponentProps } from "../../type";
 
-type NineWinBoxInfoProps = JackpotComponentProps<SixDJackpot> & {
-  selectedTime: string | undefined;
-};
+type NineWinBoxInfoProps = JackpotComponentProps<NineWinJackpot>;
 
 export type { NineWinBoxInfoProps };

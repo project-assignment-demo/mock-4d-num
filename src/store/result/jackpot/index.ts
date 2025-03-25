@@ -1,0 +1,79 @@
+import { useCompanies, useSiteStore } from "../..";
+import { ResultDTO } from "../../../api/result/type";
+import { Company } from "../../company";
+import { JackpotResultChild, Result, ResultType } from "../type";
+import { getDaMaCaiJackpot } from "./daMaCai";
+import { getEightLuckyJackpot } from "./eightLucky";
+import { getMagnumJackpot } from "./magnum";
+import { getNineWinBoxJackpot } from "./nineWin";
+import { getSabahFourDJackpot } from "./sabahFourD";
+import { getSingaporeFourDJackpot } from "./SingaporeFourD";
+import { getSportToToJackpot } from "./sportToTo";
+import { JackpotKey } from "./type";
+
+interface GetJackpotConfig {
+  results: ResultDTO[];
+  companies: Company[];
+  type: JackpotKey;
+}
+
+function getJackpotChildren({
+  results,
+  type,
+}: {
+  results: ResultDTO[];
+  type: JackpotKey;
+}): JackpotResultChild[] {
+  const resultType: ResultType = "jackpot";
+  switch (type) {
+    case "M":
+      return getMagnumJackpot({ results, type, resultType });
+    case "EE":
+      return getSabahFourDJackpot({ results, type, resultType });
+    case "H":
+      return getEightLuckyJackpot({ results, type, resultType });
+    case "PMP":
+      return getDaMaCaiJackpot({ results, type, resultType });
+    case "SG":
+      return getSingaporeFourDJackpot({ results, type, resultType });
+    case "ST":
+      return getSportToToJackpot({ results, type, resultType });
+    case "WB":
+      return getNineWinBoxJackpot({ results, type, resultType });
+  }
+}
+
+function getJackpot({ type, companies, results }: GetJackpotConfig): Result {
+  const company = companies.find((company) => company.id === type);
+  if (!company) throw Error(`not found company ${type}`);
+  const logo = company.source;
+  const title = company.label;
+
+  const children = getJackpotChildren({ results, type });
+
+  return {
+    type,
+    logo,
+    title,
+    children,
+  };
+}
+
+function useJackpots(): Result[] {
+  const results = useSiteStore((state) => state.sourceResults);
+  const companies = useCompanies("/jackpot");
+  const jackpotTypes: JackpotKey[] = ["M", "PMP", "ST", "SG", "EE", "H", "WB"];
+
+  console.log("results 123", results);
+  const jackpots = jackpotTypes.map((type) =>
+    getJackpot({
+      results,
+      type,
+      companies,
+    })
+  );
+
+  return jackpots;
+}
+
+export { useJackpots };

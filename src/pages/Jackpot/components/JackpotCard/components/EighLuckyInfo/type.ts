@@ -1,6 +1,7 @@
-import { SixDJackpot } from "../../../../../../api/result/type";
+
+import { EightLuckyJackpot } from "../../../../../../store/result/jackpot/eightLucky/type";
 import { JackpotComponentProps } from "../../type";
 
-type EighLuckyInfoProps  = JackpotComponentProps<SixDJackpot> & { selectedTime: string | undefined };
+type EighLuckyInfoProps  = JackpotComponentProps<EightLuckyJackpot>;
 
 export type { EighLuckyInfoProps };

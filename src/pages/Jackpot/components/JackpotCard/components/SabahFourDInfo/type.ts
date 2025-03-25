@@ -1,6 +1,7 @@
-import { SabahJackpot } from "../../../../../../api/result/type";
+
+import { SabahFourDJackpot } from "../../../../../../store/result/jackpot/sabahFourD/type";
 import { JackpotComponentProps } from "../../type";
 
-type SabahFourDInfoProps = JackpotComponentProps<SabahJackpot>;
+type SabahFourDInfoProps = JackpotComponentProps<SabahFourDJackpot>;
 
 export type { SabahFourDInfoProps }

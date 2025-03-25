@@ -1,4 +1,4 @@
-import { DaMaCaiJackpot } from "../../../../../../api/result/type";
+import { DaMaCaiJackpot } from "../../../../../../store/result/jackpot/daMaCai/type";
 import { JackpotComponentProps } from "../../type";
 
 type DaMaCaiInfoProps = JackpotComponentProps<DaMaCaiJackpot>;

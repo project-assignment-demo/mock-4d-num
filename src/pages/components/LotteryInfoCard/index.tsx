@@ -3,7 +3,7 @@ import LotteryJackpotSection from "./components/LotteryJackpotSection";
 import LotteryInfoHeader from "./components/LotteryInfoHeader";
 import LotteryInfoBody from "./components/LotteryInfoBody";
 import { useState } from "react";
-import { Result } from "../../../api/result/type";
+import { Result } from "../../../store/result/type";
 
 const LotteryInfoCard = (props: Result) => {
   const getPrimaryColor = (id: string): string => {

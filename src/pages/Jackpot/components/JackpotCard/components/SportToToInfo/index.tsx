@@ -10,8 +10,10 @@ const SportToToInfo = ({
   primaryColor,
   secondaryColor,
   textColor: settingTextColor,
+  title,
+  logo
 }: SportToToInfoProps) => {
-  const { totoJackpot, fiveD, sixD, title, logo } = data;
+  const { jackpots, fiveD, sixD} = data;
 
   const textColor = settingTextColor ?? "#ffffff";
 
@@ -19,7 +21,7 @@ const SportToToInfo = ({
     <>
       <JackpotTable primaryColor={primaryColor} title={title} icon={logo}>
         <div className="flex flex-col gap-2 mt-2">
-          {totoJackpot.map((jackpot) => {
+          {jackpots.map((jackpot) => {
             return (
               <JackpotInfoCard
                 key={jackpot.label}
@@ -27,7 +29,7 @@ const SportToToInfo = ({
                 primaryColor={secondaryColor}
                 textColor={textColor}
               >
-                <JackpotInfoContent prizes={jackpot.jackpot} />
+                <JackpotInfoContent prizes={jackpot.jackpots} />
                 {jackpot.prizes.map((prize, index) => {
                   return (
                     <ToToJackpotPrize

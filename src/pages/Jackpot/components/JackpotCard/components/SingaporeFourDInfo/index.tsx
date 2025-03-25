@@ -6,6 +6,7 @@ import { SingaporeFourDInfoProps } from "./type";
 
 const SingaporeFourDInfo = ({
   data,
+  logo,
   primaryColor,
   secondaryColor,
   textColor: settingTextColor,
@@ -32,7 +33,7 @@ const SingaporeFourDInfo = ({
     );
   };
 
-  const { logo, winningNumbers, winningShares } = data;
+  const { winningNumbers, winningShares } = data;
 
   return (
     <>

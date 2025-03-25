@@ -1,12 +1,8 @@
-import type { SixDJackpot } from "../../../../../../api/result/type";
+import { SixDJackpotResult } from "../../../../../../store/result/jackpot/sixD/type";
+import { JackpotComponentProps } from "../../type";
 
-interface SixDInfoProps {
-    data: SixDJackpot;
-    primaryColor: string;
-    secondaryColor: string;
-    textColor?: string;
-    title: string;
-    selectedTime: string | undefined;
-}
+
+type SixDInfoProps= JackpotComponentProps<SixDJackpotResult>;
+
 
 export type { SixDInfoProps }

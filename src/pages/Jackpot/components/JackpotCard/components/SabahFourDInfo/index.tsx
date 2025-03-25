@@ -6,11 +6,13 @@ import { SabahFourDInfoProps } from "./type";
 
 const SabahFourDInfo = ({
   data,
+  logo,
   primaryColor,
   secondaryColor,
   textColor: settingTextColor,
 }: SabahFourDInfoProps) => {
-  const { winningNumbers, logo } = data;
+  const { winningJackpot } = data;
+  const { prizes, jackpots } = winningJackpot;
   const textColor = settingTextColor ?? "#ffffff";
   return (
     <>
@@ -21,8 +23,8 @@ const SabahFourDInfo = ({
             primaryColor={secondaryColor}
             textColor={textColor}
           >
-            <JackpotInfoContent prizes={winningNumbers.prizes} />
-            {winningNumbers.jackpot.map((prize, index) => {
+            <JackpotInfoContent prizes={prizes} />
+            {jackpots.map((prize, index) => {
               const label = `Jackpot ${index + 1}`
               return (
                 <ToToJackpotPrize

@@ -5,6 +5,7 @@ import type { SixDInfoProps } from "./type";
 
 const SixDInfo = ({
   data,
+  logo,
   primaryColor,
   secondaryColor,
   textColor,
@@ -15,9 +16,9 @@ const SixDInfo = ({
 
   const titles = ["ST", "ND", "RD", "TH"];
   const defaultSelectedTime = "15:30";
-  const { prizes, logo } = data;
+  const { sixD, time } = data;
   const currentSelectedTime = selectedTime ?? defaultSelectedTime;
-  const prize = prizes[currentSelectedTime];
+  const prize = sixD;
   return (
     <JackpotTable title={title} primaryColor={primaryColor} icon={logo}>
       <div className="mt-2 flex flex-col gap-2">

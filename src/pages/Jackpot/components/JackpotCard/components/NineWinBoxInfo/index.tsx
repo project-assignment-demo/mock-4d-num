@@ -1,22 +1,9 @@
 import SixDInfo from "../SixDInfo";
 import { NineWinBoxInfoProps } from "./type";
 
-const NineWinBoxInfo = ({
-  data,
-  primaryColor,
-  secondaryColor,
-  selectedTime,
-}: NineWinBoxInfoProps) => {
+const NineWinBoxInfo = (props: NineWinBoxInfoProps) => {
   const title = "9 Winbox";
-  return (
-    <SixDInfo
-      selectedTime={selectedTime}
-      title={title}
-      primaryColor={primaryColor}
-      secondaryColor={secondaryColor}
-      data={data}
-    />
-  );
+  return <SixDInfo {...props} title={title} />;
 };
 
 export default NineWinBoxInfo;

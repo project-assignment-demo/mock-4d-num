@@ -5,13 +5,17 @@ import { MagnumInfoProps } from "./type";
 
 const MagnumInfo = ({
   data,
+  title, 
+  logo,
   primaryColor,
   secondaryColor,
   textColor: settingTextColor,
 }: MagnumInfoProps) => {
-  const { magnumLife, goldJackpot, jackpotPrize, title, logo } = data;
+  const { magnumLife, magnumGoldJackpot } = data;
 
   const textColor = settingTextColor ?? "#ffffff";
+
+  const {jackpots: goldJackpots, prizes  } = magnumGoldJackpot;
 
   return (
     <>
@@ -34,8 +38,8 @@ const MagnumInfo = ({
       </JackpotTable>
       <JackpotTable primaryColor="#000000" title="Gold Jackpot" icon={logo}>
         <div className="flex flex-col gap-2 mt-2">
-          {goldJackpot.map((jackpots, index) => {
-            const label = `Jackpot ${index}`;
+          {goldJackpots.map((jackpots, index) => {
+            const label = `Jackpot ${index + 1}`;
             return (
               <JackpotInfoCard
                 key={label}
@@ -66,7 +70,7 @@ const MagnumInfo = ({
         textColor={textColor}
       >
         <div className="flex h-[40px] w-full max-h-full">
-          <JackpotInfoContent prizes={jackpotPrize} />
+          <JackpotInfoContent prizes={prizes} />
         </div>
       </JackpotInfoCard>
     </>

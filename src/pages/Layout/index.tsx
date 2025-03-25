@@ -14,6 +14,8 @@ const Layout = () => {
   const selectedDate = useSiteStore((state) => state.selectedDate);
 
   const updateResults = useSiteStore((state) => state.updateResults);
+  const companies = useSiteStore(state => state.companies);
+  const sourceResults = useSiteStore(state => state.sourceResults);
 
   // fetch companies icon
   // fetch results
@@ -41,14 +43,16 @@ const Layout = () => {
     if (results.isSuccess) updateResults(results.data);
   }, [results.isSuccess, results.data, updateResults]);
 
-  let Content = () => <Outlet />;
+  let Content = () => <Loading />;
 
-  if (companiesIconResult.isPending || results.isPending) {
-    Content = () => <Loading />;
-  }
+  const isLoadSuccess = companies.length && sourceResults.length;
 
   if (companiesIconResult.isError || companiesIconResult.isError) {
     Content = () => <Error />;
+  }
+
+  if (isLoadSuccess) {
+     Content = () => <Outlet/>
   }
 
   return (

@@ -1,4 +1,5 @@
-import { MagnumJackpot } from "../../../../../../api/result/type";
+
+import { MagnumJackpot } from "../../../../../../store/result/jackpot/magnum/type";
 import { JackpotComponentProps } from "../../type";
 
 type MagnumInfoProps = JackpotComponentProps<MagnumJackpot>;
