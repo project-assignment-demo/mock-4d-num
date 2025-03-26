@@ -1,5 +1,10 @@
-import { LotteryResultChild } from "../../type";
+import { getBaseLotteryInfo } from "../baseLotteryInfo";
+import { GetGetSabahFourDLotteryLotteryConfig, SabahFourDLottery } from "./type";
 
-type SabahFourDLottery = LotteryResultChild;
+function getSabahFourDLottery(
+  config: GetGetSabahFourDLotteryLotteryConfig
+): SabahFourDLottery[] {
+  return [getBaseLotteryInfo(config)];
+}
 
-export type { SabahFourDLottery }
+export { getSabahFourDLottery };

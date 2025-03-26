@@ -1,4 +1,5 @@
 import { ResultDTO } from "../../../api/result/type";
+import { Company } from "../../company";
 import { ResultType } from "../type";
 import { DaMaCaiJackpot } from "./daMaCai/type";
 import { EightLuckyJackpot } from "./eightLucky/type";
@@ -10,9 +11,6 @@ import { SportToToJackpot } from "./sportToTo/type";
 
 type JackpotKey = "M" | "PMP" | "ST" | "SG" | "EE" | "H" | "WB";
 
-// type SixDJackpot = Record<string, string[][]>;
-
-
 type JackpotLottery =
   | DaMaCaiJackpot
   | EightLuckyJackpot
@@ -22,12 +20,18 @@ type JackpotLottery =
   | SingaporeFourDJackpot
   | SportToToJackpot;
 
-
-
 interface GetJackpotConfig {
   type: JackpotKey;
   results: ResultDTO[];
   resultType: ResultType;
 }
 
-export type { JackpotKey, JackpotLottery, GetJackpotConfig };
+interface MapJackpotConfig {
+  results: ResultDTO[];
+  companies: Company[];
+  type: JackpotKey;
+}
+
+type GetJackpotChildrenConfig = Pick<MapJackpotConfig, 'results'| 'type'>
+
+export type { JackpotKey, JackpotLottery, GetJackpotConfig, GetJackpotChildrenConfig, MapJackpotConfig };

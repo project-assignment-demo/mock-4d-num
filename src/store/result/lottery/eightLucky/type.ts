@@ -1,5 +1,7 @@
-import { JackpotLottery } from "../../type";
+import { LotteryJackpot, LotteryResultChild } from "../../type";
+import { GetLotteryConfig } from "../type";
 
-type EightLuckyLottery = JackpotLottery;
+type  EightLuckyLottery = LotteryResultChild & LotteryJackpot;
+type GetEightLuckyLotteryConfig = GetLotteryConfig;
 
-export type { EightLuckyLottery }
+export type { EightLuckyLottery , GetEightLuckyLotteryConfig }

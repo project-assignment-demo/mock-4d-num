@@ -4,9 +4,14 @@ import { getResults } from "../../api/result";
 import { useSiteStore } from "../../store";
 import dayjs from "dayjs";
 import SwiperWrapper from "./components/Swiper";
+import { useLotteries } from "../../store/result";
 
 const Dashboard = () => {
   const selectedDate = useSiteStore((state) => state.selectedDate);
+
+  const lotteries = useLotteries();
+
+  console.log(lotteries);
 
   // const {
   //   isPending,

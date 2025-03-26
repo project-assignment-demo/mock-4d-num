@@ -9,21 +9,12 @@ import { getNineWinBoxJackpot } from "./nineWin";
 import { getSabahFourDJackpot } from "./sabahFourD";
 import { getSingaporeFourDJackpot } from "./SingaporeFourD";
 import { getSportToToJackpot } from "./sportToTo";
-import { JackpotKey } from "./type";
-
-interface GetJackpotConfig {
-  results: ResultDTO[];
-  companies: Company[];
-  type: JackpotKey;
-}
+import { GetJackpotChildrenConfig, JackpotKey, MapJackpotConfig } from "./type";
 
 function getJackpotChildren({
   results,
   type,
-}: {
-  results: ResultDTO[];
-  type: JackpotKey;
-}): JackpotResultChild[] {
+}: GetJackpotChildrenConfig): JackpotResultChild[] {
   const resultType: ResultType = "jackpot";
   switch (type) {
     case "M":
@@ -43,7 +34,7 @@ function getJackpotChildren({
   }
 }
 
-function getJackpot({ type, companies, results }: GetJackpotConfig): Result {
+function getJackpot({ type, companies, results }: MapJackpotConfig): Result {
   const company = companies.find((company) => company.id === type);
   if (!company) throw Error(`not found company ${type}`);
   const logo = company.source;
@@ -64,7 +55,6 @@ function useJackpots(): Result[] {
   const companies = useCompanies("/jackpot");
   const jackpotTypes: JackpotKey[] = ["M", "PMP", "ST", "SG", "EE", "H", "WB"];
 
-  console.log("results 123", results);
   const jackpots = jackpotTypes.map((type) =>
     getJackpot({
       results,
