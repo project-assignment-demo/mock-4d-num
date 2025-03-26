@@ -1,6 +1,15 @@
+import { ResultDTO } from "../../../../api/result/type";
 import { GetLotteryConfig } from "../type";
 
-type GetBaseLotteryInfoConfig = GetLotteryConfig;
+type GetBaseLotteryInfoConfig = GetLotteryConfig & {
+    filterOption?: (results: ResultDTO[]) => ResultDTO; 
+};
 
-export type { GetBaseLotteryInfoConfig };
+type GetLotteryBasicInfoConfig = Omit<GetLotteryConfig, "results"> & {
+  result: ResultDTO;
+};
 
+export type {
+  GetBaseLotteryInfoConfig,
+  GetLotteryBasicInfoConfig,
+};

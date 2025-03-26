@@ -1,10 +1,10 @@
 import { getBaseLotteryInfo } from "../baseLotteryInfo";
 import { GetSpecialCashSweepLotteryConfig, SpecialCashSweepLottery } from "./type";
 
-function getSportToToLottery(
+function getSpecialCashSweepLottery(
   config: GetSpecialCashSweepLotteryConfig
 ): SpecialCashSweepLottery[] {
   return [getBaseLotteryInfo(config)];
 }
 
-export { getSportToToLottery };
+export { getSpecialCashSweepLottery };

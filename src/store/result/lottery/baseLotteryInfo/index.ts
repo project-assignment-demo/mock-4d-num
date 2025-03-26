@@ -1,58 +1,44 @@
-import { ResultDTO } from "../../../../api/result/type";
 import { getResultBaseInfo } from "../../baseResultInfo";
 import { LotteryResultChild } from "../../type";
-import { GetLotteryConfig } from "../type";
-import { getLotterySecondaryPrize } from "../utils";
-import { GetBaseLotteryInfoConfig } from "./type";
+import { getLotteryPrimaryPrize, getLotterySecondaryPrize } from "../utils";
+import { GetBaseLotteryInfoConfig, GetLotteryBasicInfoConfig } from "./type";
 
-type GetLotteryBaseInfoConfig = GetLotteryConfig & { info: ResultDTO };
-
-function getLotteryBaseInfo({
+function getLotteryBasicInfo({
   resultType,
   type,
-  info,
-  video,
-}: GetLotteryBaseInfoConfig) {
-  const lotteryBasicInfo = getResultBaseInfo(info.fdData);
+  result,
+}: GetLotteryBasicInfoConfig) {
+  const { fdData } = result;
+
+  const { videoUrl: video } = fdData;
+
+  const lotteryBasicInfo = getResultBaseInfo(fdData);
   return {
     type,
     resultType,
     video,
     ...lotteryBasicInfo,
-    primaryPrizes: [],
-    ...getLotterySecondaryPrize(info),
+    primaryPrizes: getLotteryPrimaryPrize(result),
+    ...getLotterySecondaryPrize(result),
   };
 }
 
 function getBaseLotteryInfo(
   config: GetBaseLotteryInfoConfig
 ): LotteryResultChild {
-  const { results, type } = config;
+  const { results, type, resultType, filterOption } = config;
 
-  const baseLotteryInfo = results.find((result) => result.type === type);
+  const baseLotteryInfo = filterOption
+    ? filterOption(results)
+    : results.find((result) => result.type === type);
 
   if (!baseLotteryInfo) throw Error(`${type} info not found`);
 
-  return getLotteryBaseInfo({
-    ...config,
-    info: baseLotteryInfo,
+  return getLotteryBasicInfo({
+    resultType,
+    type,
+    result: baseLotteryInfo,
   });
 }
 
-function getMultipleBaseLotteryInfo(
-  config: GetBaseLotteryInfoConfig
-): LotteryResultChild[] {
-  const { results, type } = config;
-  const sources = results.filter((result) =>
-    result.type.startsWith(`${type}T`)
-  );
-
-  return sources.map((source) => {
-    return getLotteryBaseInfo({
-      ...config,
-      info: source,
-    });
-  });
-}
-
-export { getBaseLotteryInfo, getMultipleBaseLotteryInfo };
+export { getBaseLotteryInfo };

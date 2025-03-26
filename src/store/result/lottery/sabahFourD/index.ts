@@ -1,10 +1,10 @@
 import { getBaseLotteryInfo } from "../baseLotteryInfo";
 import { GetGetSabahFourDLotteryLotteryConfig, SabahFourDLottery } from "./type";
 
-function getSportToToLottery(
+function getSabahFourDLottery(
   config: GetGetSabahFourDLotteryLotteryConfig
 ): SabahFourDLottery[] {
   return [getBaseLotteryInfo(config)];
 }
 
-export { getSportToToLottery };
+export { getSabahFourDLottery };

@@ -1,12 +1,22 @@
 // x completed need add jackpot
 
-import { getMultipleBaseLotteryInfo } from "../baseLotteryInfo";
-import { EightLuckyLottery, GetEightLuckyLotteryConfig } from "./type";
+import { getBaseLotteryInfo } from "../baseLotteryInfo";
+import { getLotteryJackpot } from "../utils";
+import { NineWinLottery, GetNineWinLotteryConfig } from "./type";
 
-function getEightLuckyLottery(
-  config: GetEightLuckyLotteryConfig
-): EightLuckyLottery[] {
-  return getMultipleBaseLotteryInfo(config);
+function getNineWinBoxLottery(
+  config: GetNineWinLotteryConfig
+): NineWinLottery[] {
+  const { results, type } = config;
+
+  const filteredResults = results.filter(({ type: resultType }) =>
+    resultType.startsWith(`${type}T`)
+  );
+
+  return filteredResults.map((source) => ({
+    ...getBaseLotteryInfo({ ...config, filterOption: (_) => source }),
+    ...getLotteryJackpot(source),
+  }));
 }
 
-export { getEightLuckyLottery };
+export { getNineWinBoxLottery };

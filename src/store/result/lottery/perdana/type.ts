@@ -1,5 +1,8 @@
 import { LotteryResultChild } from "../../type";
+import { GetLotteryConfig } from "../type";
 
 type PerdanaLottery = LotteryResultChild;
 
-export type { PerdanaLottery }
+type GetPerdanayLotteryConfig = GetLotteryConfig;
+
+export type { PerdanaLottery, GetPerdanayLotteryConfig }

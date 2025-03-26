@@ -9,15 +9,41 @@ import { SpecialCashSweepLottery } from "./specialCashSweep/type";
 import { SportToToLottery } from "./sportToTo/type";
 import { ResultDTO } from "../../../api/result/type";
 import { ResultType } from "../type";
+import { Company } from "../../company";
 
-type LotteryKey = "M" | "PMP"| "ST" | "SG" | "CS" | "STC" | "EE" | "H" | "P" | "WB";
+type LotteryKey =
+  | "M"
+  | "PMP"
+  | "ST"
+  | "SG"
+  | "CS"
+  | "STC"
+  | "EE"
+  | "H"
+  | "P"
+  | "WB";
 
-type LotteryType = DaMaCaiLottery | EightLuckyLottery | MagnumLottery | NineWinLottery | PerdanaLottery | SabahFourDLottery | SpecialCashSweepLottery | SportToToLottery | SandakanFourDLottery;
+type LotteryType =
+  | DaMaCaiLottery
+  | EightLuckyLottery
+  | MagnumLottery
+  | NineWinLottery
+  | PerdanaLottery
+  | SabahFourDLottery
+  | SpecialCashSweepLottery
+  | SportToToLottery
+  | SandakanFourDLottery;
 interface GetLotteryConfig {
-    type: LotteryKey;
-    results: ResultDTO[];
-    resultType: ResultType;
-    video?: string | undefined;
-  }
+  type: LotteryKey;
+  results: ResultDTO[];
+  resultType: ResultType;
+  // video?: string | undefined;
+}
 
-export type { LotteryKey, LotteryType, GetLotteryConfig }
+interface MapLotteryConfig {
+  results: ResultDTO[];
+  companies: Company[];
+  type: LotteryKey;
+}
+
+export type { LotteryKey, LotteryType, GetLotteryConfig, MapLotteryConfig };

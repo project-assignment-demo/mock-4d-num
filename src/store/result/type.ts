@@ -26,7 +26,7 @@ interface LotteryResultChild extends ResultChild {
   consolations: SecondaryPrize[];
 }
 
-interface JackpotLottery {
+interface LotteryJackpot {
   jackpotPool: string;
   jackpotResults: JackpotResult[];
 }
@@ -69,5 +69,5 @@ export type {
   PrimaryPrize,
   SecondaryPrize,
   WinningJackpot,
-  JackpotLottery,
+  LotteryJackpot,
 };
