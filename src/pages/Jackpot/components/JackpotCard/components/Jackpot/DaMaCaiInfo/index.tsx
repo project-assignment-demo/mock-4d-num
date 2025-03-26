@@ -1,7 +1,7 @@
-import JackpotTable from "../../../../JackpotTable";
-import JackpotInfoCard from "../../../JackpotInfoCard";
-import PrimaryJackpotPrizes from "../../../PrimaryJackpotPrizes";
-import SecondaryPrizes from "../../../SecondaryPrizes";
+import JackpotInfoCard from "../../JackpotInfoCard";
+import JackpotTable from "../../JackpotTable";
+import PrimaryJackpotPrizes from "../../PrimaryJackpotPrizes";
+import SecondaryPrizes from "../../SecondaryPrizes";
 import { DaMaCaiInfoProps } from "./type";
 
 const DaMaCaiInfo = ({

@@ -1,8 +1,8 @@
-import JackpotTable from "../../../../JackpotTable";
-import JackpotInfoCard from "../../../JackpotInfoCard";
-import JackpotInfoContent from "../../../JackpotInfoContent";
-import PrimaryJackpotPrizes from "../../../PrimaryJackpotPrizes";
-import ToToJackpotPrize from "../../../ToToJackpotPrize";
+import JackpotInfoCard from "../../JackpotInfoCard";
+import JackpotInfoContent from "../../JackpotInfoContent";
+import JackpotTable from "../../JackpotTable";
+import PrimaryJackpotPrizes from "../../PrimaryJackpotPrizes";
+import ToToJackpotPrize from "../../ToToJackpotPrize";
 import { SportToToInfoProps } from "./type";
 
 const SportToToInfo = ({

@@ -1,7 +1,7 @@
-import JackpotTable from "../../../../JackpotTable";
-import JackpotInfoCard from "../../../JackpotInfoCard";
-import JackpotInfoContent from "../../../JackpotInfoContent";
-import ToToJackpotPrize from "../../../ToToJackpotPrize";
+import JackpotInfoCard from "../../JackpotInfoCard";
+import JackpotInfoContent from "../../JackpotInfoContent";
+import JackpotTable from "../../JackpotTable";
+import ToToJackpotPrize from "../../ToToJackpotPrize";
 import { SabahFourDInfoProps } from "./type";
 
 const SabahFourDInfo = ({

@@ -1,17 +1,35 @@
-import LotteryInfoCard from "../components/LotteryInfoCard";
-import { useQuery } from "@tanstack/react-query";
-import { getResults } from "../../api/result";
-import { useSiteStore } from "../../store";
-import dayjs from "dayjs";
-import SwiperWrapper from "./components/Swiper";
+// import LotteryInfoCard from "../components/LotteryInfoCard";
+// import { useQuery } from "@tanstack/react-query";
+// import { getResults } from "../../api/result";
+// import { useSiteStore } from "../../store";
+// import dayjs from "dayjs";
+// import SwiperWrapper from "./components/Swiper";
 import { useLotteries } from "../../store/result";
+import LotteryCard from "./components/LotteryCard";
+import { LotteryKey } from "../../store/result/lottery/type";
 
 const Dashboard = () => {
-  const selectedDate = useSiteStore((state) => state.selectedDate);
 
   const lotteries = useLotteries();
 
   console.log(lotteries);
+
+  return (
+    <div className="flex flex-wrap flex-row gap-4 justify-center">
+      {lotteries.map((lottery) => {
+        
+        const { type } = lottery
+        return (
+          <div key={type} id={type} className="mx-4 w-[400px]">
+            <LotteryCard
+              lotteryKey={type as LotteryKey}
+              lotteryData={lottery}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
 
   // const {
   //   isPending,
@@ -49,7 +67,6 @@ const Dashboard = () => {
   //     </div>
   //   </>
   // );
-  return <div>Dashboard</div>
 };
 
 export default Dashboard;

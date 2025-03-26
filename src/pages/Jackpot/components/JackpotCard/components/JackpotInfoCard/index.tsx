@@ -1,4 +1,3 @@
-import { title } from "process";
 import { PropsWithChildren } from "react";
 
 interface JackpotInfoCard extends PropsWithChildren {

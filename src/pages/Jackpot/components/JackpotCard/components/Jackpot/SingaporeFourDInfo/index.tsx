@@ -1,7 +1,7 @@
-import JackpotTable from "../../../../JackpotTable";
-import JackpotInfoCard from "../../../JackpotInfoCard";
-import JackpotInfoContent from "../../../JackpotInfoContent";
-import JackpotShare from "../../../JackpotShare";
+import JackpotInfoCard from "../../JackpotInfoCard";
+import JackpotInfoContent from "../../JackpotInfoContent";
+import JackpotShare from "../../JackpotShare";
+import JackpotTable from "../../JackpotTable";
 import { SingaporeFourDInfoProps } from "./type";
 
 const SingaporeFourDInfo = ({

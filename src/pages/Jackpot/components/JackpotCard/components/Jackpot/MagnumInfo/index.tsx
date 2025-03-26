@@ -1,6 +1,6 @@
-import JackpotTable from "../../../../JackpotTable";
-import JackpotInfoCard from "../../../JackpotInfoCard";
-import JackpotInfoContent from "../../../JackpotInfoContent";
+import JackpotInfoCard from "../../JackpotInfoCard";
+import JackpotInfoContent from "../../JackpotInfoContent";
+import JackpotTable from "../../JackpotTable";
 import { MagnumInfoProps } from "./type";
 
 const MagnumInfo = ({
