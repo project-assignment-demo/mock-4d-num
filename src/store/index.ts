@@ -39,7 +39,6 @@ const useSiteStore = create<SiteState & SiteAction>((set) => ({
   sourceResults: [],
   resultFilter: undefined,
   updateResults: (results) => {
-    console.log("upate result", results);
     set({ sourceResults: results });
   },
   updateLocale: (locale: SupportLocales) => set({ locale }),

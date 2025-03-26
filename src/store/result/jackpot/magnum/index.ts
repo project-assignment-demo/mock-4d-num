@@ -42,8 +42,6 @@ function getMagnumJackpot({
   type,
   resultType,
 }: GetMagnumJackpotConfig): MagnumJackpot[] {
-  console.log(type);
-  console.log(results);
   const magnumBaseInfoSource = results.find((result) => result.type === type);
   const jackpotTypes = ["JPLIFE","JPGOLD"];
 

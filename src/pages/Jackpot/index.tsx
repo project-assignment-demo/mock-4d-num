@@ -8,10 +8,9 @@ import JackpotCard from "./components/JackpotCard";
 
 
 const Jackpot = () => {
+  
   const jackpots = useJackpots();
-  console.log(jackpots);
-  // const jackpots = useJackpots();
-  // if (!jackpots) return <div>Not Found jackpot</div>;
+
   return (
     <div className="flex flex-wrap flex-row gap-4 justify-center">
       {jackpots.map((jackpot) => {

@@ -21,52 +21,20 @@ import {
   EightLuckyInfo,
   NineWinBoxInfo,
 } from "./components/Jackpot";
+import { resultColorMap } from "../../../../utils";
 
 interface JackpotCardProps {
   jackpotKey: JackpotKey;
   jackpotData: Result;
 }
 
-const jackpotComponentColorMap: Record<
-  JackpotKey,
-  { primaryColor: string; secondaryColor: string }
-> = {
-  M: {
-    primaryColor: "#000000",
-    secondaryColor: "#F5C530",
-  },
-  PMP: {
-    primaryColor: "#1D377B",
-    secondaryColor: "#E9181B",
-  },
-  ST: {
-    primaryColor: "#E9181B",
-    secondaryColor: "#000000",
-  },
-  SG: {
-    primaryColor: "#0093D8",
-    secondaryColor: "#1D377B",
-  },
-  EE: {
-    primaryColor: "#FA0504",
-    secondaryColor: "#1E68A2",
-  },
-  H: {
-    primaryColor: "#1A81BB",
-    secondaryColor: "#1D377B",
-  },
-  WB: {
-    primaryColor: "#612FAE",
-    secondaryColor: "#B44EF2",
-  },
-};
 
 const JackpotCard = (props: JackpotCardProps) => {
   const { jackpotKey, jackpotData } = props;
 
   const [data, setData] = useState(jackpotData.children[0]);
   const Component = jackpotComponentMap[jackpotKey];
-  const colors = jackpotComponentColorMap[jackpotKey];
+  const colors = resultColorMap[jackpotKey];
 
   return (
     <div className="w-full rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full">

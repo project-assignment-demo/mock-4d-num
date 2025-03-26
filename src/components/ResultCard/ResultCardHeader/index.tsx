@@ -26,7 +26,7 @@ const ResultCardHeader = ({
         </div>
         <p className="text-center text-white font-bold my-1">{title}</p>
       </div>
-      <div className="px-5 mt-[-50px] absolute top-[180px] z-10 w-full h-full">
+      <div className="px-5 mt-[-50px] absolute top-[180px] w-full h-full">
         <ResultCardHeaderInfoCard
           date={date}
           day={day}
@@ -68,7 +68,7 @@ const ResultCardHeaderInfoCard = ({
         )}
         <div className="flex-1 w-full h-[53px] flex flex-col justify-between">
           <p className="text-center font-extralight text-[12px]">Draw No.</p>
-          <p className="text-center font-bold">{drawNo}</p>
+          <p className="text-center font-bold">{drawNo || "----"}</p>
         </div>
       </div>
     </div>
@@ -141,7 +141,7 @@ const ResultTimeSelection = ({
         )}
       </div>
 
-      <div className="h-[40%] border-l border-gray-300"></div>
+      <hr className="h-[30px] border-l border-gray-300 m-auto"/>
     </>
   );
 };

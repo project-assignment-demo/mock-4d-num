@@ -12,7 +12,6 @@ const Dashboard = () => {
 
   const lotteries = useLotteries();
 
-  console.log(lotteries);
 
   return (
     <div className="flex flex-wrap flex-row gap-4 justify-center">

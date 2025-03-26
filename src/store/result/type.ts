@@ -1,4 +1,8 @@
+import { JackpotKey } from "./jackpot/type";
+import { LotteryKey } from "./lottery/type";
+
 type ResultType = "lottery" | "jackpot";
+type ResultKey = keyof Record<LotteryKey | JackpotKey, unknown>;
 
 interface Result {
   type: string;
@@ -70,4 +74,5 @@ export type {
   SecondaryPrize,
   WinningJackpot,
   LotteryJackpot,
+  ResultKey,
 };
