@@ -1,95 +1,87 @@
-import {
-  DaMaCaiJackpot,
-  JackpotKey,
-  JackpotType,
-  MagnumJackpot,
-  SabahJackpot,
-  Singapor4DJackpot,
-  SixDJackpot,
-  SportToToJackpot,
-} from "../../../../api/result/type";
-import JackpotHeader from "../JackpotHeader";
-import DaMaCaiInfo from "./components/DaMaCaiInfo";
-import EightLuckyInfo from "./components/EighLuckyInfo";
-import MagnumInfo from "./components/MagnumInfo";
-import NineWinBoxInfo from "./components/NineWinBoxInfo";
-import SabahFourDInfo from "./components/SabahFourDInfo";
-import SingaporeFourDInfo from "./components/SingaporeFourDInfo";
-import SportToToInfo from "./components/SportToToInfo";
+import { useState } from "react";
+
+import CardHeader from "../../../../components/ResultCard/ResultCardHeader";
+import { JackpotKey } from "../../../../store/result/jackpot/type";
+import { Result } from "../../../../store/result/type";
 import { JackpotComponentProps } from "./type";
+import { MagnumJackpot } from "../../../../store/result/jackpot/magnum/type";
+import { DaMaCaiJackpot } from "../../../../store/result/jackpot/daMaCai/type";
+import { SportToToJackpot } from "../../../../store/result/jackpot/sportToTo/type";
+import { SingaporeFourDJackpot } from "../../../../store/result/jackpot/SingaporeFourD/type";
+import { SabahFourDJackpot } from "../../../../store/result/jackpot/sabahFourD/type";
+import { NineWinJackpot } from "../../../../store/result/jackpot/nineWin/type";
+import { EightLuckyJackpot } from "../../../../store/result/jackpot/eightLucky/type";
+
+import {
+  MagnumInfo,
+  DaMaCaiInfo,
+  SportToToInfo,
+  SingaporeFourDInfo,
+  SabahFourDInfo,
+  EightLuckyInfo,
+  NineWinBoxInfo,
+} from "./components/Jackpot";
+import { resultColorMap } from "../../../../utils";
 
 interface JackpotCardProps {
   jackpotKey: JackpotKey;
-  jackpotData: JackpotType;
+  jackpotData: Result;
 }
+
 
 const JackpotCard = (props: JackpotCardProps) => {
   const { jackpotKey, jackpotData } = props;
+
+  const [data, setData] = useState(jackpotData.children[0]);
   const Component = jackpotComponentMap[jackpotKey];
-  const colors = jackpotComponentColorMap[jackpotKey];
+  const colors = resultColorMap[jackpotKey];
 
   return (
     <div className="w-full rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full">
-      <JackpotHeader title={jackpotData.title} logo={jackpotData.logo} />
+      <CardHeader
+        title={jackpotData.title}
+        logo={jackpotData.logo}
+        date={data.date}
+        day={data.day}
+        primaryColor={colors.primaryColor}
+        drawNo={data.drawNo}
+        showTimeSelection={jackpotData.children.length > 1}
+        onUpdateSelectedTime={(index) => setData(jackpotData.children[index])}
+      />
 
       <div className="mt-[20px] flex flex-col gap-[40px] px-5">
-        <Component data={jackpotData} {...colors} />
+        <Component
+          title={jackpotData.title}
+          logo={jackpotData.logo}
+          data={data as any}
+          {...colors}
+          selectedTime={undefined}
+        />
       </div>
     </div>
   );
 };
 
-const jackpotComponentMap: Record<
-  JackpotKey,
-  React.FC<JackpotComponentProps<JackpotType>>
-> = {
-  M: (props) => <MagnumInfo {...props} data={props.data as MagnumJackpot} />,
-  PMP: (props) => (
-    <DaMaCaiInfo {...props} data={props.data as DaMaCaiJackpot} />
-  ),
-  ST: (props) => (
-    <SportToToInfo {...props} data={props.data as SportToToJackpot} />
-  ),
-  SG: (props) => (
-    <SingaporeFourDInfo {...props} data={props.data as Singapor4DJackpot} />
-  ),
-  EE: (props) => <SabahFourDInfo {...props} data={props.data as SabahJackpot} />,
-  H: (props) => <EightLuckyInfo {...props} data={props.data as SixDJackpot} />,
-  WB: (props) => <NineWinBoxInfo {...props} data={props.data as SixDJackpot} />,
+type JackpotComponentMap = {
+  M: JackpotComponentProps<MagnumJackpot>;
+  PMP: JackpotComponentProps<DaMaCaiJackpot>;
+  ST: JackpotComponentProps<SportToToJackpot>;
+  SG: JackpotComponentProps<SingaporeFourDJackpot>;
+  EE: JackpotComponentProps<SabahFourDJackpot>;
+  H: JackpotComponentProps<EightLuckyJackpot>;
+  WB: JackpotComponentProps<NineWinJackpot>;
 };
 
-const jackpotComponentColorMap: Record<
-  JackpotKey,
-  { primaryColor: string; secondaryColor: string }
-> = {
-  M: {
-    primaryColor: "#000000",
-    secondaryColor: "#F5C530",
-  },
-  PMP: {
-    primaryColor: "#1D377B",
-    secondaryColor: "#E9181B",
-  },
-  ST: {
-    primaryColor: "#E9181B",
-    secondaryColor: "#000000",
-  },
-  SG: {
-    primaryColor: "#0093D8",
-    secondaryColor: "#1D377B",
-  },
-  EE: {
-    primaryColor: "#FA0504",
-    secondaryColor: "#1E68A2",
-  },
-  H: {
-    primaryColor: "#1A81BB",
-    secondaryColor: "#1D377B",
-  },
-  WB: {
-    primaryColor: "#612FAE",
-    secondaryColor: "#B44EF2",
-  },
+const jackpotComponentMap: {
+  [K in keyof JackpotComponentMap]: React.FC<JackpotComponentMap[K]>;
+} = {
+  M: (props) => <MagnumInfo {...props} />,
+  PMP: (props) => <DaMaCaiInfo {...props} />,
+  ST: (props) => <SportToToInfo {...props} />,
+  SG: (props) => <SingaporeFourDInfo {...props} />,
+  EE: (props) => <SabahFourDInfo {...props} />,
+  H: (props) => <EightLuckyInfo {...props} />,
+  WB: (props) => <NineWinBoxInfo {...props} />,
 };
 
 export default JackpotCard;

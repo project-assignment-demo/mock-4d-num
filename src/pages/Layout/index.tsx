@@ -14,6 +14,8 @@ const Layout = () => {
   const selectedDate = useSiteStore((state) => state.selectedDate);
 
   const updateResults = useSiteStore((state) => state.updateResults);
+  const companies = useSiteStore(state => state.companies);
+  const sourceResults = useSiteStore(state => state.sourceResults);
 
   // fetch companies icon
   // fetch results
@@ -41,43 +43,17 @@ const Layout = () => {
     if (results.isSuccess) updateResults(results.data);
   }, [results.isSuccess, results.data, updateResults]);
 
-  let Content = () => <Outlet />;
+  let Content = () => <Loading />;
 
-  if (companiesIconResult.isPending || results.isPending) {
-    Content = () => <Loading />;
-  }
+  const isLoadSuccess = companies.length && sourceResults.length;
 
   if (companiesIconResult.isError || companiesIconResult.isError) {
     Content = () => <Error />;
   }
 
-  // const {
-  //   isPending,
-  //   error,
-  //   data: icons,
-  // } = useQuery({
-  //   queryKey: ["site-logo"],
-  //   queryFn: fetchIcons,
-  // });
-
-  // useEffect(() => {
-  //   if (icons) updateCompanies({ currentPath: location.pathname, icons });
-  // }, [icons, updateCompanies, location.pathname]);
-
-  // const {
-  //   data: results,
-  // } = useQuery({
-  //   queryKey: ["results", selectedDate],
-  //   queryFn: () => getResults(dayjs(selectedDate).format("YYYY-MM-DD")),
-  // });
-
-  // console.log(results);
-
-  // useEffect(() => {
-  //   if (results) {
-  //     updateResults(results);
-  //   }
-  // }, [selectedDate, results]);
+  if (isLoadSuccess) {
+     Content = () => <Outlet/>
+  }
 
   return (
     <div className="flex h-screen w-full bg-[#F3F3F3]">

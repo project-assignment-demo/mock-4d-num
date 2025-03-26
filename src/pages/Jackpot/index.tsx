@@ -1,22 +1,30 @@
+
+// import { JackpotKey } from "../../api/result/type";
+
+import { useJackpots } from "../../store/result";
+import { JackpotKey } from "../../store/result/jackpot/type";
 import JackpotCard from "./components/JackpotCard";
-import { JackpotKey } from "../../api/result/type";
-import { useJackpots } from "../../store";
+
+
 
 const Jackpot = () => {
-
+  
   const jackpots = useJackpots();
-  if (!jackpots) return <div>Not Found jackpot</div>
-  console.log(jackpots);
+
   return (
     <div className="flex flex-wrap flex-row gap-4 justify-center">
-     {
-
-        Object.entries(jackpots).map(([key]) => {
-                return <div className="mx-4 w-[400px]">
-                <JackpotCard jackpotKey={key as JackpotKey} jackpotData={jackpots[key as JackpotKey]} />
-              </div>
-        })
-     }
+      {jackpots.map((jackpot) => {
+        
+        const { type } = jackpot
+        return (
+          <div key={type} id={type} className="mx-4 w-[400px]">
+            <JackpotCard
+              jackpotKey={type as JackpotKey}
+              jackpotData={jackpot}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };

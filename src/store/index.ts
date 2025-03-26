@@ -1,10 +1,15 @@
 import { create } from "zustand";
 import { ResultDTO } from "../api/result/type";
 import { CompanyDTO } from "../api/companyIcon/type";
-import { useJackpots } from "./jackpot";
 import { useCompanies } from "./company";
 
 export type SupportLocales = "zh" | "ms" | "en";
+
+export interface ResultFilter {
+  target: string;
+  type: "jackpot" | "result";
+  value: string;
+}
 
 type SiteState = {
   locale: SupportLocales;
@@ -12,6 +17,7 @@ type SiteState = {
   companies: CompanyDTO[];
   selectedDate: Date;
   sourceResults: ResultDTO[];
+  resultFilter: ResultFilter | undefined;
 };
 
 type SiteAction = {
@@ -24,14 +30,15 @@ type SiteAction = {
   updateSelectedDate: (date: Date) => void;
 
   updateResults: (results: ResultDTO[]) => void;
+
+  updateResultFilter: (filter: ResultFilter) => void;
 };
 
 const useSiteStore = create<SiteState & SiteAction>((set) => ({
   locale: "en",
   sourceResults: [],
-  // jackpots: fetchJackpots(get().sourceResults),
+  resultFilter: undefined,
   updateResults: (results) => {
-    console.log("update global");
     set({ sourceResults: results });
   },
   updateLocale: (locale: SupportLocales) => set({ locale }),
@@ -44,6 +51,7 @@ const useSiteStore = create<SiteState & SiteAction>((set) => ({
     }),
   selectedDate: new Date(),
   updateSelectedDate: (date) => set({ selectedDate: date }),
+  updateResultFilter: (resultFilter) => set({ resultFilter }),
 }));
 
-export { useSiteStore, useJackpots, useCompanies };
+export { useSiteStore, useCompanies };

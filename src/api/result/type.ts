@@ -80,118 +80,122 @@ export interface ResultDTO {
   };
 }
 
-export interface Result {
-  type: string;
-  logo: string;
-  label: string;
-  children: ResultItem[];
-}
-
-export interface ResultItem {
-  id: string;
-  date: Dayjs;
-  drawNo: string;
-  // timeSelection?: [string, string];
-  video: string;
-  winningPrizes: ResultWiningPrize;
-  specials: ResultPrize[];
-  consolations: ResultPrize[];
-  fourDJackpot?: FourDJackpot;
-  jackpot?: ResultJackpot;
-}
-
-export type ResultWiningPrize = [
-  { key: string; position: string; value: string },
-  { key: string; position: string; value: string },
-  { key: string; position: string; value: string }
-];
-
-export interface ResultPrize {
-  position: string;
-  value: string;
-}
-
-export type FourDJackpot = [string, string];
-
-export interface ResultJackpot {
-  poolAmount: string;
-  results: ResultJackpotResult[];
-}
-
-export interface ResultJackpotResult {
-  amount: string;
-  noPrize: string;
-  totalWinerUnit: string;
-  usdUnit: string;
-}
-
-export interface BaseJackpot {
-  type: string;
-  date: string;
-  day: string;
-  drawNo: string;
-  title: string;
-  logo: string;
-}
-
-export interface MagnumJackpot extends BaseJackpot {
-  magnumLife: {
-    winningNumbers: string[];
-    bonusNumbers: string[];
-  };
-  goldJackpot: string[][][];
-  jackpotPrize: [string, string];
-}
-
-export interface DaMaCaiJackpot extends BaseJackpot {
-  threeDBonus: [string, string, string];
-  special: string[];
-  consolation: string[];
-}
-
-type ToToSixD = string | string[];
-
-export interface SportToToJackpot extends BaseJackpot {
-  totoJackpot: {
-    label: string;
-    jackpot: string[];
-    prizes: string[];
-  }[];
-  fiveD: string[];
-  sixD: ToToSixD[];
-}
-
-export interface Singapor4DJackpot extends BaseJackpot {
-  winningNumbers: string[];
-  toto: {
-    date: string;
-    day: string;
-    drawNo: string;
-  }
-  winningShares: { amount: string; shares: string }[];
-}
-
-export interface SabahJackpot extends BaseJackpot {
-  winningNumbers: {
-    jackpot: string[];
-    prizes: string[];
-  };
-}
-
-export interface SixDJackpot extends BaseJackpot {
-  datas: {
-    sixDPrizes: string[][];
-  }[]
-}
 
 
-export type JackpotKey = "M" | "PMP" | "ST" | "SG" | "EE" | "H" | "WB";
-export type JackpotType =
-  | MagnumJackpot
-  | DaMaCaiJackpot
-  | SportToToJackpot
-  | Singapor4DJackpot
-  | SabahJackpot
-  | SixDJackpot;
 
-export type Jackpots = Record<JackpotKey, JackpotType>;
+
+
+
+// export interface Result {
+//   type: string;
+//   logo: string;
+//   label: string;
+//   children: ResultItem[];
+// }
+
+// export interface ResultItem {
+//   id: string;
+//   date: Dayjs;
+//   drawNo: string;
+//   // timeSelection?: [string, string];
+//   video: string;
+//   winningPrizes: ResultWiningPrize;
+//   specials: ResultPrize[];
+//   consolations: ResultPrize[];
+//   fourDJackpot?: FourDJackpot;
+//   jackpot?: ResultJackpot;
+// }
+
+// export type ResultWiningPrize = [
+//   { key: string; position: string; value: string },
+//   { key: string; position: string; value: string },
+//   { key: string; position: string; value: string }
+// ];
+
+// export interface ResultPrize {
+//   position: string;
+//   value: string;
+// }
+
+// export type FourDJackpot = [string, string];
+
+// export interface ResultJackpot {
+//   poolAmount: string;
+//   results: ResultJackpotResult[];
+// }
+
+// export interface ResultJackpotResult {
+//   amount: string;
+//   noPrize: string;
+//   totalWinerUnit: string;
+//   usdUnit: string;
+// }
+
+// export interface BaseJackpot {
+//   type: string;
+//   date: string;
+//   day: string;
+//   drawNo: string;
+//   title: string;
+//   logo: string;
+// }
+
+// export interface MagnumJackpot extends BaseJackpot {
+//   magnumLife: {
+//     winningNumbers: string[];
+//     bonusNumbers: string[];
+//   };
+//   goldJackpot: string[][][];
+//   jackpotPrize: [string, string];
+// }
+
+// export interface DaMaCaiJackpot extends BaseJackpot {
+//   threeDBonus: [string, string, string];
+//   special: string[];
+//   consolation: string[];
+// }
+
+// type ToToSixD = string | string[];
+
+// export interface SportToToJackpot extends BaseJackpot {
+//   totoJackpot: {
+//     label: string;
+//     jackpot: string[];
+//     prizes: string[];
+//   }[];
+//   fiveD: string[];
+//   sixD: ToToSixD[];
+// }
+
+// export interface Singapor4DJackpot extends BaseJackpot {
+//   winningNumbers: string[];
+//   toto: {
+//     date: string;
+//     day: string;
+//     drawNo: string;
+//   }
+//   winningShares: { amount: string; shares: string }[];
+// }
+
+// export interface SabahJackpot extends BaseJackpot {
+//   winningNumbers: {
+//     jackpot: string[];
+//     prizes: string[];
+//   };
+// }
+
+// export interface SixDJackpot extends BaseJackpot {
+//   prizes: Record<string, string[][]>;
+// }
+
+
+// export type JackpotKey = "M" | "PMP" | "ST" | "SG" | "EE" | "H" | "WB";
+// export type JackpotType =
+//   | MagnumJackpot
+//   | DaMaCaiJackpot
+//   | SportToToJackpot
+//   | Singapor4DJackpot
+//   | SabahJackpot
+//   | SixDJackpot;
+
+// export type Jackpots = Record<JackpotKey, JackpotType>;

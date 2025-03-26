@@ -1,7 +1,7 @@
 import { MdMenu, MdRefresh } from "react-icons/md";
 import { useCompanies, useSiteStore } from "../../store";
-import CustomDatePicker from "../components/LotteryDatePicker";
-import ChangeLocaleDropDown from "../components/LocaleDropDownButton";
+import CustomDatePicker from "../../components/LotteryDatePicker";
+import ChangeLocaleDropDown from "../../components/LocaleDropDownButton";
 import { useSwiperControl } from "../../context/SwiperContext";
 import { useLocation, useNavigate } from "react-router";
 
