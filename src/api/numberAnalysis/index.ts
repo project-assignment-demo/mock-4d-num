@@ -14,9 +14,10 @@ async function getNumberAnalysis({
   permutation,
 }: FourDAnalysisPayload) {
   const result = await api.get<FourDAnalysisNumberDto>(
-    `/numberAnalysis/${analysisNumber}/${analysisCategories}${
-      permutation ? `/${permutation}` : ""
-    }`
+    `/numberAnalysis/${analysisNumber}/${encodeURIComponent(
+      JSON.stringify(analysisCategories)
+    )}${permutation ? `/${permutation}` : ""}`,
+    {}
   );
 
   return result.data;
@@ -37,7 +38,7 @@ async function getFourDNumberAnalysisResult(
   config: GetFourDAnalysisResultConfig
 ): Promise<FourDNumberAnalysisResult> {
   const data = await getNumberAnalysis(config);
-
+  console.log(data);
   return {
     analysisNumber: data.TotalComeOut,
     totalWinHistory: getFourDNumberAnalysisResultotalWinHistory(data),
