@@ -7,52 +7,77 @@ import { fetchIcons } from "../../api/companyIcon";
 import { useQueries, useQuery } from "@tanstack/react-query";
 import { getResults } from "../../api/result";
 import dayjs from "dayjs";
+import { getSpecialDraw } from "../../api/specialDrawDate";
 
-const Layout = () => {
-  const location = useLocation();
+const useBaseInitializeRequest = () => {
   const updateCompanies = useSiteStore((state) => state.upateCompanies);
   const selectedDate = useSiteStore((state) => state.selectedDate);
 
   const updateResults = useSiteStore((state) => state.updateResults);
-  const companies = useSiteStore(state => state.companies);
-  const sourceResults = useSiteStore(state => state.sourceResults);
+  const companies = useSiteStore((state) => state.companies);
+  const sourceResults = useSiteStore((state) => state.sourceResults);
+  const specialDrawResults = useSiteStore((state) => state.sourceResults);
+
+  const updateSpecialDrawResults = useSiteStore(
+    (state) => state.updateSpecialDrawResults
+  );
 
   // fetch companies icon
   // fetch results
 
-  const [companiesIconResult, results] = useQueries({
+  const queries = useQueries({
     queries: [
       { queryKey: ["site-logo"], queryFn: fetchIcons },
       {
         queryKey: ["results", selectedDate],
         queryFn: () => getResults(dayjs(selectedDate).format("YYYY-MM-DD")),
       },
+      { queryKey: ["specialDraw"], queryFn: getSpecialDraw },
     ],
   });
+
+  const [companiesIconResult, results, specialDraw] = queries;
 
   useEffect(() => {
     if (companiesIconResult.isSuccess)
       updateCompanies(companiesIconResult.data);
-  }, [
-    companiesIconResult.isSuccess,
-    companiesIconResult.data,
-    updateCompanies,
-  ]);
+  }, [companiesIconResult.isSuccess, companiesIconResult.data]);
 
   useEffect(() => {
     if (results.isSuccess) updateResults(results.data);
-  }, [results.isSuccess, results.data, updateResults]);
+  }, [results.isSuccess, results.data]);
+
+  useEffect(() => {
+    if (specialDraw.isSuccess) updateSpecialDrawResults(specialDraw.data);
+  }, [specialDraw.isSuccess, specialDraw.data]);
+
+  const isCompleted =
+    companies.length && sourceResults.length && specialDrawResults.length;
+  const isError =
+    companiesIconResult.isError || results.isError || specialDraw.isError;
+
+  const isPending =
+    companiesIconResult.isPending || results.isPending || specialDraw.isPending;
+
+  return {
+    isPending,
+    isCompleted,
+    isError,
+  };
+};
+const Layout = () => {
+  const { isCompleted, isError } = useBaseInitializeRequest();
+
+  const specialDrawResults = useSiteStore((state) => state.specialDrawResults);
 
   let Content = () => <Loading />;
 
-  const isLoadSuccess = companies.length && sourceResults.length;
-
-  if (companiesIconResult.isError || companiesIconResult.isError) {
+  if (isError) {
     Content = () => <Error />;
   }
 
-  if (isLoadSuccess) {
-     Content = () => <Outlet/>
+  if (isCompleted) {
+    Content = () => <Outlet />;
   }
 
   return (
@@ -68,7 +93,20 @@ const Layout = () => {
         </div>
 
         <div className="overflow-scroll scrollbar-hidden max-w-[1440px]">
-          <Content />
+          <div className="flex">
+            <div className="flex-grow">
+              <Content />
+            </div>
+            <div>
+              {specialDrawResults.length && (
+                <div>
+                  {specialDrawResults.map((r) => (
+                    <p>{r}</p>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </main>
     </div>

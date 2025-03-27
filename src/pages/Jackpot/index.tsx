@@ -30,7 +30,7 @@ const Jackpot = () => {
           {jackpots.map((jackpot) => {
             const { type } = jackpot;
             return (
-              <div className="max-w-full w-full h-screen">
+              <div key={type} className="max-w-full w-full h-screen">
                 <JackpotCard
                   jackpotKey={type as JackpotKey}
                   jackpotData={jackpot}

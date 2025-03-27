@@ -29,7 +29,7 @@ const Dashboard = () => {
           {lotteries.map((lottery) => {
             const { type } = lottery;
             return (
-              <div className="max-w-full w-full h-screen">
+              <div key={type} className="max-w-full w-full h-screen">
                 <LotteryCard
                   lotteryKey={type as LotteryKey}
                   lotteryData={lottery}

@@ -5,19 +5,13 @@ import { useCompanies } from "./company";
 
 export type SupportLocales = "zh" | "ms" | "en";
 
-export interface ResultFilter {
-  target: string;
-  type: "jackpot" | "result";
-  value: string;
-}
-
 type SiteState = {
   locale: SupportLocales;
   openDrawer: boolean;
   companies: CompanyDTO[];
   selectedDate: Date;
   sourceResults: ResultDTO[];
-  
+  specialDrawResults: string[];
 };
 
 type SiteAction = {
@@ -30,12 +24,15 @@ type SiteAction = {
   updateSelectedDate: (date: Date) => void;
 
   updateResults: (results: ResultDTO[]) => void;
+
+  updateSpecialDrawResults: (results: string[]) => void;
 };
 
 const useSiteStore = create<SiteState & SiteAction>((set) => ({
   locale: "en",
   sourceResults: [],
-  resultFilter: undefined,
+  specialDrawResults: [],
+  selectedDate: new Date(),
   updateResults: (results) => {
     set({ sourceResults: results });
   },
@@ -47,8 +44,9 @@ const useSiteStore = create<SiteState & SiteAction>((set) => ({
     set({
       companies,
     }),
-  selectedDate: new Date(),
+
   updateSelectedDate: (date) => set({ selectedDate: date }),
+  updateSpecialDrawResults: (specialDrawResults) => set({ specialDrawResults }),
 }));
 
 export { useSiteStore, useCompanies };
