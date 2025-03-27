@@ -17,7 +17,7 @@ type SiteState = {
   companies: CompanyDTO[];
   selectedDate: Date;
   sourceResults: ResultDTO[];
-  resultFilter: ResultFilter | undefined;
+  
 };
 
 type SiteAction = {
@@ -30,8 +30,6 @@ type SiteAction = {
   updateSelectedDate: (date: Date) => void;
 
   updateResults: (results: ResultDTO[]) => void;
-
-  updateResultFilter: (filter: ResultFilter) => void;
 };
 
 const useSiteStore = create<SiteState & SiteAction>((set) => ({
@@ -51,7 +49,6 @@ const useSiteStore = create<SiteState & SiteAction>((set) => ({
     }),
   selectedDate: new Date(),
   updateSelectedDate: (date) => set({ selectedDate: date }),
-  updateResultFilter: (resultFilter) => set({ resultFilter }),
 }));
 
 export { useSiteStore, useCompanies };

@@ -1,6 +1,8 @@
 const Hot4DNumber = () => {
     return (
-        <p>Hot 4D Number</p>
+        <div>
+         123
+        </div>
     )
 }
 
