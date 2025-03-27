@@ -104,7 +104,7 @@ const ResultTimeSelection = ({
 
   return (
     <>
-      <div className="flex-1 w-full h-full flex items-center justify-center relative">
+      <div  onClick={() => setShowSelection(!showSelection)} className="flex-1 w-full h-full flex items-center justify-center relative cursor-pointer">
         <div>
           <img
             className="w-[46px] h-[46px]"
@@ -113,11 +113,10 @@ const ResultTimeSelection = ({
           />
         </div>
         <FiChevronDown
-          onClick={() => setShowSelection(!showSelection)}
           className="text-[24px]"
         />
         {showSelection && (
-          <div className="w-[70px] h-fit absolute mt-2 bg-white border-black shadow-lg rounded-md top-1/1 flex flex-col items-center space-y-2 py-2">
+          <div className="w-[70px] h-fit absolute z-1 mt-2 bg-white border-black shadow-lg rounded-md top-1/1 flex flex-col items-center space-y-2 py-2">
             {/*  */}
             {timeSelections.map((selection, index) => {
               const cs = classNames(

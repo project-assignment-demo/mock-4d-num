@@ -25,17 +25,6 @@ function getPrizeData(sources: string, limit?: number) {
 }
 
 function getSixDPrizes(source: ResultDTO["fdData"]) {
-  // return [
-  //   generatePrizes(source.n1?.split("") ?? []),
-  //   generatePrizes(source.n2?.split("") ?? [], source.n3?.split("") ?? []),
-  //   generatePrizes(
-  //     source.n4?.slice(0, 2).split("") ?? [],
-  //     source.n5?.split("") ?? []
-  //   ),
-  //   generatePrizes(source.n6?.split("") ?? [], source.n7?.split("") ?? []),
-  //   generatePrizes(source.n8?.split("") ?? [], source.n9?.split("") ?? []),
-  // ];
-
   return [
     generatePrizes(getPrizeData(source.n1, 6)),
     generatePrizes(getPrizeData(source.n2, 5), getPrizeData(source.n3, 5)),
