@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 import { ResultCardHeaderProps } from "./type";
 import { FiChevronDown } from "react-icons/fi";
 import classNames from "classnames";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import { getPrexOrNextResultByDate } from "../../../api/result";
+import ResultDatePicker from "../../LotteryDatePicker";
+import { getResultCountry } from "../../../utils";
+import { useSiteStore } from "../../../store";
+import { ResultDTO } from "../../../api/result/type";
+import { getMergedResults } from "../../../store/result/utils";
 
 const ResultCardHeader = ({
   title,
@@ -11,6 +18,7 @@ const ResultCardHeader = ({
   drawNo,
   primaryColor,
   showTimeSelection,
+  type,
   onUpdateSelectedTime,
 }: ResultCardHeaderProps) => {
   return (
@@ -31,6 +39,7 @@ const ResultCardHeader = ({
           date={date}
           day={day}
           drawNo={drawNo}
+          type={type}
           showTimeSelection={showTimeSelection}
           onUpdateSelectedTime={onUpdateSelectedTime}
         />
@@ -43,30 +52,79 @@ interface ResultCardHeaderInfoCardProps {
   date: string;
   day: string;
   drawNo: string;
+  type: string;
   onUpdateSelectedTime: (index: number) => void;
   showTimeSelection: boolean;
 }
+
+const ResultHeaderDateInfo = ({
+  date,
+  day,
+  type,
+}: {
+  date: string;
+  day: string;
+  type: string;
+}) => {
+  const updateResults = useSiteStore((state) => state.updateResults);
+
+  const getResultByDate = async (action: "prev" | "next") => {
+    const target = getResultCountry(type);
+    const results = await getPrexOrNextResultByDate({
+      action,
+      target,
+      date,
+    });
+
+    const oldResults = useSiteStore.getState().sourceResults;
+
+    const mergedResults = getMergedResults(oldResults, results, target);
+
+    console.log(mergedResults);
+
+    updateResults(mergedResults);
+  };
+
+  return (
+    <div className="flex flex-col justify-start items-center h-[53px] w-full">
+      <p className="text-center font-extralight text-[12px]">Date</p>
+      <div className="flex items-center">
+        <MdChevronLeft
+          onClick={() => getResultByDate("prev")}
+          className="text-[24px] font-[400]"
+        />
+        <ResultDatePicker>
+          <div>
+            <p className="text-center font-bold text-[14px]">{date}</p>
+            <p className="text-center font-bold text-[14px]">({day})</p>
+          </div>
+        </ResultDatePicker>
+        <MdChevronRight
+          onClick={() => getResultByDate("next")}
+          className="text-[24px] font-[400]"
+        />
+      </div>
+    </div>
+  );
+};
 
 const ResultCardHeaderInfoCard = ({
   date,
   day,
   drawNo,
+  type,
   onUpdateSelectedTime,
   showTimeSelection,
 }: ResultCardHeaderInfoCardProps) => {
   return (
     <div className="rounded-lg shadow-md bg-white w-full h-[72px] p-1">
       <div className="flex h-full">
-        <div className="flex flex-col justify-start items-center flex-1 w-full h-[53px]">
-          <p className="text-center font-extralight text-[12px]">Date</p>
-          <p className="text-center font-bold">{date}</p>
-          <p className="text-center font-bold">({day})</p>
-        </div>
+        <ResultHeaderDateInfo date={date} day={day} type={type} />
         <hr className="h-[30px] border-l  border-gray-300 m-auto" />
         {showTimeSelection && (
           <ResultTimeSelection onUpdateSelectedTime={onUpdateSelectedTime} />
         )}
-        <div className="flex-1 w-full h-[53px] flex flex-col justify-between">
+        <div className="w-full h-[53px] flex flex-col justify-between">
           <p className="text-center font-extralight text-[12px]">Draw No.</p>
           <p className="text-center font-bold">{drawNo || "----"}</p>
         </div>
@@ -98,13 +156,14 @@ const ResultTimeSelection = ({
 
   useEffect(() => {
     onUpdateSelectedTime(selectedTimeIndex);
-  }, [selectedTimeIndex])
-
-
+  }, [selectedTimeIndex]);
 
   return (
     <>
-      <div  onClick={() => setShowSelection(!showSelection)} className="flex-1 w-full h-full flex items-center justify-center relative cursor-pointer">
+      <div
+        onClick={() => setShowSelection(!showSelection)}
+        className="w-full h-full flex items-center justify-center relative cursor-pointer"
+      >
         <div>
           <img
             className="w-[46px] h-[46px]"
@@ -112,9 +171,7 @@ const ResultTimeSelection = ({
             alt=""
           />
         </div>
-        <FiChevronDown
-          className="text-[24px]"
-        />
+        <FiChevronDown className="text-[24px]" />
         {showSelection && (
           <div className="w-[70px] h-fit absolute z-1 mt-2 bg-white border-black shadow-lg rounded-md top-1/1 flex flex-col items-center space-y-2 py-2">
             {/*  */}
@@ -140,7 +197,7 @@ const ResultTimeSelection = ({
         )}
       </div>
 
-      <hr className="h-[30px] border-l border-gray-300 m-auto"/>
+      <hr className="h-[30px] border-l border-gray-300 m-auto" />
     </>
   );
 };

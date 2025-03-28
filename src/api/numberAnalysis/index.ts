@@ -38,7 +38,6 @@ async function getFourDNumberAnalysisResult(
   config: GetFourDAnalysisResultConfig
 ): Promise<FourDNumberAnalysisResult> {
   const data = await getNumberAnalysis(config);
-  console.log(data);
   return {
     analysisNumber: data.TotalComeOut,
     totalWinHistory: getFourDNumberAnalysisResultotalWinHistory(data),

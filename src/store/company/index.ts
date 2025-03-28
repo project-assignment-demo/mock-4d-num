@@ -77,7 +77,8 @@ function mapToCompaniesWithLabel(companies: CompanyDTO[]): Company[] {
 }
 
 function useCompanies(currentPath: string) {
-  const companies = useSiteStore((state) => state.companies);
+  // const companies = useSiteStore((state) => state.companies);
+  const companies = useSiteStore.getState().companies;
   return mapCompanies({ currentPath, companies });
 }
 

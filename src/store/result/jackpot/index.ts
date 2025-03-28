@@ -50,10 +50,29 @@ function getJackpot({ type, companies, results }: MapJackpotConfig): Result {
   };
 }
 
-function useJackpots(): Result[] {
-  const results = useSiteStore((state) => state.sourceResults);
+// function useJackpots(): Result[] {
+//   // const results = useSiteStore((state) => state.sourceResults);
+//   console.log('rebuild lala')
+//   const results = useSiteStore.getState().sourceResults;
+//   const companies = useCompanies("/jackpot");
+//   const jackpotTypes: JackpotKey[] = ["M", "PMP", "ST", "SG", "EE", "H", "WB"];
+
+//   const jackpots = jackpotTypes.map((type) =>
+//     getJackpot({
+//       results,
+//       type,
+//       companies,
+//     })
+//   );
+
+//   return jackpots;
+// }
+
+
+function getJackpots(): Result[] {
+  const results = useSiteStore.getState().sourceResults;
   const companies = useCompanies("/jackpot");
-  const jackpotTypes: JackpotKey[] = ["M", "PMP", "ST", "SG", "EE", "H", "WB"];
+    const jackpotTypes: JackpotKey[] = ["M", "PMP", "ST", "SG", "EE", "H", "WB"];
 
   const jackpots = jackpotTypes.map((type) =>
     getJackpot({
@@ -66,4 +85,4 @@ function useJackpots(): Result[] {
   return jackpots;
 }
 
-export { useJackpots };
+export {  getJackpots };

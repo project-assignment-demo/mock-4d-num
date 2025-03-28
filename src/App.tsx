@@ -32,8 +32,8 @@ const App = () => {
         locale={locale}
         defaultLocale="en"
       >
-        <SwiperProvider>
-          <BrowserRouter>
+        <BrowserRouter>
+          <SwiperProvider>
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Dashboard />} />
@@ -45,8 +45,8 @@ const App = () => {
                 <Route path="lucky-book" element={<LuckyBook />} />
               </Route>
             </Routes>
-          </BrowserRouter>
-        </SwiperProvider>
+          </SwiperProvider>
+        </BrowserRouter>
       </IntlProvider>
     </QueryClientProvider>
   );

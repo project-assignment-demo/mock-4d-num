@@ -32,16 +32,18 @@ const getPrevOrNextResultPath = (
     other: "other",
   };
 
-  return `/${targetMap[target]}${actionMap[action]}/`;
+  return `/${targetMap[target]}${actionMap[action]}`;
 };
 
-const getPrexOrNextResultByDate = ({
+const getPrexOrNextResultByDate = async ({
   action,
   target,
   date,
 }: getPrevNextResultConfig) => {
   const apiPath = getPrevOrNextResultPath(action, target);
-  return api.get<ResultDTO>(`${apiPath}/${date}`);
+  const results = await api.get<ResultDTO[]>(`${apiPath}/${date}`);
+
+  return results.data;
 };
 
 const uploadResultShareImage = async (

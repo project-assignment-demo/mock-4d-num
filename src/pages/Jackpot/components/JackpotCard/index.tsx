@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import CardHeader from "../../../../components/ResultCard/ResultCardHeader";
 import { JackpotKey } from "../../../../store/result/jackpot/type";
@@ -22,23 +22,48 @@ import {
   NineWinBoxInfo,
 } from "./components/Jackpot";
 import { resultColorMap } from "../../../../utils";
+import { useSiteStore } from "../../../../store";
+import { getJackpots } from "../../../../store/result";
 
 interface JackpotCardProps {
   jackpotKey: JackpotKey;
   jackpotData: Result;
 }
 
-
 const JackpotCard = (props: JackpotCardProps) => {
-  const { jackpotKey, jackpotData } = props;
+  const { jackpotKey, jackpotData: source } = props;
 
-  const [data, setData] = useState(jackpotData.children[0]);
+  const sourcesResults = useSiteStore((state) => state.sourceResults);
+
+  const [jackpotData, setJackpotData] = useState(source);
+  const [childIndex, setChildIndex] = useState(0);
+  // const [data, setData] = useState(jackpotData.children[childIndex]);
+
   const Component = jackpotComponentMap[jackpotKey];
   const colors = resultColorMap[jackpotKey];
+
+  useEffect(() => {
+    setJackpotData(source);
+  }, [source]);
+
+  useEffect(() => {
+    const d = getJackpots().find((j) => j.type === jackpotKey)!;
+    setJackpotData(d);
+  }, [sourcesResults]);
+
+  const data = useMemo(() => {
+    if (jackpotKey === "M") {
+      console.log("update memo");
+      console.log(jackpotData.children[childIndex]);
+    }
+
+    return jackpotData?.children?.[childIndex];
+  }, [jackpotData, childIndex]);
 
   return (
     <div className="w-full rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full">
       <CardHeader
+        type={jackpotData.type}
         title={jackpotData.title}
         logo={jackpotData.logo}
         date={data.date}
@@ -46,9 +71,8 @@ const JackpotCard = (props: JackpotCardProps) => {
         primaryColor={colors.primaryColor}
         drawNo={data.drawNo}
         showTimeSelection={jackpotData.children.length > 1}
-        onUpdateSelectedTime={(index) => setData(jackpotData.children[index])}
+        onUpdateSelectedTime={(index) => setChildIndex(index)}
       />
-
       <div className="mt-[20px] flex flex-col gap-[40px] px-5">
         <Component
           title={jackpotData.title}
@@ -75,7 +99,10 @@ type JackpotComponentMap = {
 const jackpotComponentMap: {
   [K in keyof JackpotComponentMap]: React.FC<JackpotComponentMap[K]>;
 } = {
-  M: (props) => <MagnumInfo {...props} />,
+  M: (props) => {
+    console.log(props);
+    return <MagnumInfo {...props} />;
+  },
   PMP: (props) => <DaMaCaiInfo {...props} />,
   ST: (props) => <SportToToInfo {...props} />,
   SG: (props) => <SingaporeFourDInfo {...props} />,

@@ -15,7 +15,11 @@ interface SwiperProviderProps extends PropsWithChildren {}
 export const SwiperProvider = ({ children }: SwiperProviderProps) => {
   const swiperRef = useRef<Swiper | null>(null);
   return (
-    <SwiperContext.Provider value={{ getSwiper: () => swiperRef.current, setSwiper: (swiper: Swiper) => swiperRef.current = swiper }}>
+    <SwiperContext.Provider value={{ getSwiper: () => swiperRef.current, setSwiper: (swiper: Swiper) => {
+      console.log('set swiper')
+      swiperRef.current = swiper;
+      return swiperRef.current;
+    } }}>
       {children}
     </SwiperContext.Provider>
   );

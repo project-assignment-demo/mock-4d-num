@@ -1,12 +1,14 @@
 // import { JackpotKey } from "../../api/result/type";
-
 import SwiperWrapper from "../../components/Swiper";
-import { useJackpots } from "../../store/result";
+
 import { JackpotKey } from "../../store/result/jackpot/type";
 import JackpotCard from "./components/JackpotCard";
+import { getJackpots } from "../../store/result/jackpot";
 
 const Jackpot = () => {
-  const jackpots = useJackpots();
+  const jackpots = getJackpots();
+
+  console.log('Jackpot parent rebuild')
 
   return (
     <>
