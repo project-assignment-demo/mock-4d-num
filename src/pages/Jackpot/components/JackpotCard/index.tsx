@@ -52,7 +52,7 @@ const JackpotCard = (props: JackpotCardProps) => {
   }, [sourcesResults]);
 
   const data = useMemo(() => {
-    if (jackpotKey === "M") {
+    if (jackpotKey === "ST") {
       console.log("update memo");
       console.log(jackpotData.children[childIndex]);
     }

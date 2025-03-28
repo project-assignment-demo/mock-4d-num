@@ -7,7 +7,6 @@ import { getPrexOrNextResultByDate } from "../../../api/result";
 import ResultDatePicker from "../../LotteryDatePicker";
 import { getResultCountry } from "../../../utils";
 import { useSiteStore } from "../../../store";
-import { ResultDTO } from "../../../api/result/type";
 import { getMergedResults } from "../../../store/result/utils";
 
 const ResultCardHeader = ({

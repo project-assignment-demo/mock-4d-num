@@ -7,9 +7,9 @@ function getToToJackpot(results: ResultDTO[]): SportToToJackpot["jackpots"] {
   const sources = results
     .filter((result) =>
       matchTypes.some((matchType) => matchType === result.type)
-    )
-    .map((result) => result.fdData);
-  return sources.map((source) => {
+    );
+    
+  return sources.map(({type, fdData:source}) => {
     let jackpots = [
       source.n1,
       source.n2,
@@ -19,7 +19,7 @@ function getToToJackpot(results: ResultDTO[]): SportToToJackpot["jackpots"] {
       source.n6,
     ];
 
-    if (source.jp_type === "6/50" && source.n7) {
+    if (type === `STJP6/50` && source.n7) {
       jackpots = [...jackpots, "+", source.n7];
     }
 
