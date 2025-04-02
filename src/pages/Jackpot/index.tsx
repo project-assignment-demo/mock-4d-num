@@ -8,8 +8,6 @@ import { getJackpots } from "../../store/result/jackpot";
 const Jackpot = () => {
   const jackpots = getJackpots();
 
-  console.log('Jackpot parent rebuild')
-
   return (
     <>
       <div className="hidden sm:block">
@@ -27,7 +25,7 @@ const Jackpot = () => {
           })}
         </div>
       </div>
-      <div className="block sm:hidden">
+      <div>
         <SwiperWrapper>
           {jackpots.map((jackpot) => {
             const { type } = jackpot;

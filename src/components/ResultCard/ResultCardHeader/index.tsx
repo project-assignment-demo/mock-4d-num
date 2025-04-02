@@ -79,8 +79,6 @@ const ResultHeaderDateInfo = ({
 
     const mergedResults = getMergedResults(oldResults, results, target);
 
-    console.log(mergedResults);
-
     updateResults(mergedResults);
   };
 

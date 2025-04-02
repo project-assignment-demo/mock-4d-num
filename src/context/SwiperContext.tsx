@@ -1,25 +1,25 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useRef,
-} from "react";
+import { createContext, PropsWithChildren, useContext, useRef } from "react";
 import { Swiper } from "swiper/types";
 
-const SwiperContext = createContext<{ getSwiper: () => Swiper | null, setSwiper: (swiper: Swiper) =>  Swiper | null} | null>(
-  null
-);
+const SwiperContext = createContext<{
+  getSwiper: () => Swiper | null;
+  setSwiper: (swiper: Swiper) => Swiper | null;
+} | null>(null);
 
 interface SwiperProviderProps extends PropsWithChildren {}
 
 export const SwiperProvider = ({ children }: SwiperProviderProps) => {
   const swiperRef = useRef<Swiper | null>(null);
   return (
-    <SwiperContext.Provider value={{ getSwiper: () => swiperRef.current, setSwiper: (swiper: Swiper) => {
-      console.log('set swiper')
-      swiperRef.current = swiper;
-      return swiperRef.current;
-    } }}>
+    <SwiperContext.Provider
+      value={{
+        getSwiper: () => swiperRef.current,
+        setSwiper: (swiper: Swiper) => {
+          swiperRef.current = swiper;
+          return swiperRef.current;
+        },
+      }}
+    >
       {children}
     </SwiperContext.Provider>
   );
