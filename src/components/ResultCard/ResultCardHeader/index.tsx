@@ -22,7 +22,7 @@ const ResultCardHeader = ({
 }: ResultCardHeaderProps) => {
   return (
     <div
-      className="mb-[80px] h-[170px] w-full rounded-b-2xl rounded-t-[25px] relative"
+      className="mb-[80px] h-[170px] w-full rounded-b-2xl sm:rounded-t-[25px] relative"
       style={{ backgroundColor: primaryColor }}
     >
       <div className="flex flex-col justify-start mt-[15px]">
@@ -33,7 +33,7 @@ const ResultCardHeader = ({
         </div>
         <p className="text-center text-white font-bold my-1">{title}</p>
       </div>
-      <div className="px-5 mt-[-50px] absolute top-[180px] w-full h-full">
+      <div className="px-5 absolute top-3/4 w-full h-full">
         <ResultCardHeaderInfoCard
           date={date}
           day={day}
