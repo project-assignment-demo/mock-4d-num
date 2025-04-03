@@ -45,4 +45,13 @@ const resultColorMap: ResulCardMap = {
   }
 };
 
-export { resultColorMap }
+const getResultCountry = (type: string): "mysg" | "other" =>  {
+const mySgList = ['M', 'PMP', 'ST', 'SG', 'EE'];
+const isMySg = mySgList.includes(type) || mySgList.some(matchType=> type.startsWith(`${matchType}T`) || type.startsWith(`${matchType}JP`) || type.startsWith(`${matchType}JPT`)) ;
+  if (isMySg) {
+    return 'mysg';
+  }
+  return 'other';
+}
+
+export { resultColorMap, getResultCountry }

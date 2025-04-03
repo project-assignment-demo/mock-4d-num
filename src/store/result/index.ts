@@ -1,3 +1,3 @@
-export { useJackpots } from "./jackpot";
+export { getJackpots } from "./jackpot";
 
 export { useLotteries } from "./lottery";

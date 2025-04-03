@@ -4,12 +4,11 @@ import { GetSportToToConfig, SportToToJackpot } from "./type";
 
 function getToToJackpot(results: ResultDTO[]): SportToToJackpot["jackpots"] {
   const matchTypes = ["STJP6/58", "STJP6/55", "STJP6/50"];
-  const sources = results
-    .filter((result) =>
-      matchTypes.some((matchType) => matchType === result.type)
-    )
-    .map((result) => result.fdData);
-  return sources.map((source) => {
+  const sources = results.filter((result) =>
+    matchTypes.some((matchType) => matchType === result.type)
+  );
+
+  return sources.map(({ type, fdData: source }) => {
     let jackpots = [
       source.n1,
       source.n2,
@@ -19,18 +18,25 @@ function getToToJackpot(results: ResultDTO[]): SportToToJackpot["jackpots"] {
       source.n6,
     ];
 
-    if (source.jp_type === "6/50" && source.n7) {
+    if (type === `STJP6/50` && source.n7) {
       jackpots = [...jackpots, "+", source.n7];
     }
 
     const prizes = [source.jp1, source.jp2].filter(Boolean);
 
     return {
-      label: source.jp_type ?? "",
+      label: typeof source.jp_type === 'string' && source.jp_type.length
+        ? source.jp_type
+        : getJackpotLabelByType(type),
+      // label: source.jp_type ?? "",
       jackpots,
       prizes,
     };
   });
+}
+
+function getJackpotLabelByType(type: string): string {
+  return type.replace("STJPT", "");
 }
 
 function getToToFiveD(source: ResultDTO["fdData"]) {

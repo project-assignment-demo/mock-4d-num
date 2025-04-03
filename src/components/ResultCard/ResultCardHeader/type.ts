@@ -10,6 +10,7 @@ interface ResultCardHeaderProps {
   drawNo: string;
   primaryColor: string;
   showTimeSelection: boolean;
+  type: string;
   onUpdateSelectedTime: (index: number) => void;
 }
 

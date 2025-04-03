@@ -12,6 +12,7 @@ const CompanyTabBar = () => {
   const { goTo } = useSwiperControl();
 
   const companyIconHandler = (id: string, index: number) => {
+    console.log('index', index);
     goTo(index);
     const element = document.getElementById(id);
     console.log(id);

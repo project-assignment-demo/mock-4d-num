@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 
 import "swiper/css";
-import React, { PropsWithChildren } from "react";
+import React, { memo, PropsWithChildren } from "react";
 import { useSwiperContext } from "../../context/SwiperContext";
 
 interface SwiperWrapperProps extends PropsWithChildren {}
@@ -11,12 +11,12 @@ interface SwiperWrapperProps extends PropsWithChildren {}
 const SwiperWrapper = (props: SwiperWrapperProps) => {
   const { children } = props;
 
-  const { getSwiper, setSwiper } = useSwiperContext();
+  const { setSwiper } = useSwiperContext();
 
   return (
     <div className="h-screen w-screen">
       <Swiper
-        onSwiper={(swiper) =>  (getSwiper() === null ? setSwiper(swiper) : null) }
+        onSwiper={(swiper) => setSwiper(swiper)}
         modules={[Navigation, Pagination]}
         navigation
         pagination={{ clickable: true }}
@@ -35,5 +35,6 @@ const SwiperWrapper = (props: SwiperWrapperProps) => {
     </div>
   );
 };
+
 
 export default SwiperWrapper;

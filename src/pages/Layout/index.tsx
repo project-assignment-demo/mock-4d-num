@@ -2,9 +2,9 @@ import { Outlet, useLocation } from "react-router";
 import Sidebar from "../Sidebar";
 import { useSiteStore } from "../../store";
 import Nav from "../Nav";
-import { useEffect } from "react";
+import { PropsWithChildren, useEffect, useMemo } from "react";
 import { fetchIcons } from "../../api/companyIcon";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { getResults } from "../../api/result";
 import dayjs from "dayjs";
 import { getSpecialDraw } from "../../api/specialDrawDate";
@@ -65,10 +65,21 @@ const useBaseInitializeRequest = () => {
     isError,
   };
 };
+
+const DataInitializer = ({ children }: PropsWithChildren) => {
+  const { isCompleted, isError } = useBaseInitializeRequest();
+
+  if (isError) return <Error />;
+
+  if (isCompleted) return children;
+
+  return <Loading />;
+};
+
 const Layout = () => {
   const { isCompleted, isError } = useBaseInitializeRequest();
 
-  const specialDrawResults = useSiteStore((state) => state.specialDrawResults);
+  // const specialDrawResults = useSiteStore((state) => state.specialDrawResults);
 
   let Content = () => <Loading />;
 
@@ -86,18 +97,20 @@ const Layout = () => {
       <section className="hidden lg:w-[250px] lg:block h-screen">
         <Sidebar />
       </section>
+      <DataInitializer>
+        <main className="flex flex-col h-full w-full">
+          <div className="w-full bg-[#F3F3F3]">
+            <Nav />
+          </div>
 
-      <main className="flex flex-col h-full w-full">
-        <div className="w-full bg-[#F3F3F3]">
-          <Nav />
-        </div>
+          <div className="overflow-scroll scrollbar-hidden max-w-[1440px]">
+            <div className="flex">
+              <div className="flex-grow">
+                <Outlet />
 
-        <div className="overflow-scroll scrollbar-hidden max-w-[1440px]">
-          <div className="flex">
-            <div className="flex-grow">
-              <Content />
-            </div>
-            <div>
+                {/* <Content /> */}
+              </div>
+              {/* <div>
               {specialDrawResults.length && (
                 <div>
                   {specialDrawResults.map((r) => (
@@ -105,13 +118,15 @@ const Layout = () => {
                   ))}
                 </div>
               )}
+            </div> */}
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </DataInitializer>
     </div>
   );
 };
+
 
 const Loading = () => {
   return <div>Loading...</div>;

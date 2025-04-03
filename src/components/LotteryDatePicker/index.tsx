@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdOutlineDateRange } from 'react-icons/md'
@@ -14,7 +14,9 @@ const CustomInput = React.forwardRef(({ value, onClick }: any, ref: any) => (
   </button>
 ));
 
-const CustomDatePicker = () => {
+interface ResultDatePickerProps extends PropsWithChildren {}
+
+const ResultDatePicker = ({ children }: ResultDatePickerProps) => {
   const selectedDate = useSiteStore(state => state.selectedDate);
   const updateSelectedDate = useSiteStore(state => state.updateSelectedDate);
 
@@ -23,9 +25,28 @@ const CustomDatePicker = () => {
       selected={selectedDate}
       onChange={(date) => updateSelectedDate(date!)}
       maxDate={new Date()}
-      customInput={<CustomInput />}
+      customInput={React.isValidElement(children) ? children : <CustomInput />}
     />
   );
 };
 
-export default CustomDatePicker;
+
+
+// interface ResultDatePickerProps extends PropsWithChildren {}
+
+// const CustomDatePicker = ({ children }: ResultDatePickerProps) => {
+//   const selectedDate = useSiteStore(state => state.selectedDate);
+//   const updateSelectedDate = useSiteStore(state => state.updateSelectedDate);
+
+//   return (
+//     <DatePicker
+//       selected={selectedDate}
+//       onChange={(date) => updateSelectedDate(date!)}
+//       maxDate={new Date()}
+//       customInput={ React.isValidElement(children) children ?? <CustomInput/>}
+//       // customInput={<CustomInput />}
+//     />
+//   );
+// };
+
+export default ResultDatePicker;

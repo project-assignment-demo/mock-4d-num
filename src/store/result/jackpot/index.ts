@@ -1,6 +1,4 @@
 import { useCompanies, useSiteStore } from "../..";
-import { ResultDTO } from "../../../api/result/type";
-import { Company } from "../../company";
 import { JackpotResultChild, Result, ResultType } from "../type";
 import { getDaMaCaiJackpot } from "./daMaCai";
 import { getEightLuckyJackpot } from "./eightLucky";
@@ -50,10 +48,10 @@ function getJackpot({ type, companies, results }: MapJackpotConfig): Result {
   };
 }
 
-function useJackpots(): Result[] {
-  const results = useSiteStore((state) => state.sourceResults);
+function getJackpots(): Result[] {
+  const results = useSiteStore.getState().sourceResults;
   const companies = useCompanies("/jackpot");
-  const jackpotTypes: JackpotKey[] = ["M", "PMP", "ST", "SG", "EE", "H", "WB"];
+    const jackpotTypes: JackpotKey[] = ["M", "PMP", "ST", "SG", "EE", "H", "WB"];
 
   const jackpots = jackpotTypes.map((type) =>
     getJackpot({
@@ -66,4 +64,4 @@ function useJackpots(): Result[] {
   return jackpots;
 }
 
-export { useJackpots };
+export {  getJackpots };

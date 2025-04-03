@@ -38,7 +38,6 @@ async function getFourDNumberAnalysisResult(
   config: GetFourDAnalysisResultConfig
 ): Promise<FourDNumberAnalysisResult> {
   const data = await getNumberAnalysis(config);
-  console.log(data);
   return {
     analysisNumber: data.TotalComeOut,
     totalWinHistory: getFourDNumberAnalysisResultotalWinHistory(data),
@@ -68,12 +67,12 @@ function getFourDNumberAnalysisResultotalWinHistory(
     },
     {
       source: "special",
-      totalWin: source.totalSpecial,
+      totalWin: source.TotalSpecial,
       type: "text",
     },
     {
       source: "consolation",
-      totalWin: source.totalConsolation,
+      totalWin: source.TotalConsolation,
       type: "text",
     },
   ];
