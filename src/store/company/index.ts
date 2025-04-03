@@ -1,19 +1,17 @@
 import { useSiteStore } from "..";
 import { CompanyDTO } from "../../api/companyIcon/type";
+import type { Company, MapCompaniesConfig } from "./type";
 
-interface MapCompaniesConfig {
-  currentPath: string;
-  companies: CompanyDTO[];
-}
-
-export interface Company extends CompanyDTO {
-  label: string;
-}
+const permutation = {
+  id: "permutation",
+  label: "Permutation",
+  source: "https://4dnum.com/assets/permutation-244e4472.svg",
+};
 
 function mapCompanies(config: MapCompaniesConfig) {
   const companies = mapToCompaniesWithLabel(config.companies);
 
-  const isJackpotPath = config.currentPath.includes("/jackpot");
+  const isJackpotPath = config.currentPath?.includes("/jackpot");
   return companies.filter(({ id }) =>
     isJackpotPath
       ? ["M", "PMP", "ST", "SG", "EE", "H", "WB"].includes(id)
@@ -82,4 +80,27 @@ function useCompanies(currentPath: string) {
   return mapCompanies({ currentPath, companies });
 }
 
-export { useCompanies };
+function getCompanies(currentPath?: string) {
+  const companies = useSiteStore.getState().companies;
+  return mapCompanies({ currentPath, companies });
+}
+
+function getNumberAnalysisCompanies() {
+  const companies = getCompanies();
+
+  
+  return [permutation, ...companies].map((company) => {
+    if (company.id === "permutation") {
+      return {
+        ...company,
+        selected: false,
+      };
+    }
+    return {
+      ...company,
+      selected: true,
+    };
+  });
+}
+
+export { useCompanies, getNumberAnalysisCompanies, getCompanies, permutation };

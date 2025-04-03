@@ -30,8 +30,8 @@ interface FourDAnalysisNumberDto {
   totalN1: number;
   totalN2: number;
   totalN3: number;
-  totalSpecial: number;
-  totalConsolation: number;
+  TotalSpecial: number;
+  TotalConsolation: number;
   dream: FoudDNumberAnlaysisDream;
 }
 
@@ -41,7 +41,7 @@ interface BaseFourDAnalysisPayload {
 }
 
 interface FourDAnalysisPayload extends BaseFourDAnalysisPayload {
-  permutation?: string | null;
+  permutation: boolean;
 }
 
 type GetFourDAnalysisResultConfig = FourDAnalysisPayload;

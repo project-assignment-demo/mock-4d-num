@@ -67,12 +67,12 @@ function getFourDNumberAnalysisResultotalWinHistory(
     },
     {
       source: "special",
-      totalWin: source.totalSpecial,
+      totalWin: source.TotalSpecial,
       type: "text",
     },
     {
       source: "consolation",
-      totalWin: source.totalConsolation,
+      totalWin: source.TotalConsolation,
       type: "text",
     },
   ];

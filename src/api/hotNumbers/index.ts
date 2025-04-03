@@ -6,11 +6,11 @@ async function getHotNumbers({
   year,
   showFirstThreePrize,
   showThreeD,
-}: HotNumberPayload): Promise<HotNumberDto> {
+}: HotNumberPayload): Promise<HotNumberDto[]> {
   const limitPrizeType = showFirstThreePrize ? 1 : 0;
   const limitThreeD = showThreeD ? 3 : 4;
 
-  const result =  await api.get<HotNumberDto>(
+  const result =  await api.get<HotNumberDto[]>(
     `/hotNumber/${resultType}/${limitPrizeType}/${year}/${limitThreeD}`
   );
   return result.data;

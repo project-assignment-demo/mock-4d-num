@@ -30,7 +30,7 @@ interface JackpotCardProps {
   jackpotData: Result;
 }
 
-const JackpotCard = (props: JackpotCardProps) => {
+const   JackpotCard = (props: JackpotCardProps) => {
   const { jackpotKey, jackpotData: source } = props;
 
   const sourcesResults = useSiteStore((state) => state.sourceResults);
@@ -109,6 +109,7 @@ const jackpotComponentMap: {
   EE: (props) => <SabahFourDInfo {...props} />,
   H: (props) => <EightLuckyInfo {...props} />,
   WB: (props) => <NineWinBoxInfo {...props} />,
+  
 };
 
 export default JackpotCard;

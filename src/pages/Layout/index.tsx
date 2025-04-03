@@ -4,7 +4,7 @@ import { useSiteStore } from "../../store";
 import Nav from "../Nav";
 import { PropsWithChildren, useEffect, useMemo } from "react";
 import { fetchIcons } from "../../api/companyIcon";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { getResults } from "../../api/result";
 import dayjs from "dayjs";
 import { getSpecialDraw } from "../../api/specialDrawDate";

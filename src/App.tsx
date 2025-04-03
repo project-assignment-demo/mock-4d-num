@@ -13,6 +13,7 @@ import { en, ms, zh } from "./locale/index.ts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Dashboard from "./pages/Dashboard";
 import { SwiperProvider } from "./context/SwiperContext.tsx";
+import NotFound from "./pages/NotFound/index.tsx";
 
 const messages: Record<string, any> = {
   en: en,
@@ -44,6 +45,7 @@ const App = () => {
                 <Route path="hot-dddd-num" element={<Hot4DNumber />} />
                 <Route path="lucky-book" element={<LuckyBook />} />
               </Route>
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </SwiperProvider>
         </BrowserRouter>

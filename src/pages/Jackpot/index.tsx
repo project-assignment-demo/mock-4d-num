@@ -25,12 +25,12 @@ const Jackpot = () => {
           })}
         </div>
       </div>
-      <div>
+      <div className="block sm:hidden h-[500px]">
         <SwiperWrapper>
           {jackpots.map((jackpot) => {
             const { type } = jackpot;
             return (
-              <div key={type} className="max-w-full w-full h-screen">
+              <div key={type} className="max-w-full w-full h-full">
                 <JackpotCard
                   jackpotKey={type as JackpotKey}
                   jackpotData={jackpot}
