@@ -1,5 +1,3 @@
-// x completed need add jackpot
-
 import { getBaseLotteryInfo } from "../baseLotteryInfo";
 import { getLotteryJackpot } from "../utils";
 import { NineWinLottery, GetNineWinLotteryConfig } from "./type";

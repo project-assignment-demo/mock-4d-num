@@ -1,4 +1,3 @@
-// import { JackpotKey } from "../../api/result/type";
 import SwiperWrapper from "../../components/Swiper";
 
 import { JackpotKey } from "../../store/result/jackpot/type";

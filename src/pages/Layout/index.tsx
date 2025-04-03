@@ -22,9 +22,6 @@ const useBaseInitializeRequest = () => {
     (state) => state.updateSpecialDrawResults
   );
 
-  // fetch companies icon
-  // fetch results
-
   const queries = useQueries({
     queries: [
       { queryKey: ["site-logo"], queryFn: fetchIcons },

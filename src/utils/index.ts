@@ -30,7 +30,6 @@ const resultColorMap: ResulCardMap = {
     secondaryColor: "#B44EF2",
   },
 
-  // check
   CS: {
     primaryColor: "#0FA227",
     secondaryColor: "#EC2024",

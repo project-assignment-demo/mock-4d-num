@@ -72,13 +72,12 @@ const HotFourDSelectionWrapper = ({
                     React.HTMLProps<HTMLDivElement>
                   >;
                   return React.cloneElement(
-                    newChild, // Explicitly cast child to ReactElement
+                    newChild,
                     {
                       onClick: (
                         e: React.MouseEvent<HTMLDivElement, MouseEvent>
                       ) => {
                         if (newChild.props.onClick) {
-                          // Call the original onClick handler if it exists
                           newChild.props.onClick(e);
                         }
                         handleClose();

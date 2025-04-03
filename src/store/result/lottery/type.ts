@@ -9,7 +9,7 @@ import { SpecialCashSweepLottery } from "./specialCashSweep/type";
 import { SportToToLottery } from "./sportToTo/type";
 import { ResultDTO } from "../../../api/result/type";
 import { ResultType } from "../type";
-import { Company } from "../../company";
+import { Company } from "../../company/type";
 
 type LotteryKey =
   | "M"
@@ -37,7 +37,6 @@ interface GetLotteryConfig {
   type: LotteryKey;
   results: ResultDTO[];
   resultType: ResultType;
-  // video?: string | undefined;
 }
 
 interface MapLotteryConfig {

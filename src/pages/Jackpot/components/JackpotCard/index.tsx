@@ -37,7 +37,6 @@ const   JackpotCard = (props: JackpotCardProps) => {
 
   const [jackpotData, setJackpotData] = useState(source);
   const [childIndex, setChildIndex] = useState(0);
-  // const [data, setData] = useState(jackpotData.children[childIndex]);
 
   const Component = jackpotComponentMap[jackpotKey];
   const colors = resultColorMap[jackpotKey];

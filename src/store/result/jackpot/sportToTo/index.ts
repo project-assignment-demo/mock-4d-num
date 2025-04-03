@@ -28,7 +28,6 @@ function getToToJackpot(results: ResultDTO[]): SportToToJackpot["jackpots"] {
       label: typeof source.jp_type === 'string' && source.jp_type.length
         ? source.jp_type
         : getJackpotLabelByType(type),
-      // label: source.jp_type ?? "",
       jackpots,
       prizes,
     };

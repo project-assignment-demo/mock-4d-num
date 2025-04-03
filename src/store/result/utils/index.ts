@@ -1,5 +1,3 @@
-// import { SixDJackpot } from "../../../api/result/type";
-
 import { ResultDTO } from "../../../api/result/type";
 import { getResultCountry } from "../../../utils";
 

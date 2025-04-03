@@ -11,8 +11,3 @@ interface JackpotComponentProps <T extends JackpotResultChild> {
 }
 
 export type { JackpotComponentProps }
-
-// { data: JackpotType }
-
-// interface => oop
-// type -> compostion
