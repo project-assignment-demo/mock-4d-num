@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import CardHeader from "../../../../components/ResultCard/ResultCardHeader";
+import ResultCardHeader from "../../../../components/ResultCard/ResultCardHeader";
 import { JackpotKey } from "../../../../store/result/jackpot/type";
 import { Result } from "../../../../store/result/type";
 import { JackpotComponentProps } from "./type";
@@ -56,12 +56,12 @@ const   JackpotCard = (props: JackpotCardProps) => {
       console.log(jackpotData.children[childIndex]);
     }
 
-    return jackpotData?.children?.[childIndex];
+    return jackpotData.children[childIndex];
   }, [jackpotData, childIndex]);
 
   return (
     <div className="w-full rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full">
-      <CardHeader
+      <ResultCardHeader
         type={jackpotData.type}
         title={jackpotData.title}
         logo={jackpotData.logo}

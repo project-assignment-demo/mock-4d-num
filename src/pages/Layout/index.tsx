@@ -91,7 +91,7 @@ const Layout = () => {
   return (
     <div className="flex h-screen w-full bg-[#F3F3F3]">
       {/* Sidebar */}
-      <section className="hidden lg:w-[250px] lg:block h-screen">
+      <section className="hidden lg:w-[250px] lg:block h-full">
         <Sidebar />
       </section>
       <DataInitializer>
@@ -115,7 +115,7 @@ const Layout = () => {
 const SpecialDrawResultSection = () => {
   const specialDrawResults = useSiteStore((state) => state.specialDrawResults);
   return (
-    <div className="w-[206px] h-auto my-auto hidden md:block">
+    <div className="w-[206px] h-auto my-auto hidden">
       <div className="flex flex-col justify-center items-center w-full">
         <p className="text-center">Special Draw Date</p>
         <p className="text-center">Upcoming Special Draw Date</p>

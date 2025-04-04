@@ -1,6 +1,6 @@
 import { useSiteStore } from "../..";
 import { ResultDTO } from "../../../api/result/type";
-import { getCompanies, useCompanies } from "../../company";
+import { getCompanies } from "../../company";
 import { LotteryResultChild, Result, ResultType } from "../type";
 import { getDaMaCaiLottery } from "./daMaCai";
 import { getEightLuckyLottery } from "./eightLucky";
