@@ -1,6 +1,6 @@
 import { useSiteStore } from "../..";
 import { ResultDTO } from "../../../api/result/type";
-import { useCompanies } from "../../company";
+import { getCompanies, useCompanies } from "../../company";
 import { LotteryResultChild, Result, ResultType } from "../type";
 import { getDaMaCaiLottery } from "./daMaCai";
 import { getEightLuckyLottery } from "./eightLucky";
@@ -62,9 +62,9 @@ function getlotteryChildren({
   }
 }
 
-function useLotteries(): Result[] {
-  const results = useSiteStore((state) => state.sourceResults);
-  const companies = useCompanies("");
+function getLotteries(): Result[] {
+  const results = useSiteStore.getState().sourceResults;
+  const companies = getCompanies();
   const lotterryTypes: LotteryKey[] = [
     "M",
     "PMP",
@@ -87,4 +87,4 @@ function useLotteries(): Result[] {
   );
 }
 
-export { useLotteries };
+export { getLotteries };

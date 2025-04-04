@@ -1,10 +1,11 @@
-import { useLotteries } from "../../store/result";
+
 import LotteryCard from "./components/LotteryCard";
 import { LotteryKey } from "../../store/result/lottery/type";
 import SwiperWrapper from "../../components/Swiper";
+import { getLotteries } from "../../store/result";
 
 const Dashboard = () => {
-  const lotteries = useLotteries();
+  const lotteries = getLotteries();
 
   return (
     <>
