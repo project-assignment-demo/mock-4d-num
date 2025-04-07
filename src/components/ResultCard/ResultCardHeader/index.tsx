@@ -88,17 +88,21 @@ const ResultHeaderDateInfo = ({
       <div className="flex items-center">
         <MdChevronLeft
           onClick={() => getResultByDate("prev")}
-          className="text-[24px] font-[400]"
+          className="text-[24px] font-[400] block sm:hidden"
         />
-        <ResultDatePicker>
+        <ResultDatePicker className="sm:hidden">
           <div>
             <p className="text-center font-bold text-[14px]">{date}</p>
             <p className="text-center font-bold text-[14px]">({day})</p>
           </div>
         </ResultDatePicker>
+        <div className="hidden: sm:block">
+          <p className="text-center font-bold text-[14px]">{date}</p>
+          <p className="text-center font-bold text-[14px]">({day})</p>
+        </div>
         <MdChevronRight
           onClick={() => getResultByDate("next")}
-          className="text-[24px] font-[400]"
+          className="text-[24px] font-[400] block sm:hidden"
         />
       </div>
     </div>

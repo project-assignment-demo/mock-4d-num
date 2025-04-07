@@ -83,17 +83,17 @@ const Hot4DNumber = () => {
     <div className="h-[calc(-95px-0.5rem+100dvh)] max-h-[calc(1345px-0.5rem)]">
       <div className="flex">
         <div className="w-full">
-          <FourDYearSelection
-            items={years}
-            title={yearTitle}
-            onUpdateSelectedYear={onUpdateSelectedYearHandler}
-          />
-        </div>
-        <div className="w-full">
           <FourDTypesSelection
             items={fourDTypes}
             title={hotFourDTypeTitle}
             onUpdateSelectedFourD={onUpdateSelectedFourDHandler}
+          />
+        </div>
+        <div className="w-full">
+          <FourDYearSelection
+            items={years}
+            title={yearTitle}
+            onUpdateSelectedYear={onUpdateSelectedYearHandler}
           />
         </div>
       </div>

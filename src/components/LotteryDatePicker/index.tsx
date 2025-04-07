@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { MdOutlineDateRange } from 'react-icons/md'
+import { MdOutlineDateRange } from "react-icons/md";
 import { useSiteStore } from "../../store";
 const CustomInput = React.forwardRef(({ value, onClick }: any, ref: any) => (
   <button
@@ -9,19 +9,22 @@ const CustomInput = React.forwardRef(({ value, onClick }: any, ref: any) => (
     onClick={onClick}
     ref={ref}
   >
-    <MdOutlineDateRange color="grey" size={25}/>
-   {value}
+    <MdOutlineDateRange color="grey" size={25} />
+    {value}
   </button>
 ));
 
-interface ResultDatePickerProps extends PropsWithChildren {}
+interface ResultDatePickerProps extends PropsWithChildren {
+  className?: string | undefined;
+}
 
-const ResultDatePicker = ({ children }: ResultDatePickerProps) => {
-  const selectedDate = useSiteStore(state => state.selectedDate);
-  const updateSelectedDate = useSiteStore(state => state.updateSelectedDate);
+const ResultDatePicker = ({ children, className }: ResultDatePickerProps) => {
+  const selectedDate = useSiteStore((state) => state.selectedDate);
+  const updateSelectedDate = useSiteStore((state) => state.updateSelectedDate);
 
   return (
     <DatePicker
+      className={className}
       selected={selectedDate}
       onChange={(date) => updateSelectedDate(date!)}
       maxDate={new Date()}
@@ -29,8 +32,6 @@ const ResultDatePicker = ({ children }: ResultDatePickerProps) => {
     />
   );
 };
-
-
 
 // interface ResultDatePickerProps extends PropsWithChildren {}
 

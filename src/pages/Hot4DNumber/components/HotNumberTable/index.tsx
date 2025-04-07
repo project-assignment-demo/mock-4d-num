@@ -31,9 +31,11 @@ const HotNumberTable = ({ numbers }: HotNumberTableProps) => {
           </tbody>
         )}
       </table>
-      <div className="flex justify-center items-center">
-        <p className="text-center">Please select type and year</p>
-      </div>
+      {numbers && numbers.length > 0 && (
+        <div className="flex justify-center items-center">
+          <p className="text-center">Please select type and year</p>
+        </div>
+      )}
     </div>
   );
 };

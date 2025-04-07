@@ -7,7 +7,7 @@ function getYears() {
       years[i] = (startYear + i).toString(); // Direct assignment
     }
   
-    return years;
+    return years.sort((a,b) => b - a);
   }
 
   export { getYears }
