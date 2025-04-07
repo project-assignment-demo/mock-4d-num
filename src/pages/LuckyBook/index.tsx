@@ -39,7 +39,7 @@ const LuckyBook = () => {
         {
             books.map(book => {
                 return (
-                    <div onClick={() => navigate(`/lucky-book-category-list/${book.id}`)} className="w-[200px] h-[336px] bg-blue-400">
+                    <div onClick={() => navigate(`/lucky-book-category-list/${book.id.toLowerCase()}`)} className="w-[200px] h-[336px] bg-blue-400">
                         <img src={book.image} alt="" />
                         <p>{book.label}</p>
                         <p>{book.id}</p>

@@ -74,19 +74,6 @@ const DataInitializer = ({ children }: PropsWithChildren) => {
 };
 
 const Layout = () => {
-  const { isCompleted, isError } = useBaseInitializeRequest();
-
-  // const specialDrawResults = useSiteStore((state) => state.specialDrawResults);
-
-  let Content = () => <Loading />;
-
-  if (isError) {
-    Content = () => <Error />;
-  }
-
-  if (isCompleted) {
-    Content = () => <Outlet />;
-  }
 
   return (
     <div className="flex h-screen w-full bg-[#F3F3F3]">

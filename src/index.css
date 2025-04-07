@@ -4,7 +4,7 @@
   display: none;
 }
 
-.scrollbar-hidden {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
+/* .scrollbar-hidden {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+} */
