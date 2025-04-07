@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import LuckyBookSearchSection from "./components/LuckBookSearchBar";
 
 interface LuckBookItem {
   image: string;
@@ -35,6 +36,7 @@ const LuckyBook = () => {
   const navigate = useNavigate();
 
   return <div className="w-full h-full bg-red-200">
+    <LuckyBookSearchSection type="all"/>
     <div className="flex justify-center items-center gap-10">
         {
             books.map(book => {

@@ -1,8 +1,11 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
-import { getLuckyBook } from "../../api/luckyBook";
-import { LuckyBookDto } from "../../api/luckyBook/type";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { getLuckyBook } from "../../../api/luckyBook";
+import { LuckyBookDto } from "../../../api/luckyBook/type";
 import { useNavigate, useParams } from "react-router";
+import ScrollToTopButton from "../../../components/ScrollToTopButton";
+import LuckyBookSearchSection from "../components/LuckBookSearchBar";
+import { LuckyBookSearchCategory } from "../../../store";
 
 const LuckyBookCategoryList = () => {
   const { id } = useParams();
@@ -16,6 +19,8 @@ const LuckyBookCategoryList = () => {
   const [page, setPage] = useState<number>(0);
 
   const loaderRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isRefReady, setIsRefReady] = useState(false);
   const { data, isLoading, isError } = useQuery<LuckyBookDto[], Error>({
     queryKey: ["items", page, id],
     placeholderData: keepPreviousData,
@@ -27,6 +32,13 @@ const LuckyBookCategoryList = () => {
       });
     },
   });
+
+  useEffect(() => {
+    console.log(containerRef);
+    if (containerRef.current) {
+      setIsRefReady(true);
+    }
+  }, [containerRef.current]);
 
   useEffect(() => {
     if (data?.length) {
@@ -57,11 +69,15 @@ const LuckyBookCategoryList = () => {
   if (isError) return <p>Error loading data.</p>;
 
   return (
-    <div className="flex flex-col w-[760px] mx-auto py-8 overflow-y-auto">
+    <div
+      ref={containerRef}
+      className="flex flex-col w-[760px] mx-auto py-8 overflow-y-auto h-full"
+    >
+      <LuckyBookSearchSection type={id as LuckyBookSearchCategory} />
       <div className="flex flex-wrap w-full gap-5 px-2">
         {books.map((item) => (
           <div
-            className="w-[150px] min-h-[250px] h-full flex flex-col items-center bg-white gap-2 p-[20px] rounded-[18px]"
+            className="w-[150px] min-h-[250px] flex flex-col items-center bg-white gap-2 p-[20px] rounded-[18px]"
             key={item.number}
           >
             <div className="w-[120px] h-[33.5px] border border-[rgb(198,198,198)] bg-[rgb(255,255,255)] rounded-[13px]">
@@ -82,10 +98,12 @@ const LuckyBookCategoryList = () => {
         ))}
       </div>
 
+      {isRefReady && <ScrollToTopButton scrollRef={containerRef} />}
       <div ref={loaderRef} style={{ height: "30px" }}>
         {isLoading && <p>Loading...</p>}
       </div>
     </div>
   );
 };
+
 export default LuckyBookCategoryList;

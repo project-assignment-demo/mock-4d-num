@@ -5,8 +5,11 @@ import { useCompanies } from "./company";
 
 export type SupportLocales = "zh" | "ms" | "en";
 
+export type LuckyBookSearchCategory = "all" | "wzt" | "gzt" | "qzt";
+
 type SiteState = {
   locale: SupportLocales;
+  luckyBookSearchCategory: LuckyBookSearchCategory;
   openDrawer: boolean;
   companies: CompanyDTO[];
   selectedDate: Date;
@@ -16,6 +19,8 @@ type SiteState = {
 
 type SiteAction = {
   updateLocale: (locale: SupportLocales) => void;
+
+  updateLuckyBookSearchCategory: (category: LuckyBookSearchCategory) => void;
 
   updateDrawer: (val: boolean) => void;
 
@@ -30,12 +35,15 @@ type SiteAction = {
 
 const useSiteStore = create<SiteState & SiteAction>((set) => ({
   locale: "en",
+  luckyBookSearchCategory: "all",
   sourceResults: [],
   specialDrawResults: [],
   selectedDate: new Date(),
   updateResults: (results) => {
     set({ sourceResults: results });
   },
+  updateLuckyBookSearchCategory: (category) =>
+    set({ luckyBookSearchCategory: category }),
   updateLocale: (locale: SupportLocales) => set({ locale }),
   openDrawer: false,
   updateDrawer: (val: boolean) => set({ openDrawer: val }),
