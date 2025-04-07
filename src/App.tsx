@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Dashboard from "./pages/Dashboard";
 import { SwiperProvider } from "./context/SwiperContext.tsx";
 import NotFound from "./pages/NotFound/index.tsx";
+import LuckyBookCategoryList from "./pages/LuckyBookCategoryList/index.tsx";
 
 const messages: Record<string, any> = {
   en: en,
@@ -44,6 +45,10 @@ const App = () => {
                 <Route path="spin-my-luck" element={<SpinMyLuck />} />
                 <Route path="hot-dddd-num" element={<Hot4DNumber />} />
                 <Route path="lucky-book" element={<LuckyBook />} />
+                <Route
+                  path="lucky-book-category-list/:id"
+                  element={<LuckyBookCategoryList />}
+                />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>

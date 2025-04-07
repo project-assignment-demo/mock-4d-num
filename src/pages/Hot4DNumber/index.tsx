@@ -125,8 +125,8 @@ const Hot4DNumber = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col h-full bg-gray-400 overflow-y-hidden">
-        <div className="flex-grow bg-red-400 p-[10px]">
+      <div className="flex flex-col h-ful overflow-y-hidden">
+        <div className="flex-grow p-[10px]">
           <HotNumberTable numbers={data} />
         </div>
       </div>

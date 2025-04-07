@@ -2,7 +2,7 @@ import { Outlet, useLocation } from "react-router";
 import Sidebar from "../Sidebar";
 import { useSiteStore } from "../../store";
 import Nav from "../Nav";
-import { PropsWithChildren, useEffect, useMemo } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { fetchIcons } from "../../api/companyIcon";
 import { useQueries } from "@tanstack/react-query";
 import { getResults } from "../../api/result";
@@ -74,24 +74,11 @@ const DataInitializer = ({ children }: PropsWithChildren) => {
 };
 
 const Layout = () => {
-  const { isCompleted, isError } = useBaseInitializeRequest();
-
-  // const specialDrawResults = useSiteStore((state) => state.specialDrawResults);
-
-  let Content = () => <Loading />;
-
-  if (isError) {
-    Content = () => <Error />;
-  }
-
-  if (isCompleted) {
-    Content = () => <Outlet />;
-  }
 
   return (
     <div className="flex h-screen w-full bg-[#F3F3F3]">
       {/* Sidebar */}
-      <section className="hidden lg:w-[250px] lg:block h-screen">
+      <section className="hidden lg:w-[250px] lg:block h-full">
         <Sidebar />
       </section>
       <DataInitializer>
@@ -100,23 +87,11 @@ const Layout = () => {
             <Nav />
           </div>
 
-          <div className="overflow-scroll scrollbar-hidden max-w-[1440px]">
-            <div className="flex">
-              <div className="flex-grow">
-                <Outlet />
-
-                {/* <Content /> */}
-              </div>
-              {/* <div>
-              {specialDrawResults.length && (
-                <div>
-                  {specialDrawResults.map((r) => (
-                    <p>{r}</p>
-                  ))}
-                </div>
-              )}
-            </div> */}
+          <div className="flex flex-row overflow-hidden">
+            <div className="overflow-scroll scrollbar-hidden w-full max-w-[1440px]">
+              <Outlet />
             </div>
+            <SpecialDrawResultSection />
           </div>
         </main>
       </DataInitializer>
@@ -124,6 +99,27 @@ const Layout = () => {
   );
 };
 
+const SpecialDrawResultSection = () => {
+  const specialDrawResults = useSiteStore((state) => state.specialDrawResults);
+  return (
+    <div className="w-[206px] h-auto my-auto hidden">
+      <div className="flex flex-col justify-center items-center w-full">
+        <p className="text-center">Special Draw Date</p>
+        <p className="text-center">Upcoming Special Draw Date</p>
+        {specialDrawResults.length && (
+          <ul>
+            {specialDrawResults.map((r) => (
+              <li className="flex">
+                <p>{r}</p>
+                <span>( {dayjs(new Date(r)).format("ddd")} )</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const Loading = () => {
   return <div>Loading...</div>;

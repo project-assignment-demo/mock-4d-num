@@ -5,11 +5,15 @@ const HotNumberTable = ({ numbers }: HotNumberTableProps) => {
 
   return (
     <div className="w-full">
-      <table>
-        <thead>
-          <tr>
+      <table className="table-auto w-full border border-[rgb(233,232,232)] rounded-lg">
+        <thead className="rounded-lg">
+          <tr className="rounded-lg bg-[rgb(255,184,2)]">
             {headers.map((header) => {
-              return <th>{header}</th>;
+              return (
+                <th className="px-4 py-1 text-sm text-[rgb(130,39,0)]">
+                  {header}
+                </th>
+              );
             })}
           </tr>
         </thead>
@@ -17,10 +21,10 @@ const HotNumberTable = ({ numbers }: HotNumberTableProps) => {
           <tbody>
             {numbers.map((number, index) => {
               return (
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{number.num}</td>
-                  <td> {number.total} </td>
+                <tr className="border-b border-[rgb(233,232,232)] bg-white">
+                  <td className="text-center">{index + 1}</td>
+                  <td className="text-center">{number.num}</td>
+                  <td className="text-center"> {number.total} </td>
                 </tr>
               );
             })}

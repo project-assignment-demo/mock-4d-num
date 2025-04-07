@@ -1,4 +1,4 @@
-type LuckBookType = "wzt" | "gzt" | "qzt";
+type LuckBookType = string | "wzt" | "gzt" | "qzt";
 
 interface LuckyBookPayload {
   type: LuckBookType;

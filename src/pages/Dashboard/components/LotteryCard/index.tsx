@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { LotteryKey } from "../../../../store/result/lottery/type";
 import { Result } from "../../../../store/result/type";
 import ResultCardHeader from "../../../../components/ResultCard/ResultCardHeader";
@@ -24,66 +24,87 @@ import EightLuckyLotteryInfo from "../Lottery/EightLuckyLotteryInfo";
 import PerdanaLotteryInfo from "../Lottery/PerdanaLotteryInfo";
 import NineWinBoxLotteryInfo from "../Lottery/NineWinBoxLotteryInfo";
 import { resultColorMap } from "../../../../utils";
+import { useSiteStore } from "../../../../store";
+import { getLotteries } from "../../../../store/result";
 
 interface LotteryCardProps {
   lotteryKey: LotteryKey;
   lotteryData: Result;
 }
 
+type LotteryComponentMap = {
+  M: LotteryComponentProps<MagnumLottery>;
+  PMP: LotteryComponentProps<DaMaCaiLottery>;
+  ST: LotteryComponentProps<SportToToLottery>;
+  SG: LotteryComponentProps<SingaporeFourDLottery>;
+  CS: LotteryComponentProps<SpecialCashSweepLottery>;
+  STC: LotteryComponentProps<SandakanFourDLottery>;
+  EE: LotteryComponentProps<SabahFourDLottery>;
+  H: LotteryComponentProps<EightLuckyLottery>;
+  P: LotteryComponentProps<PerdanaLottery>;
+  WB: LotteryComponentProps<NineWinLottery>;
+};
+
+const lotteryComponentMap: {
+  [K in keyof LotteryComponentMap]: React.FC<LotteryComponentMap[K]>;
+} = {
+  M: (props) => <MagnumLotteryInfo {...props} />,
+  PMP: (props) => <DaMaCaiLotteryInfo {...props} />,
+  ST: (props) => <SportToToLotteryInfo {...props} />,
+  SG: (props) => <SingaporeLotteryInfo {...props} />,
+  CS: (props) => <SpecialCashSweepLotteryInfo {...props} />,
+  STC: (props) => <SandakanLotteryInfo {...props} />,
+  EE: (props) => <SabahFourDLotteryInfo {...props} />,
+  H: (props) => <EightLuckyLotteryInfo {...props} />,
+  P: (props) => <PerdanaLotteryInfo {...props} />,
+  WB: (props) => <NineWinBoxLotteryInfo {...props} />,
+};
+
 const LotteryCard = (props: LotteryCardProps) => {
-  const { lotteryKey, lotteryData } = props;
+  const { lotteryKey, lotteryData: source } = props;
+
+  const sourcesResults = useSiteStore((state) => state.sourceResults);
+
+  const [lotteryData, setLotteryData] = useState(source);
+  const [childIndex, setChildIndex] = useState(0);
+
+  const Component = lotteryComponentMap[lotteryKey];
   const colors = resultColorMap[lotteryKey];
 
-  type LotteryComponentMap = {
-    M: LotteryComponentProps<MagnumLottery>;
-    PMP: LotteryComponentProps<DaMaCaiLottery>;
-    ST: LotteryComponentProps<SportToToLottery>;
-    SG: LotteryComponentProps<SingaporeFourDLottery>;
-    CS: LotteryComponentProps<SpecialCashSweepLottery>;
-    STC: LotteryComponentProps<SandakanFourDLottery>;
-    EE: LotteryComponentProps<SabahFourDLottery>;
-    H: LotteryComponentProps<EightLuckyLottery>;
-    P: LotteryComponentProps<PerdanaLottery>;
-    WB: LotteryComponentProps<NineWinLottery>;
-  };
+  useEffect(() => {
+    setLotteryData(source);
+  }, [source]);
 
-  const lotteryComponentMap: {
-    [K in keyof LotteryComponentMap]: React.FC<LotteryComponentMap[K]>;
-  } = {
-    M: (props) => <MagnumLotteryInfo {...props} />,
-    PMP: (props) => <DaMaCaiLotteryInfo {...props} />,
-    ST: (props) => <SportToToLotteryInfo {...props} />,
-    SG: (props) => <SingaporeLotteryInfo {...props} />,
-    CS: (props) => <SpecialCashSweepLotteryInfo {...props} />,
-    STC: (props) => <SandakanLotteryInfo {...props} />,
-    EE: (props) => <SabahFourDLotteryInfo {...props} />,
-    H: (props) => <EightLuckyLotteryInfo {...props} />,
-    P: (props) => <PerdanaLotteryInfo {...props} />,
-    WB: (props) => <NineWinBoxLotteryInfo {...props} />,
-  };
+  useEffect(() => {
+    const d = getLotteries().find((lottery) => lottery.type === lotteryKey)!;
+    setLotteryData(d);
+  }, [sourcesResults]);
 
-  const [resultChild, setResultChild] = useState(lotteryData.children[0]);
-  const Component = lotteryComponentMap[lotteryKey];
+  const data = useMemo(() => {
+    return lotteryData.children[childIndex];
+  }, [lotteryData, childIndex]);
+
+  // const [resultChild, setResultChild] = useState(lotteryData.children[0]);
+
   return (
     <div className="w-full rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full">
       <ResultCardHeader
+        type={lotteryData.type}
         title={lotteryData.title}
         logo={lotteryData.logo}
-        date={resultChild.date}
-        day={resultChild.day}
+        date={data.date}
+        day={data.day}
         primaryColor={colors.primaryColor}
-        drawNo={resultChild.drawNo}
+        drawNo={data.drawNo}
         showTimeSelection={lotteryData.children.length > 1}
-        onUpdateSelectedTime={(index: number) =>
-          setResultChild(lotteryData.children[index])
-        }
+        onUpdateSelectedTime={(index: number) => setChildIndex(index)}
       />
 
       <div className="mt-[-35px] flex flex-col gap-[10px] px-5">
         <Component
           title={lotteryData.title}
           logo={lotteryData.logo}
-          data={resultChild as any}
+          data={data as any}
           {...colors}
           selectedTime={undefined}
         />
