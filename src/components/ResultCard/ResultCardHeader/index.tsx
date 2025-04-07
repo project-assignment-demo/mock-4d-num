@@ -96,7 +96,7 @@ const ResultHeaderDateInfo = ({
             <p className="text-center font-bold text-[14px]">({day})</p>
           </div>
         </ResultDatePicker>
-        <div className="hidden: sm:block">
+        <div className="hidden sm:block">
           <p className="text-center font-bold text-[14px]">{date}</p>
           <p className="text-center font-bold text-[14px]">({day})</p>
         </div>
