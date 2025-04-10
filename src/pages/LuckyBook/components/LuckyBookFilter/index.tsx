@@ -1,5 +1,4 @@
 import {
-  memo,
   PropsWithChildren,
   useEffect,
   useMemo,
@@ -9,6 +8,7 @@ import {
 import Filter from "../../../../assets/Filter.svg?react";
 
 import cs from "classnames";
+import { useSiteStore } from "../../../../store";
 
 const LuckyBookFilter = (props: {onSelected?: (value: LuckyBookFilterData) => void}) => {
   return (
@@ -35,10 +35,14 @@ const LuckyBookFilterDropDown = ({
   const filterDatas = useMemo(() => {
     return generateFilterData();
   }, []);
+
   const [open, setOpen] = useState(false);
-  const [selectedFilter, updateSelectedFilter] = useState(filterDatas[0]);
+
+  const luckyBookFilterPointer = useSiteStore(state => state.luckyBookFilterPointer)
+  const updateLuckyBookFilterPointer = useSiteStore(state => state.updateLuckyBookFilterPointer);
+
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const buttonRef = useRef<HTMLDivElement | null>(null);
 
   const handleToggle = () => setOpen(!open);
   const handleClose = () => setOpen(false);
@@ -61,13 +65,6 @@ const LuckyBookFilterDropDown = ({
     };
   }, []);
 
-  const imageClassnames = cs(
-    "w-[23px] transform transition-transform duration-300",
-    {
-      "-rotate-180": open,
-    }
-  );
-
   const dropdownClassnames = cs(
     "absolute z-[10] left-1/2 top-full mt-2 w-[150px] max-h-[420px] bg-green-300 overflow-y-auto border border-gray-400 shadow-lg rounded transform -translate-x-1/2",
     {
@@ -83,10 +80,10 @@ const LuckyBookFilterDropDown = ({
   return (
     <div className="flex flex-col items-center relative cursor-pointer">
       <div className="relative group">
-        <div className="w-[120px] min-h-[32px] flex justify-center items-center">
+        <div ref={buttonRef} className="w-[120px] min-h-[32px] flex justify-center items-center">
           <p onClick={handleToggle}>
-            {format4Digit(selectedFilter.start)} -{" "}
-            {format4Digit(selectedFilter.end)}
+            {format4Digit(luckyBookFilterPointer.start)} -{" "}
+            {format4Digit(luckyBookFilterPointer.end)}
           </p>
         </div>
 
@@ -96,7 +93,7 @@ const LuckyBookFilterDropDown = ({
               return (
                 <p
                   onClick={() => {
-                    updateSelectedFilter(data);
+                    updateLuckyBookFilterPointer(data);
                     onSelected?.(data)
                     handleClose();
                   }}
@@ -116,7 +113,7 @@ function generateFilterData(): LuckyBookFilterData[] {
   const dataLength = 10000;
   const singleGapQuantity = 500;
   const totalGap = dataLength / singleGapQuantity;
-  return Array.from({ length: totalGap }).map((gap, index) => {
+  return Array.from({ length: totalGap }).map((_, index) => {
     const start = index * singleGapQuantity;
     const end = start + singleGapQuantity - 1;
     return {
