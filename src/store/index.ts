@@ -6,7 +6,11 @@ import { LuckyBookFilterData } from "../pages/LuckyBook/components/LuckyBookFilt
 
 export type SupportLocales = "zh" | "ms" | "en";
 
-export type LuckyBookSearchCategory = "all" | "wzt" | "gzt" | "qzt";
+export const LuckyBookSearchCategories = ["all", "wzt", "gzt", "qzt"] as const;
+
+export type LuckyBookSearchCategory = typeof LuckyBookSearchCategories[number];
+
+// export type LuckyBookSearchCategory = "all" | "wzt" | "gzt" | "qzt";
 
 interface LuckyBookFilterPointerData extends LuckyBookFilterData {
   pointer: number;

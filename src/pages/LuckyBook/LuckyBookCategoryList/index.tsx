@@ -4,7 +4,11 @@ import { getLuckyBook } from "../../../api/luckyBook";
 import { LuckyBookDto } from "../../../api/luckyBook/type";
 import { useNavigate, useParams } from "react-router";
 import ScrollToTopButton from "../../../components/ScrollToTopButton";
-import { useSiteStore } from "../../../store";
+import {
+  LuckyBookSearchCategories,
+  LuckyBookSearchCategory,
+  useSiteStore,
+} from "../../../store";
 import LuckyBookContainer from "../components/LuckyBookContainer";
 
 const LuckyBookCategoryList = () => {
@@ -15,11 +19,19 @@ const LuckyBookCategoryList = () => {
     (state) => state.resetLuckyBookFilterPointer
   );
 
+  const updateLuckyBookSearchCategory = useSiteStore(
+    (state) => state.updateLuckyBookSearchCategory
+  );
+
   if (!id) {
     navigate("/unknown");
   }
 
   useEffect(() => {
+    if (LuckyBookSearchCategories.includes(id as any)) {
+      updateLuckyBookSearchCategory(id as LuckyBookSearchCategory);
+    }
+
     return () => {
       resetLuckyBookFilterPointer();
     };

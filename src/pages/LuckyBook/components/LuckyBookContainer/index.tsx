@@ -58,7 +58,7 @@ const LuckyBookContainer = ({ children, title }: LuckyBookContainerProps) => {
         )}
         <div className="md:hidden w-[315px] flex flex-col gap-2 h-25 absolute left-[50%] bottom-[0px] translate-x-[-50%]">
           <div className="w-full">
-            <LuckyBookSearchSection type={"all"} />
+            <LuckyBookSearchSection />
           </div>
           <div className={filterSectionClassnames}>
             {isShowLoadPrevious && (

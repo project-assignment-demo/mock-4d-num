@@ -1,26 +1,23 @@
 import { useState } from "react";
 import Search from "./icon/search.svg?react";
 import { useNavigate } from "react-router";
-import { LuckyBookSearchCategory, useSiteStore } from "../../../../store";
+import { useSiteStore } from "../../../../store";
 
-interface LuckyBookSearchSectionProps {
-  type: LuckyBookSearchCategory;
-}
 
-const LuckyBookSearchSection = ({ type }: LuckyBookSearchSectionProps) => {
+const LuckyBookSearchSection = () => {
   const [value, setValue] = useState("");
 
   const navigate = useNavigate();
 
-  const updateLuckyBookSearchCategory = useSiteStore(
-    (state) => state.updateLuckyBookSearchCategory
+  const luckyBookSearchCategory = useSiteStore(
+    (state) => state.luckyBookSearchCategory
   );
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        updateLuckyBookSearchCategory(type);
+        console.log(luckyBookSearchCategory);
         navigate(`/lucky-book-search-result?query=${value}`);
       }}
       className="flex flex-row h-[40px] w-full max-w-[400px] gap-[4px]"

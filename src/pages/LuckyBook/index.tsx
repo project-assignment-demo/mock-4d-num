@@ -1,5 +1,7 @@
 import { Link } from "react-router";
 import LuckyBookSearchSection from "./components/LuckBookSearchBar";
+import { useEffect } from "react";
+import { useSiteStore } from "../../store";
 
 interface LuckCategory {
   image: string;
@@ -36,6 +38,15 @@ const LuckyBook = () => {
     },
   ];
 
+  const updateLuckyBookSearchCategory = useSiteStore(
+    (state) => state.updateLuckyBookSearchCategory
+  );
+
+  useEffect(() => {
+    // set to all'
+    updateLuckyBookSearchCategory("all");
+  });
+
   return (
     <div className="w-fit h-[calc(-95px-0.5rem+100dvh)] max-h-[calc(1345px-0.5rem)] flex flex-col items-center bg-white mx-auto mt-[65px] xl:mt-[15px] rounded-[10px]">
       <div className="w-full md:w-[760px] 2xl:w-[900px] h-[150px] md:h-[163px] bg-[rgb(38,76,170)] rounded-t-[0px] md:rounded-t-[12px] rounded-b-[34px] md:pb-[43px] relative flex justify-center items-center">
@@ -45,7 +56,7 @@ const LuckyBook = () => {
       </div>
       <div className="flex w-[85%] relative max-w-[700px] rounded-t-[46px] bg-white md:mt-[-30px] md:pt-[100px]">
         <div className="relative md:absolute -top-[20px] left-[50%] -translate-x-[50%] w-[275px] sm:w-[315px] md:w-[400px]">
-          <LuckyBookSearchSection type="all" />
+          <LuckyBookSearchSection />
         </div>
         <div className="flex justify-center items-center gap-10 h-fit w-full xl:scale-[0.8]">
           {categories.map((category) => {
@@ -62,6 +73,7 @@ interface LuckCategoryCardProps {
 }
 
 const LuckCategoryCard = ({ category }: LuckCategoryCardProps) => {
+
   return (
     <div className="flex flex-col w-full items-center gap-2 group">
       {/* content */}
@@ -89,7 +101,9 @@ const LuckCategoryCard = ({ category }: LuckCategoryCardProps) => {
         </Link>
       </div>
       {/* button */}
-      <Link to={`/lucky-book-category-list/${category.id.toLowerCase()}`}>
+      <Link
+        to={`/lucky-book-category-list/${category.id.toLowerCase()}`}
+      >
         <button className="w-[50px] h-[50px] group-hover:w-[116px] rounded-full bg-[rgb(255,184,2)] flex items-center justify-center group-hover:justify-between group-hover:gap-2 mt-[50px] px-4 transition-all duration-300">
           <p className="opacity-0 hidden group-hover:opacity-100 group-hover:block text-[rgb(130,39,0)] text-[22px] font-[900]">
             Enter
