@@ -18,7 +18,7 @@ async function searchLuckyBookContent({
   type,
   locale,
   keyword,
-}: SearchLuckBookContentPayload) {
+}: SearchLuckBookContentPayload): Promise<SearchLuckyBookDto> {
   const result = await api.get<SearchLuckyBookDto>(
     `/newSearch/${locale}/${type ?? "all"}/${keyword}?page=1`
   );

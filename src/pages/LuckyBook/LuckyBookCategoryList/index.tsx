@@ -1,108 +1,70 @@
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { getLuckyBook } from "../../../api/luckyBook";
-import { LuckyBookDto } from "../../../api/luckyBook/type";
+import BackArrow from "../../../assets/backArrow.svg?react";
+import { useEffect} from "react";
+
 import { useNavigate, useParams } from "react-router";
-import ScrollToTopButton from "../../../components/ScrollToTopButton";
-import LuckyBookSearchSection from "../components/LuckBookSearchBar";
-import { LuckyBookSearchCategory } from "../../../store";
+
+import {
+  LuckyBookSearchCategories,
+  LuckyBookSearchCategory,
+  useSiteStore,
+} from "../../../store";
+import LuckyBookContainer from "../components/LuckyBookContainer";
+import LuckyBookAction from "./components/LuckyBookAction";
+import LuckyBookContent from "./components/LuckyBookContent";
 
 const LuckyBookCategoryList = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const resetLuckyBookFilterPointer = useSiteStore(
+    (state) => state.resetLuckyBookFilterPointer
+  );
+
+  const updateLuckyBookSearchCategory = useSiteStore(
+    (state) => state.updateLuckyBookSearchCategory
+  );
+
   if (!id) {
     navigate("/unknown");
   }
 
-  const [books, setBooks] = useState<LuckyBookDto[]>([]);
-  const [page, setPage] = useState<number>(0);
-
-  const loaderRef = useRef(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [isRefReady, setIsRefReady] = useState(false);
-  const { data, isLoading, isError } = useQuery<LuckyBookDto[], Error>({
-    queryKey: ["items", page, id],
-    placeholderData: keepPreviousData,
-    queryFn: () => {
-      return getLuckyBook({
-        type: id!,
-        locale: "en",
-        index: page,
-      });
-    },
-  });
-
   useEffect(() => {
-    console.log(containerRef);
-    if (containerRef.current) {
-      setIsRefReady(true);
+    if (LuckyBookSearchCategories.includes(id as any)) {
+      updateLuckyBookSearchCategory(id as LuckyBookSearchCategory);
     }
-  }, [containerRef.current]);
-
-  useEffect(() => {
-    if (data?.length) {
-      setBooks((prevBooks) => [...prevBooks, ...data]);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const first = entries[0];
-        if (first.isIntersecting && !isLoading) {
-          setPage((page) => page + 20);
-        }
-      },
-      { threshold: 1, rootMargin: "100px" }
-    );
-
-    const currentLoader = loaderRef.current;
-    if (currentLoader) observer.observe(currentLoader);
 
     return () => {
-      if (currentLoader) observer.unobserve(currentLoader);
+      resetLuckyBookFilterPointer();
     };
-  }, [isLoading]);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error loading data.</p>;
+  });
 
   return (
-    <div
-      ref={containerRef}
-      className="flex flex-col w-[760px] mx-auto py-8 overflow-y-auto h-full"
-    >
-      <LuckyBookSearchSection type={id as LuckyBookSearchCategory} />
-      <div className="flex flex-wrap w-full gap-5 px-2">
-        {books.map((item) => (
-          <div
-            className="w-[150px] min-h-[250px] flex flex-col items-center bg-white gap-2 p-[20px] rounded-[18px]"
-            key={item.number}
-          >
-            <div className="w-[120px] h-[33.5px] border border-[rgb(198,198,198)] bg-[rgb(255,255,255)] rounded-[13px]">
-              <p className="text-black text-[22px] leading-[26px] font-[900] mt-[3px] text-center">
-                {item.number}
-              </p>
-            </div>
-            <img
-              src={item.image}
-              className="w-[120px] h-[120px] rounded-[14px]"
-            />
-            <div className="w-full text-center">
-              <p className="text-black text-[14px] leading-[17px] font-[400]">
-                {item.content}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {isRefReady && <ScrollToTopButton scrollRef={containerRef} />}
-      <div ref={loaderRef} style={{ height: "30px" }}>
-        {isLoading && <p>Loading...</p>}
-      </div>
+    <div className="flex w-full items-center justify-center">
+      <LuckyBookContainer
+        title="Tua Pek Kong (Wan) Dictionary"
+        action={<LuckyBookAction />}
+        navIcon={<LuckyBookNavIcon />}
+      >
+        <LuckyBookContent id={id!} />
+      </LuckyBookContainer>
     </div>
+  );
+};
+
+
+const LuckyBookNavIcon = () => {
+  const navigate = useNavigate();
+
+  function toBack() {
+    navigate("/lucky-book");
+  }
+  return (
+    <button
+      className=" w-[34px] h-[34px] rounded-full flex justify-center items-center bg-[rgb(241,241,241)] md:hidden"
+      onClick={toBack}
+    >
+      <BackArrow />
+    </button>
   );
 };
 

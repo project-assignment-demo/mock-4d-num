@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router";
 import { defineMessages, useIntl } from "react-intl";
-import ChangeLocaleDropDown from "../components/LocaleDropDownButton";
 import { PropsWithChildren, ReactElement } from "react";
 import { MdDashboard } from "react-icons/md";
 import cs from "classnames";

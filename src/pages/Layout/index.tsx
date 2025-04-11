@@ -1,13 +1,14 @@
-import { Outlet, useLocation } from "react-router";
-import Sidebar from "../Sidebar";
+import { Outlet } from "react-router";
 import { useSiteStore } from "../../store";
-import Nav from "../Nav";
 import { PropsWithChildren, useEffect } from "react";
 import { fetchIcons } from "../../api/companyIcon";
 import { useQueries } from "@tanstack/react-query";
 import { getResults } from "../../api/result";
 import dayjs from "dayjs";
 import { getSpecialDraw } from "../../api/specialDrawDate";
+import SideBar from "./SideBar";
+import Nav from "./Nav";
+import SpecialDrawDateSection from "./SpecialDrawDateSection";
 
 const useBaseInitializeRequest = () => {
   const updateCompanies = useSiteStore((state) => state.upateCompanies);
@@ -74,28 +75,25 @@ const DataInitializer = ({ children }: PropsWithChildren) => {
 };
 
 const Layout = () => {
-
   return (
-    <div className="flex h-screen w-full bg-[#F3F3F3]">
-      {/* Sidebar */}
-      <section className="hidden lg:w-[250px] lg:block h-full">
-        <Sidebar />
-      </section>
+    <>
+      {/* main */}
       <DataInitializer>
-        <main className="flex flex-col h-full w-full">
-          <div className="w-full bg-[#F3F3F3]">
-            <Nav />
-          </div>
-
-          <div className="flex flex-row overflow-hidden">
-            <div className="overflow-scroll scrollbar-hidden w-full max-w-[1440px]">
-              <Outlet />
-            </div>
-            <SpecialDrawResultSection />
-          </div>
+        <main className="w-full h-full bg-[rgb(243,243,243)]">
+          {/* h-[calc(-5rem+100dvh)] */}
+        <div className="overflow-y-auto h-full sm:h-[calc(-5rem+100dvh)] md:mt-20 xl:mx-[206px]">
+        <Outlet />
+        </div>
         </main>
+
+        <div className="flex w-full overflow-y-hidden">
+          <SideBar />
+          <Nav />
+          <SpecialDrawDateSection />
+        </div>
       </DataInitializer>
-    </div>
+      {/* absolute group */}
+    </>
   );
 };
 
