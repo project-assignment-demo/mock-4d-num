@@ -3,6 +3,7 @@ import LuckyBookContainer from "../components/LuckyBookContainer";
 import LuckyBookSearchResultContent from "./components/LuckyBookSearchResultContent";
 import LuckyBookSearchResultAction from "./components/LuckyBookSearchResultAction";
 import { useState } from "react";
+import LuckyBookSearchResultNavIcon from "./components/LuckyBookSearchResultNavIcon";
 
 const LuckyBookSearchResult = () => {
   const [searchParams] = useSearchParams();
@@ -16,6 +17,7 @@ const LuckyBookSearchResult = () => {
     <div className="flex w-full items-center justify-center">
       <LuckyBookContainer
         title="Dictionary"
+        navIcon={<LuckyBookSearchResultNavIcon/>}
         action={
           <LuckyBookSearchResultAction
             keyword={keyword}
