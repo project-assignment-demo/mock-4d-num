@@ -8,7 +8,7 @@ const SpecialDate = () => {
         title="Special Date Draw"
         className="bg-white h-full"
         navIcon={
-          <button className="absolute top-[20px] left-[20px]">
+          <button>
             <img src="https://4dnum.com/assets/menu-696a0cd6.svg" />
           </button>
         }
