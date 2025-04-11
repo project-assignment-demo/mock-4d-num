@@ -3,6 +3,8 @@ import { HotNumberTableProps } from "./type";
 const HotNumberTable = ({ numbers }: HotNumberTableProps) => {
   const headers = ["No.", "4D NUMBERS", "WIN TIMES"];
 
+  console.log(Boolean(numbers && numbers.length > 0))
+
   return (
     <div className="w-full">
       <table className="table-auto w-full border border-[rgb(233,232,232)] rounded-lg">
@@ -31,7 +33,7 @@ const HotNumberTable = ({ numbers }: HotNumberTableProps) => {
           </tbody>
         )}
       </table>
-      {numbers && numbers.length > 0 && (
+      {!Boolean(numbers && numbers.length > 0) && (
         <div className="flex justify-center items-center">
           <p className="text-center">Please select type and year</p>
         </div>
