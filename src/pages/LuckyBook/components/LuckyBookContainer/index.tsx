@@ -1,18 +1,19 @@
-import { PropsWithChildren, useMemo } from "react";
-import BackArrow from "../../../../assets/backArrow.svg?react";
-import { useNavigate } from "react-router";
-import LuckyBookSearchSection from "../LuckBookSearchBar";
-import LuckyBookFilter from "../LuckyBookFilter";
+import { PropsWithChildren, ReactNode, useMemo } from "react";
 import cs from "classnames";
 import { useSiteStore } from "../../../../store";
 
 interface LuckyBookContainerProps extends PropsWithChildren {
   title: string;
+  action?: ReactNode;
+  navIcon?: ReactNode;
 }
 
-const LuckyBookContainer = ({ children, title }: LuckyBookContainerProps) => {
-  const navigate = useNavigate();
-
+const LuckyBookContainer = ({
+  children,
+  title,
+  action,
+  navIcon,
+}: LuckyBookContainerProps) => {
   const luckyBookFilterPointer = useSiteStore(
     (state) => state.luckyBookFilterPointer
   );
@@ -28,9 +29,7 @@ const LuckyBookContainer = ({ children, title }: LuckyBookContainerProps) => {
 
   console.log(isShowLoadPrevious);
 
-  function toBack() {
-    navigate("/lucky-book");
-  }
+
 
   const filterSectionClassnames = cs(
     `flex items-center `,
@@ -39,19 +38,14 @@ const LuckyBookContainer = ({ children, title }: LuckyBookContainerProps) => {
 
   return (
     <div className="w-full md:w-[760px] 2xl:w-[900px] flex items-center justify-center flex-col gap-2 relative">
-      <div className="relative w-full  pb-20 md:pb-0">
+      <div className="relative w-full">
         <div className="flex relative justify-center items-center overflow-hidden bg-[rgb(38,76,170)] w-full md:w-[768px] 2xl:w-[900px] h-[150px] md:h-[163px] rounded-b-[34px] md:rounded-t-[12px] md:rounded-b-[34px]">
           <p className="text-[22px] leading-[26px] font-[900] place-content-center text-white md:text-[30px]">
             {title}
           </p>
-          <button
-            onClick={toBack}
-            className="absolute top-[20px] left-[20px] z-2  w-[34px] h-[34px] rounded-full flex justify-center items-center bg-[rgb(241,241,241)] md:hidden"
-          >
-            <BackArrow />
-          </button>
+          <div className="absolute top-[20px] left-[20px] z-2">{navIcon}</div>
         </div>
-        {isShowLoadPrevious && (
+        {/* {isShowLoadPrevious && (
           <button onClick={decrementLuckyBookFilterPointer} className=" hidden md:block absolute left-1/2 -translate-x-1/2 top-[90%] h-9 w-[313px] bg-white shadow-md rounded-full border-none text-[17px] text-[#264CAA] cursor-pointer">
             Load Previous
           </button>
@@ -71,7 +65,9 @@ const LuckyBookContainer = ({ children, title }: LuckyBookContainerProps) => {
             )}
             <LuckyBookFilter />
           </div>
-        </div>
+        </div> */}
+
+        {action}
       </div>
       {children}
     </div>

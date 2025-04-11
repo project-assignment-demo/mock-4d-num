@@ -28,7 +28,7 @@ const LuckyBookSearchSection = () => {
           className="w-full h-10 bg-white pl-10 pr-4 min-w-[0px] outline-transparent border  border-transparent rounded-md"
           type="text"
           name=""
-          defaultValue=""
+          placeholder="e.g. 1001 or sky"
           onChange={(e) => {
             setValue(e.target.value);
           }}

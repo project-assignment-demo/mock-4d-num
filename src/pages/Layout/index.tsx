@@ -103,7 +103,8 @@ const Layout = () => {
       {/* main */}
       <DataInitializer>
         <main className="w-full h-full bg-[rgb(243,243,243)]">
-        <div className="overflow-y-auto h-[calc(-5rem+100dvh)] md:mt-20 lg:mx-[206px]">
+          {/* h-[calc(-5rem+100dvh)] */}
+        <div className="overflow-y-auto h-[100dvh] md:mt-20 lg:mx-[206px]">
         <Outlet />
         </div>
         </main>
