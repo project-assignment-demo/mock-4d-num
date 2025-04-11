@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router";
+import { Outlet } from "react-router";
 import { useSiteStore } from "../../store";
 import { PropsWithChildren, useEffect } from "react";
 import { fetchIcons } from "../../api/companyIcon";
@@ -75,36 +75,13 @@ const DataInitializer = ({ children }: PropsWithChildren) => {
 };
 
 const Layout = () => {
-  // return (
-  //   <div className="flex h-screen w-full bg-[#F3F3F3]">
-  //     {/* Sidebar */}
-  //     <section className="hidden lg:w-[250px] lg:block h-full">
-  //       <Sidebar />
-  //     </section>
-  //     <DataInitializer>
-  //       <main className="flex flex-col h-full w-full">
-  //         <div className="w-full bg-[#F3F3F3]">
-  //           <Nav />
-  //         </div>
-
-  //         <div className="flex flex-row overflow-hidden">
-  //           <div className="overflow-scroll scrollbar-hidden w-full max-w-[1440px]">
-  //             <Outlet />
-  //           </div>
-  //           <SpecialDrawResultSection />
-  //         </div>
-  //       </main>
-  //     </DataInitializer>
-  //   </div>
-  // );
-
   return (
     <>
       {/* main */}
       <DataInitializer>
         <main className="w-full h-full bg-[rgb(243,243,243)]">
           {/* h-[calc(-5rem+100dvh)] */}
-        <div className="overflow-y-auto h-[100dvh] md:mt-20 lg:mx-[206px]">
+        <div className="overflow-y-auto h-[100dvh] md:mt-20 xl:mx-[206px]">
         <Outlet />
         </div>
         </main>
