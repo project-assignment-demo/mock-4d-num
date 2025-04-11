@@ -3,10 +3,15 @@ import LuckyBookContainer from "../LuckyBook/components/LuckyBookContainer";
 
 const SpecialDate = () => {
   return (
-    <div className="w-full md:w-fit h-full flex justify-center items-center mx-auto">
+    <div className="w-full max-w-[760px] md:w-fit h-full flex justify-center items-center mx-auto">
       <LuckyBookContainer
         title="Special Date Draw"
         className="bg-white h-full"
+        navIcon={
+          <button className="absolute top-[20px] left-[20px]">
+            <img src="https://4dnum.com/assets/menu-696a0cd6.svg" />
+          </button>
+        }
         action={
           <div
             style={{ boxShadow: "0px 3.5px 3px rgba(0, 0, 0, 0.15)" }}
