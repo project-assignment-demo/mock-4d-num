@@ -12,7 +12,7 @@ const FourDYearSelection = ({
         <div
           onClick={() => onUpdateSelectedYear(item)}
           key={item}
-          className="p-2 bg-white border-b"
+          className="p-2"
         >
           {item}
         </div>
