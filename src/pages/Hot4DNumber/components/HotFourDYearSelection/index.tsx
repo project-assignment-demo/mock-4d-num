@@ -12,7 +12,7 @@ const FourDYearSelection = ({
         <div
           onClick={() => onUpdateSelectedYear(item)}
           key={item}
-          className="p-2"
+          className="p-2 cursor-pointer"
         >
           {item}
         </div>
