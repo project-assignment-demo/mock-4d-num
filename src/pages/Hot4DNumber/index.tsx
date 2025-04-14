@@ -6,10 +6,12 @@ import FourDYearSelection from "./components/HotFourDYearSelection";
 import { getYears } from "./utils";
 import HotNumberTable from "./components/HotNumberTable";
 import { HotFourDNumberConfig } from "./type";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getHotNumbers } from "../../api/hotNumbers";
 import LuckyBookContainer from "../LuckyBook/components/LuckyBookContainer";
-
+import HotFourDFilterSwitch from "./components/HotFourDFilterSwitch";
+import HotFourDNumberSecondaryFilter from "./components/HotFourDSecondaryFilter";
+import Champion from "../.../../../assets/champion.svg?react";
 const Hot4DNumber = () => {
   const [hotFourDNumberConfig, setHotFourDNumberConfig] =
     useState<HotFourDNumberConfig>({
@@ -38,6 +40,10 @@ const Hot4DNumber = () => {
     );
   }, [hotFourDNumberConfig.fourDType]);
 
+  const hotFourDPreConditionSelected = useMemo(() => {
+    return Boolean(hotFourDNumberConfig.fourDType && hotFourDNumberConfig.year);
+  }, [hotFourDNumberConfig.fourDType, hotFourDNumberConfig.year]);
+
   function onUpdateSelectedYearHandler(year: string) {
     setHotFourDNumberConfig((config) => ({
       ...config,
@@ -58,8 +64,8 @@ const Hot4DNumber = () => {
         title="Hot 4D Number"
         className="bg-white rounded-b-[34px]"
         action={
-          <div className="bg-white rounded-b-[34px]">
-            <div className="relative -top-10 left-1/2 -translate-x-1/2 w-[85%] max-w-[700px] flex flex-col justify-center items-center">
+          <div className="bg-white rounded-b-[34px] h-full lg:h-[calc(-95px-0.5rem+100dvh)]">
+            <div className="relative -top-10 left-1/2 -translate-x-1/2 w-[85%] max-w-[700px] flex flex-col justify-center items-center h-[calc(100%-135px)]">
               <div className="rounded-[14px] bg-white flex justify-center items-center w-full h-[79px] shadow-md">
                 <div className="w-full">
                   <FourDTypesSelection
@@ -76,41 +82,33 @@ const Hot4DNumber = () => {
                   />
                 </div>
               </div>
-              <div className="w-full flex jusitfy-center items-center mt-[15px]">
-                <div className="w-full flex">
-                  <p>Show 1ST, 2ND, 3RD only</p>
-                  <input
-                    type="checkbox"
-                    checked={hotFourDNumberConfig.showPrimary}
-                    onChange={(e) =>
-                      setHotFourDNumberConfig({
-                        ...hotFourDNumberConfig,
-                        showPrimary: e.target.checked,
-                      })
-                    }
-                  />
-                </div>
-                <div className="w-full self-end">
-                  <div className="flex justify-end">
-                    <p>Show 3D only</p>
-                    <input
-                      type="checkbox"
-                      checked={hotFourDNumberConfig.showThreeD}
-                      onChange={(e) =>
-                        setHotFourDNumberConfig({
-                          ...hotFourDNumberConfig,
-                          showThreeD: e.target.checked,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="w-full h-full">
-                <Hot4DNumberContent
-                  hotFourDNumberConfig={hotFourDNumberConfig}
+              <div className="w-full flex justify-between items-center mt-[15px]">
+                <HotFourDNumberSecondaryFilter
+                  Icon={Champion}
+                  label="Show 1ST, 2ND, 3RD only"
+                  checked={hotFourDNumberConfig.showPrimary}
+                  onChange={(val) => {
+                    setHotFourDNumberConfig({
+                      ...hotFourDNumberConfig,
+                      showPrimary: val,
+                    });
+                  }}
+                  disabled={!hotFourDPreConditionSelected}
+                />
+                <HotFourDNumberSecondaryFilter
+                  Icon="https://4dnum.com/assets/3d-973c5e17.svg"
+                  label="Show 3D only"
+                  checked={hotFourDNumberConfig.showThreeD}
+                  onChange={(val) => {
+                    setHotFourDNumberConfig({
+                      ...hotFourDNumberConfig,
+                      showThreeD: val,
+                    });
+                  }}
+                  disabled={!hotFourDPreConditionSelected}
                 />
               </div>
+              <Hot4DNumberContent hotFourDNumberConfig={hotFourDNumberConfig} />
             </div>
           </div>
         }
@@ -145,6 +143,7 @@ const Hot4DNumberContent = ({
       }
       return Promise.reject("Missing year or fourDType");
     },
+    placeholderData: keepPreviousData,
     enabled:
       hotFourDNumberConfig.year !== null &&
       hotFourDNumberConfig.fourDType !== null, // Only run the query if both values are not null),
@@ -155,7 +154,7 @@ const Hot4DNumberContent = ({
   }
 
   return (
-    <div className="flex flex-col h-ful overflow-y-hidden">
+    <div className="flex flex-col h-full w-full overflow-y-auto">
       <div className="flex-grow p-[10px]">
         <HotNumberTable numbers={data} />
       </div>

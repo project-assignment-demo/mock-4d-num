@@ -3,12 +3,10 @@ import { HotNumberTableProps } from "./type";
 const HotNumberTable = ({ numbers }: HotNumberTableProps) => {
   const headers = ["No.", "4D NUMBERS", "WIN TIMES"];
 
-  console.log(Boolean(numbers && numbers.length > 0))
-
   return (
-    <div className="w-full">
+    <div className="w-full h-full relative">
       <table className="table-auto w-full border border-[rgb(233,232,232)] rounded-lg">
-        <thead className="rounded-lg">
+        <thead className="rounded-lg sticky top-[0px]">
           <tr className="rounded-lg bg-[rgb(255,184,2)]">
             {headers.map((header) => {
               return (
@@ -20,7 +18,7 @@ const HotNumberTable = ({ numbers }: HotNumberTableProps) => {
           </tr>
         </thead>
         {Array.isArray(numbers) && (
-          <tbody>
+          <tbody className=" overflow-y-scroll">
             {numbers.map((number, index) => {
               return (
                 <tr className="border-b border-[rgb(233,232,232)] bg-white">
