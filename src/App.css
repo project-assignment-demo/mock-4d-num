@@ -8,3 +8,12 @@
   height: 100%;
   box-sizing: border-box;
 }
+
+* {
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+  scrollbar-width: none;      /* For Firefox */
+}
+
+*::-webkit-scrollbar {
+  display: none;  /* For Chrome, Safari, and newer versions of Edge */
+}
