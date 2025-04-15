@@ -9,7 +9,6 @@ import { HotFourDNumberConfig } from "./type";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getHotNumbers } from "../../api/hotNumbers";
 import LuckyBookContainer from "../LuckyBook/components/LuckyBookContainer";
-import HotFourDFilterSwitch from "./components/HotFourDFilterSwitch";
 import HotFourDNumberSecondaryFilter from "./components/HotFourDSecondaryFilter";
 import Champion from "../.../../../assets/champion.svg?react";
 const Hot4DNumber = () => {
@@ -156,7 +155,7 @@ const Hot4DNumberContent = ({
   return (
     <div className="flex flex-col h-full w-full overflow-y-auto">
       <div className="flex-grow p-[10px]">
-        <HotNumberTable numbers={data} />
+        <HotNumberTable selectedType={hotFourDNumberConfig.fourDType !== null} selectedYear={hotFourDNumberConfig.year !== null} numbers={data} />
       </div>
     </div>
   );
