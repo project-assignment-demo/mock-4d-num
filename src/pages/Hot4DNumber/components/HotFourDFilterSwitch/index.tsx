@@ -4,15 +4,16 @@ import cs from "classnames";
 const HotFourDFilterSwitch = ({
   checked,
   disabled,
+  className,
   onChange,
 }: HotFourDFilterSwitchProps) => {
   const switchLabelClassnames = cs(
     "flex select-none items-center",
     disabled ? "cursor-not-allowed" : "cursor-pointer"
   );
-
   const switchContainerClassnames = cs(
     `w-7.5 h-4 rounded-full flex box-content p-0.5`,
+    className,
     checked ? "bg-[#31D94A]" : "bg-[#CBD5E0]",
     disabled ? "cursor-not-allowed" : "cursor-pointer"
   );

@@ -98,7 +98,7 @@ function getNumberAnalysisCompanies() {
     }
     return {
       ...company,
-      selected: true,
+      selected: false,
     };
   });
 }
