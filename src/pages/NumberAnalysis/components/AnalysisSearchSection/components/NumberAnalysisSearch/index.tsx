@@ -2,6 +2,7 @@ import { FormEvent, useMemo, useState } from "react";
 import { NumberAnalysisSearchProps } from "./type";
 import Search from "../../../../../../assets/search.svg?react";
 import Wrong from "../../../../../../assets/wrong.svg?react";
+import cs from "classnames";
 
 const NumberAnalysisSearch = ({
   onSearchKeywordCompleted,
@@ -33,6 +34,16 @@ const NumberAnalysisSearch = ({
     return value.length === 4;
   }, [value]);
 
+  const buttonClassnames = cs(
+    "cursor-pointer transition-colors duration-200 flex items-center justify-center w-fit min-w-10 h-[32px] text-sm leading-[1.2] font-semibold rounded-[5px] text-white px-2",
+    isValidSearch ? "bg-[rgb(38,76,170)]" : "bg-[rgb(206,206,206)]"
+  );
+
+  const inputClassname = cs(
+    "w-full min-w-0 h-8 px-8 relative appearance-none outline-2 outline-transparent focus-visible:outline-1 focus-visible:outline-[rgb(38,76,170)] transition-all duration-200 text-sm bg-white border-[0.5px] border-[rgb(165,165,165)] rounded-[8px] text-left",
+    isValidSearch ? "" : "outline-[rgb(237,64,64)] border-[rgb(237,64,64)] border-2"
+  );
+
   return (
     <div className="flex flex-col">
       <div className="flex gap-1 items-center">
@@ -46,7 +57,7 @@ const NumberAnalysisSearch = ({
               onInput={handleInput}
               type="text"
               placeholder="Number"
-              className="w-full min-w-0 h-8 px-8 relative appearance-none outline-2 outline-transparent focus-visible:outline-1 focus-visible:outline-[rgb(38,76,170)] transition-all duration-200 text-sm bg-white border-[0.5px] border-[rgb(165,165,165)] rounded-[8px] text-left"
+              className={inputClassname}
             />
           </div>
           <div className="flex items-center justify-center w-8 h-8 absolute top-0 right-0 z-2">
@@ -62,14 +73,18 @@ const NumberAnalysisSearch = ({
         <button
           onClick={handleSubmitSearch}
           type="button"
-          disabled={!isValidSearch}
-          className="cursor-pointer transition-colors duration-200 flex items-center justify-center w-fit min-w-10 h-[32px] text-sm leading-[1.2] font-semibold rounded-[5px] bg-[rgb(38,76,170)] disabled:bg-[rgb(206,206,206)] text-white px-2"
+          // disabled={!isValidSearch}
+          className={buttonClassnames}
         >
           Search
         </button>
       </div>
 
-      {errorMessage && <p>{errorMessage}</p>}
+      {errorMessage && (
+        <p className="text-center text-[rgb(237,64,64)] h-[30px] mt-2 text-[14px]">
+          {errorMessage}
+        </p>
+      )}
     </div>
   );
 };

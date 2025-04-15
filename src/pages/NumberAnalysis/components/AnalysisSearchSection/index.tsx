@@ -29,7 +29,7 @@ const AnalysisSearchSection = ({
         className="bg-white"
         action={
           <div className="relative -top-10 left-1/2 -translate-x-1/2 rounded-t-[46px] w-[85%] rounded-[14px] max-w-[700px] gap-6 bg-white pt-10 pb-2 flex justify-center items-center">
-            <div className="flex flex-col gap-4 w-[300px]">
+            <div className="flex flex-col gap-0.5  w-[300px]">
               <NumberAnalysisSearch
                 onSearchKeywordCompleted={handleSearchCompletion}
               />
