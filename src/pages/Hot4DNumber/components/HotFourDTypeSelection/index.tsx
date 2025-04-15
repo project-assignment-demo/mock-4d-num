@@ -18,13 +18,23 @@ const FourDTypesSelection = ({
               onUpdateSelectedFourD(item.id);
             }}
             key={item.id}
-            className="p-2 bg-white border-b"
+            className="p-2 cursor-pointer"
           >
-            <div className="flex flex-row items-center w-full">
-              <img className="w-[35px] h-[35px]" src={item.source} />
+            <div className="flex flex-row items-center gap-2  w-[256px]">
+              <img
+                className="w-[35px] h-[35px] md:w-[40px] md:h-[40px]"
+                src={item.source}
+              />
               <p className="text-[14px]"> {item.label}</p>
               <div className="flex-1 basis-0 place-self-stretch"></div>
-              <input type="radio" checked={item.id === selectedId} />
+              <img
+                className="w-[25px] h-[25px]"
+                src={
+                  item.id === selectedId
+                    ? "https://4dnum.com/assets/green-0b1baf2d.svg"
+                    : "https://4dnum.com/assets/gray-243f7312.svg"
+                }
+              />
             </div>
           </div>
         ))}

@@ -15,7 +15,7 @@ const SpecialDate = () => {
         action={
           <div
             style={{ boxShadow: "0px 3.5px 3px rgba(0, 0, 0, 0.15)" }}
-            className="relative -top-10 left-1/2 -translate-x-1/2 w-[85%] rounded-[14px] max-w-[700px] text-[12px] md:text-[14px] bg-white font-light leading-[20px] text-[rgb(92,92,92)] px-[37px] py-[18px]"
+            className="relative -top-10 left-1/2 -translate-x-1/2 w-[85%] rounded-[14px] max-w-[700px]  bg-white font-light text-[12px] md:text-[14px] leading-[20px] text-[rgb(92,92,92)] px-[37px] py-[18px]"
           >
             Special Draws fall on Tuesday and it is indeed special because these
             draws need to be approved and granted by the Government of Malaysia.

@@ -1,4 +1,4 @@
-function getYears() {
+function getYears(): string[] {
     const startYear = 1985;
     const currentYear = new Date().getFullYear();
     const years = new Array(currentYear - startYear + 1); // Preallocate memory

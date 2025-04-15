@@ -41,7 +41,7 @@ const HotFourDSelectionWrapper = ({
     );
   
     const dropdownClassnames = cs(
-      "absolute left-1/2 top-full mt-2 w-[150px] max-h-[420px] bg-green-300 overflow-y-auto border border-gray-400 shadow-lg rounded transform -translate-x-1/2",
+      "absolute z-999 left-1/2 top-full mt-2 bg-[rgb(245,245,245)] max-h-[420px] overflow-y-auto border border-gray-400 shadow-lg rounded transform -translate-x-1/2",
       {
         block: open,
         hidden: !open,

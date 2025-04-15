@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import { useSiteStore } from "../../store";
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren, useEffect, useRef } from "react";
 import { fetchIcons } from "../../api/companyIcon";
 import { useQueries } from "@tanstack/react-query";
 import { getResults } from "../../api/result";
@@ -9,6 +9,7 @@ import { getSpecialDraw } from "../../api/specialDrawDate";
 import SideBar from "./SideBar";
 import Nav from "./Nav";
 import SpecialDrawDateSection from "./SpecialDrawDateSection";
+import ScrollToTopButton from "../../components/ScrollToTopButton";
 
 const useBaseInitializeRequest = () => {
   const updateCompanies = useSiteStore((state) => state.upateCompanies);
@@ -75,21 +76,28 @@ const DataInitializer = ({ children }: PropsWithChildren) => {
 };
 
 const Layout = () => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   return (
     <>
       {/* main */}
+   
       <DataInitializer>
         <main className="w-full h-full bg-[rgb(243,243,243)]">
           {/* h-[calc(-5rem+100dvh)] */}
-        <div className="overflow-y-auto h-full sm:h-[calc(-5rem+100dvh)] md:mt-20 xl:mx-[206px]">
-        <Outlet />
-        </div>
+          <div
+            ref={containerRef}
+            className="overflow-y-auto h-full sm:h-[calc(-5rem+100dvh)] md:mt-20 xl:mx-[206px]"
+          >
+            <Outlet />
+          </div>
         </main>
 
         <div className="flex w-full overflow-y-hidden">
           <SideBar />
           <Nav />
           <SpecialDrawDateSection />
+          <ScrollToTopButton scrollRef={containerRef}/>
         </div>
       </DataInitializer>
       {/* absolute group */}
