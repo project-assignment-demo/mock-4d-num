@@ -23,7 +23,7 @@ interface DreamData {
 
 type FoudDNumberAnlaysisDream = Record<string, DreamData[]>;
 
-interface FourDAnalysisNumberDto {
+interface FourDAnalysisNumber {
   detail_type: FourDNumberAnalysisDetails[];
   history: FoudDNumberAnlaysisDrawHistory[];
   TotalComeOut: number;
@@ -32,7 +32,19 @@ interface FourDAnalysisNumberDto {
   totalN3: number;
   TotalSpecial: number;
   TotalConsolation: number;
-  dream: FoudDNumberAnlaysisDream;
+  dream: FoudDNumberAnlaysisDream | FoudDNumberAnlaysisDream[];
+}
+
+interface FourDAnalysisNumberDto {
+  detail_type: FourDNumberAnalysisDetails[];
+  history:FoudDNumberAnlaysisDrawHistory[] | undefined;
+  TotalComeOut: number;
+  totalN1: number;
+  totalN2: number;
+  totalN3: number;
+  TotalSpecial: number;
+  TotalConsolation: number;
+  dream: FoudDNumberAnlaysisDream | FoudDNumberAnlaysisDream[];
 }
 
 interface BaseFourDAnalysisPayload {
@@ -80,6 +92,7 @@ interface FourDNumberAnalysisResult {
 }
 
 export type {
+  FourDAnalysisNumber,
   FourDAnalysisNumberDto,
   FourDAnalysisPayload,
   FourDNumberAnalysisHistoryDto,

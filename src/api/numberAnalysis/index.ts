@@ -6,29 +6,40 @@ import {
   FourDNumberAnalysisHistoryDto,
   GetFourDAnalysisResultConfig,
   FourDNumberAnalysisResult,
+  FourDAnalysisNumber,
 } from "./type";
 
 async function getNumberAnalysis({
   analysisCategories,
   analysisNumber,
   permutation,
-}: FourDAnalysisPayload) {
+}: FourDAnalysisPayload): Promise<FourDAnalysisNumber> {
+  const encodedParams = encodeURIComponent(JSON.stringify(analysisCategories));
+
   const result = await api.get<FourDAnalysisNumberDto>(
-    `/numberAnalysis/${analysisNumber}/${encodeURIComponent(
-      JSON.stringify(analysisCategories)
-    )}${permutation ? `/${permutation}` : ""}`,
-    {}
+    `/numberAnalysis/${analysisNumber}/${encodedParams}${
+      permutation ? `/1` : ""
+    }`
   );
 
-  return result.data;
+  const history = await getNumberAnalysisHistories({
+    analysisCategories,
+    analysisNumber,
+  });
+
+  return {
+    ...result.data,
+    history,
+  };
 }
 
 async function getNumberAnalysisHistories({
   analysisCategories,
   analysisNumber,
 }: FourDAnalysisHistoriesPayload) {
-  const result = await api.get<FourDNumberAnalysisHistoryDto>(
-    `/numberHistory/${analysisNumber}/${analysisCategories}`
+  const encodedParams = encodeURIComponent(JSON.stringify(analysisCategories));
+  const result = await api.get<FourDNumberAnalysisHistoryDto[]>(
+    `/numberHistory/${analysisNumber}/${encodedParams}`
   );
 
   return result.data;
@@ -42,6 +53,7 @@ async function getFourDNumberAnalysisResult(
     analysisNumber: data.TotalComeOut,
     totalWinHistory: getFourDNumberAnalysisResultotalWinHistory(data),
     fortureNumberMeaning: getFourDNumberAnalysisResulFortureNumberMeaning(data),
+    // winningHistories: []
     winningHistories: getFourDNumberAnalysisResulWinningHistories(data),
   };
 }
@@ -87,21 +99,46 @@ function getFourDNumberAnalysisResultotalWinHistory(
   ];
 }
 
+function getFortureNumberImage(id: string) {
+  switch (id) {
+    case "gzt":
+      return "https://4dnum.com/assets/fortuneNum1-7e0e71b0.png";
+    case "qzt":
+      return "https://4dnum.com/assets/fortuneNum2-1dee6038.png";
+    case "wzt":
+      return "https://4dnum.com/assets/fortuneNum3-10ceef7f.png";
+    default:
+      return null;
+  }
+}
+
 function getFourDNumberAnalysisResulFortureNumberMeaning(
   source: FourDAnalysisNumberDto
-) {
+): FourDNumberAnalysisResult["fortureNumberMeaning"] {
   const locale = "en";
-  return Object.values(source.dream)
-    .flat()
-    .map((dream) => ({
-      image: dream.image,
-      totalWin: dream.number,
-      title: dream[locale],
+  if (Array.isArray(source.dream)) {
+    return [];
+  }
+
+  const dream = { ...source.dream };
+
+  const d = Object.keys(dream).reduce<
+    FourDNumberAnalysisResult["fortureNumberMeaning"]
+  >((acc, key) => {
+    const currData = dream[key];
+    const formarData = currData.map((d) => ({
+      image: getFortureNumberImage(key) ?? d.image,
+      totalWin: d.number,
+      title: d[locale],
     }));
+    acc.push(...formarData);
+    return acc;
+  }, []);
+  return d;
 }
 
 function getFourDNumberAnalysisResulWinningHistories(
-  source: FourDAnalysisNumberDto
+  source: FourDAnalysisNumber
 ) {
   return source.history.map((h) => ({
     image: h.image,
