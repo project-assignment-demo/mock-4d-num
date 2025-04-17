@@ -83,11 +83,12 @@ const Layout = () => {
       {/* main */}
    
       <DataInitializer>
-        <main className="w-full h-full bg-[rgb(243,243,243)]">
-          {/* h-[calc(-5rem+100dvh)] */}
+        {/*  */}
+        <main className="w-full h-full md:h-[calc(100dvh-80px)] bg-[rgb(243,243,243)]">
+          {/* h-[calc(-5rem+100dvh)] sm:h-[calc(-5rem+100dvh)] */}
           <div
             ref={containerRef}
-            className="overflow-y-auto h-full sm:h-[calc(-5rem+100dvh)] md:mt-20 xl:mx-[206px]"
+            className="overflow-y-auto h-full md:mt-20 xl:mx-[206px]"
           >
             <Outlet />
           </div>

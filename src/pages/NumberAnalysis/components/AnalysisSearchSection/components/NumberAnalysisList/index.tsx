@@ -55,22 +55,6 @@ const NumberAnalysisList = ({
                     disabled={false}
                   />
                 </div>
-                {/* <div className="flex items-start">
-                  <img className="w-[25px]" src={item.source} />
-                  <p>{item.label}</p>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={item.selected}
-                  onChange={(e) => {
-                    const updatedItems = [...items];
-                    updatedItems[index] = {
-                      ...item,
-                      selected: e.target.checked,
-                    };
-                    onUpdateItems(updatedItems);
-                  }}
-                /> */}
               </div>
             );
           })}

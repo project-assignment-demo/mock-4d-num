@@ -1,3 +1,4 @@
+import { lotteryIconAccTemplate } from "../../utils";
 import { api } from "../api";
 import {
   FourDAnalysisNumberDto,
@@ -88,15 +89,20 @@ function getFourDNumberAnalysisResultotalWinHistory(
       type: "text",
     },
   ];
+  console.log(source.detail_type);
+  const hisotries = lotteryIconAccTemplate.map((lottery) => {
 
-  return [
-    ...fixedHistories,
-    ...source.detail_type.map((detail) => ({
-      source: detail.image,
+    const detail = source.detail_type.find((detail) => detail.type === lottery);
+    console.log('detail', detail)
+    return {
+      source: detail?.image ?? "",
       type: "image" as const,
-      totalWin: detail.times,
-    })),
-  ];
+      totalWin: detail?.times ?? 0,
+    };
+  });
+
+
+  return [...fixedHistories, ...hisotries];
 }
 
 function getFortureNumberImage(id: string) {

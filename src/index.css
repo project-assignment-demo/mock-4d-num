@@ -1,10 +1,25 @@
 @import "tailwindcss";
 
-* {
-  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
-  scrollbar-width: none;      /* For Firefox */
+
+::-webkit-scrollbar {
+  display: none;  /* For Chrome, Safari, and newer versions of Edge */
 }
 
-*::-webkit-scrollbar {
-  display: none;  /* For Chrome, Safari, and newer versions of Edge */
+
+.scroll-box::-webkit-scrollbar {
+  display: block;
+  width: .4em;
+  border-radius: 50vh;
+   cursor: pointer;
+
+}
+
+.scroll-box::-webkit-scrollbar-track {
+  border-radius: 50vh;
+}
+
+.scroll-box::-webkit-scrollbar-thumb {
+  background-color: #314fabf7 !important;
+  outline: none !important;
+  border-radius: 5px;
 }

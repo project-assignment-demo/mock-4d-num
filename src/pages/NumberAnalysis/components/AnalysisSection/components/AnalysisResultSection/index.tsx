@@ -1,20 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import { getFourDNumberAnalysisResult } from "../../../../../../api/numberAnalysis";
 import { AnalysisResultSectionProps } from "./type";
-import AnalysisResultCard from "../AnalysisResultCard";
 import { permutation } from "../../../../../../store/company";
+import TotalWinHistoryCard from "../TotalWinHistoryCard";
+import FortuneNumberMeaningCard from "../FortuneNumberMeaningCard";
+import WinningHistoryCard from "../WinningHistoryCard";
+import AnalysisResultLoadingCard from "../AnalysisResultLoadingCard";
+import { Company } from "../../../../../../store/company/type";
 
-const AnalysisResultSection = ({
+function useFourDNumberAnalysisResult({
   analysisCategories,
   analysisNumber,
-}: AnalysisResultSectionProps) => {
-  function getWinHistoryText(source: string) {
-    if (source === "first") return "1ST";
-    if (source === "second") return "2ND";
-    if (source === "third") return "3RD";
-    if (source === "consolation") return "CON";
-    if (source === "special") return "SPE";
-  }
+}: {
+  analysisCategories: Company[];
+  analysisNumber: string;
+}) {
   let categories = [...analysisCategories].map((category) => category.id);
   const gotPermutation = analysisCategories.find(
     (category) => category.id === permutation.id
@@ -35,12 +35,19 @@ const AnalysisResultSection = ({
       }),
   });
 
-  if (isLoading)
-    return (
-      <div className="flex flex-col w-full h-full justify-center items-center">
-        <p className="text-center">Loading ...</p>
-      </div>
-    );
+  return { data, isLoading, error };
+}
+
+const AnalysisResultSection = ({
+  analysisCategories,
+  analysisNumber,
+}: AnalysisResultSectionProps) => {
+  const { isLoading, data, error } = useFourDNumberAnalysisResult({
+    analysisCategories,
+    analysisNumber,
+  });
+
+  if (isLoading || !data) return <AnalysisResultLoadingCard />;
 
   if (error)
     return (
@@ -49,140 +56,16 @@ const AnalysisResultSection = ({
       </div>
     );
 
-  const { totalWinHistory, fortureNumberMeaning, winningHistories } = data!;
+  const { totalWinHistory, fortureNumberMeaning, winningHistories } = data;
 
   return (
     <>
       <div className="xl:w-[32%] h-full flex flex-col gap-2">
-        <AnalysisResultCard title="Total Win History">
-          <>
-            <div className="grid grid-cols-5 gap-x-2.5">
-              {totalWinHistory
-                .filter((h) => h.type === "text")
-                .map((history) => {
-                  // TODO: if 0 should icon is grey
-
-                  return (
-                    <div className="flex flex-col items-center justify-center gap-2">
-                      {/* {history.type === "image" ? (
-                    <img className="w-[40px] h-[40px]" src={history.source} />
-                  ) : (
-                   
-                  )} */}
-                      <div className="flex justify-center items-center w-[40px] h-[40px] bg-[rgb(255,184,2)] rounded-full">
-                        <p className="text-[14px] font-bold text-[rgb(130,39,0)]">
-                          {getWinHistoryText(history.source)}
-                        </p>
-                      </div>
-                      <div className="w-[40px] flex justify-center items-center bg-[rgb(239,239,239)] rounded-lg">
-                        <p className="text-center text-[10px] font-semibold">
-                          {history.totalWin}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-            <hr className="my-[20px]" />
-            <div className="grid grid-cols-5 gap-x-2.5 gap-y-5">
-              {totalWinHistory
-                .filter((h) => h.type === "image")
-                .map((history) => {
-                  // TODO: if 0 should icon is grey
-                  return (
-                    <div className="flex flex-col items-center justify-center gap-2">
-                      <div className="flex justify-center items-center w-[40px] h-[40px] bg-[rgb(255,184,2)] rounded-full">
-                        <img
-                          className="w-[40px] h-[40px]"
-                          src={history.source}
-                        />
-                      </div>
-                      <div className="w-[40px] flex justify-center items-center bg-[rgb(239,239,239)] rounded-lg">
-                        <p className="text-center text-[10px] font-semibold">
-                          {history.totalWin}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-          </>
-        </AnalysisResultCard>
-        <AnalysisResultCard title="Forture Number Meaning">
-          <div className="flex flex-col h-full pr-[20px] overflow-y-scroll">
-            {fortureNumberMeaning.map((mean) => {
-              return (
-                <div className="flex items-center gap-[15px]">
-                  <img
-                    className="w-[28px] h-[28px] xl:w-[50px] xl:h-[50px]"
-                    src={mean.image}
-                  />
-                  <div className="flex justify-between items-center w-full">
-                    <p className="text-[14px] font-[400] ml-2 mr-10 xl:mx-2">
-                      {mean.title}
-                    </p>
-                    <p className="text-center">{mean.totalWin}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </AnalysisResultCard>
+        <TotalWinHistoryCard totalWinHistory={totalWinHistory} />
+        <FortuneNumberMeaningCard fortureNumberMeaning={fortureNumberMeaning} />
       </div>
       <div className="xl:w-[32%]">
-        <AnalysisResultCard title="Winning History">
-          <div className="overflow-y-auto">
-            <table className=" table-fixed text-[12px] w-full rounded-[9px]">
-              <thead className="bg-[rgb(255,184,2)] h-[30px] rounded-t-[9px]">
-                <tr className="text-[11px] font-bold">
-                  <th></th>
-                  <th className="text-center text-[rgb(130,39,0)]">4D</th>
-                  <th className="text-center text-[rgb(130,39,0)]">Prize</th>
-                  <th className="text-center text-[rgb(130,39,0)]">Date</th>
-                  <th className="text-center text-[rgb(130,39,0)]">Gap</th>
-                </tr>
-              </thead>
-              <tbody>
-                {winningHistories.map((history) => {
-                  const isPrimary =
-                    history.prize === "1ST" ||
-                    history.prize === "2ND" ||
-                    history.prize === "3RD";
-                  return (
-                    <tr>
-                      <td className="text-center">
-                        <img
-                          className="w-[26px] h-[26px]"
-                          src={history.image}
-                        />
-                      </td>
-                      <td className="text-center font-medium text-[11px]">
-                        <p>{history.number}</p>
-                      </td>
-                      <td className="text-center font-medium text-[11px]">
-                        <div
-                          className={`w-[90%] rounded-[3px] ${
-                            isPrimary
-                              ? "bg-[rgb(237,64,64)] text-white"
-                              : "bg-[rgb(239,239,239)] text-black"
-                          }  mx-auto`}
-                        >
-                          <p className="">{history.prize}</p>
-                        </div>
-                      </td>
-                      <td className="text-center font-medium text-[11px]">
-                        <p>{history.date}</p>
-                      </td>
-                      <td className="text-center font-medium text-[11px]">
-                        <p>{history.gap}</p>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </AnalysisResultCard>
+        <WinningHistoryCard winningHistories={winningHistories} />
       </div>
     </>
   );
