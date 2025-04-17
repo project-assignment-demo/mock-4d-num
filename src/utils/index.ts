@@ -53,4 +53,6 @@ const isMySg = mySgList.includes(type) || mySgList.some(matchType=> type.startsW
   return 'other';
 }
 
-export { resultColorMap, getResultCountry }
+const lotteryIconAccTemplate: string[] = ["M", "PMP", "ST", "SG", "STC", "EE","CS", "H",  "WB", "P"]
+
+export { resultColorMap, getResultCountry , lotteryIconAccTemplate}
