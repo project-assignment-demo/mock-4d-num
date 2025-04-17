@@ -10,11 +10,11 @@ const Jackpot = () => {
   return (
     <>
       <div className="hidden sm:block">
-        <div className="flex flex-wrap flex-row gap-4 justify-center">
+        <div className="flex flex-wrap flex-row gap-2 justify-center">
           {jackpots.map((jackpot) => {
             const { type } = jackpot;
             return (
-              <div key={type} id={type} className="mx-4 w-[400px]">
+              <div key={type} id={type} className="w-[400px]">
                 <JackpotCard
                   jackpotKey={type as JackpotKey}
                   jackpotData={jackpot}

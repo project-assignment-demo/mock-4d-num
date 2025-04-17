@@ -14,7 +14,7 @@ interface GenerateLotterySpecialPrizeConfig {
 
 interface RawSpecialPrize {
   key: number | null;
-  value: string;
+  value: string | null;
 }
 
 export type {

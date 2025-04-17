@@ -36,7 +36,7 @@ interface LotteryJackpot {
 }
 
 interface Prize {
-  value: string;
+  value: string | null;
 }
 
 interface PrimaryPrize extends SecondaryPrize {

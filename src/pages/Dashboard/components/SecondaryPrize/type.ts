@@ -1,5 +1,5 @@
 interface SecondaryPrizeContentProps {
-    value: string;
+    value: string | null;
     id: string;
     fontSize?: number;
 }

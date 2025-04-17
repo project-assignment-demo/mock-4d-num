@@ -10,11 +10,11 @@ const Dashboard = () => {
   return (
     <>
       <div className="hidden md:block">
-        <div className="flex flex-wrap flex-row gap-4 justify-center">
+        <div className="flex flex-wrap flex-row gap-2 justify-center">
           {lotteries.map((lottery) => {
             const { type } = lottery;
             return (
-              <div key={type} id={type} className="mx-4 w-[400px]">
+              <div key={type} id={type} className="w-[400px]">
                 <LotteryCard
                   lotteryKey={type as LotteryKey}
                   lotteryData={lottery}

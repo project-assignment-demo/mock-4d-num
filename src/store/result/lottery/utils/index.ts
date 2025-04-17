@@ -19,8 +19,11 @@ function generateSpecialPrizes({
   );
   if (isonly10Prizes) {
     prizes = source.splice(0, 10);
+    const emptyData = { key: null, value: null, isEmpty: true };
+    const extra = Array.from({ length: 5 }, () => ({ ...emptyData }));
+    prizes = [...prizes, ...extra];
   } else {
-    const emptyData = { key: null, value: "" };
+    const emptyData = { key: null, value: "", isEmpty: false  };
     source.splice(10, 0, emptyData);
     source.push(emptyData);
     prizes = source;
@@ -51,7 +54,7 @@ interface GetSecondaryLotteryPrizesConfig {
     | string[]
     | {
         key: number | null;
-        value: string;
+        value: string | null;
       }[];
   startPositionIndex: number;
 }
