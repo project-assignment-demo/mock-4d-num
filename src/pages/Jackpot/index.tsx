@@ -9,12 +9,12 @@ const Jackpot = () => {
 
   return (
     <>
-      <div className="hidden sm:block">
+      <div className="hidden md:block">
         <div className="flex flex-wrap flex-row gap-2 justify-center">
           {jackpots.map((jackpot) => {
             const { type } = jackpot;
             return (
-              <div key={type} id={type} className="w-[400px]">
+              <div key={type} id={type} className="w-[370px] lg:w-[400px]">
                 <JackpotCard
                   jackpotKey={type as JackpotKey}
                   jackpotData={jackpot}
@@ -24,7 +24,7 @@ const Jackpot = () => {
           })}
         </div>
       </div>
-      <div className="block sm:hidden h-[500px]">
+      <div className="block md:hidden overflow-auto">
         <SwiperWrapper>
           {jackpots.map((jackpot) => {
             const { type } = jackpot;

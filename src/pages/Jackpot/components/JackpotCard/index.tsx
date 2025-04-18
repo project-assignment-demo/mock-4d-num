@@ -60,7 +60,7 @@ const   JackpotCard = (props: JackpotCardProps) => {
   }, [jackpotData, childIndex]);
 
   return (
-    <div className="w-full rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full">
+    <div className="w-full md:rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full overflow-auto">
       <ResultCardHeader
         type={jackpotData.type}
         title={jackpotData.title}
@@ -72,7 +72,7 @@ const   JackpotCard = (props: JackpotCardProps) => {
         showTimeSelection={jackpotData.children.length > 1}
         onUpdateSelectedTime={(index) => setChildIndex(index)}
       />
-      <div className="mt-[20px] flex flex-col gap-[40px] px-5">
+      <div className="flex flex-col gap-[40px] px-5">
         <Component
           title={jackpotData.title}
           logo={jackpotData.logo}

@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router";
 import { defineMessages, useIntl } from "react-intl";
-import { MdDashboard } from "react-icons/md";
 import DashbaordIcon from "./assets/dashboard.svg?react";
 import cs from "classnames";
 import { JSX, ReactElement } from "react";
-import { title } from "process";
 import { useCurrentRoute } from "../../../routes";
 
 const messages = defineMessages({

@@ -87,7 +87,7 @@ const LotteryCard = (props: LotteryCardProps) => {
   // const [resultChild, setResultChild] = useState(lotteryData.children[0]);
 
   return (
-    <div className="w-full rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full">
+    <div className="w-full md:rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full overflow-auto">
       <ResultCardHeader
         type={lotteryData.type}
         title={lotteryData.title}

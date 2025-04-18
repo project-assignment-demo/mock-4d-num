@@ -56,7 +56,7 @@ const LuckyBook = () => {
         <p className="text-center text-white font-[700] text-[22px] md:text-[30px] leading-[26px]">
           Lucky Book
         </p>
-        <button className="absolute top-[20px] left-[20px]"> 
+        <button className="absolute top-[20px] left-[20px] md:hidden"> 
           <img src="https://4dnum.com/assets/menu-696a0cd6.svg"/>
         </button>
       </div>

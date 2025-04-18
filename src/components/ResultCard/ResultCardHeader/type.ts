@@ -12,6 +12,9 @@ interface ResultCardHeaderProps {
   showTimeSelection: boolean;
   type: string;
   onUpdateSelectedTime: (index: number) => void;
+  openDrawerHandler?: () => void;
+  refreshHandler?: () => void;
+  sharedHandler?: () => void
 }
 
 export type { ResultCardHeaderRef, ResultCardHeaderProps };

@@ -19,19 +19,37 @@ const ResultCardHeader = ({
   showTimeSelection,
   type,
   onUpdateSelectedTime,
+  openDrawerHandler,
+  sharedHandler,
+  refreshHandler,
 }: ResultCardHeaderProps) => {
   return (
     <div
-      className="mb-[80px] h-[170px] w-full rounded-b-2xl sm:rounded-t-[25px] relative"
+      className="mb-[80px] h-[170px] w-full rounded-b-2xl md:rounded-t-[25px] relative"
       style={{ backgroundColor: primaryColor }}
     >
-      <div className="flex flex-col justify-start mt-[15px]">
-        <div className="flex justify-center items-center">
-          <div className="w-[70px] h-[70px] bg-white rounded-full p-1">
-            <img src={logo} alt="" />
-          </div>
+      <div className="flex items-center justify-center w-full relative">
+        <div className="absolute left-[25px] top-[25px]">
+          <button onClick={openDrawerHandler} className="md:hidde" type="button">
+            <img src="https://4dnum.com/assets/menu-696a0cd6.svg" />
+          </button>
         </div>
-        <p className="text-center text-white font-bold my-1">{title}</p>
+        <div className="flex w-full flex-col justify-start mt-[15px] mb-[50px]">
+          <div className="flex justify-center items-center">
+            <div className="w-[70px] h-[70px] bg-white rounded-full p-1">
+              <img src={logo} alt="" />
+            </div>
+          </div>
+          <p className="text-center text-white font-bold my-1">{title}</p>
+        </div>
+        <div className="absolute right-[25px] top-[25px] h-full flex flex-col items-center">
+          <button onClick={refreshHandler} className="md:hidde" type="button">
+            <img src="https://4dnum.com/assets/whiteRefresh-c1df0ea8.svg" />
+          </button>
+          <button onClick={sharedHandler} className="mx-auto mt-8 md:mt-0" type="button">
+            <img src="https://4dnum.com/assets/share-4617e513.svg" />
+          </button>
+        </div>
       </div>
       <div className="px-5 absolute top-3/4 w-full h-full">
         <ResultCardHeaderInfoCard
@@ -84,25 +102,29 @@ const ResultHeaderDateInfo = ({
 
   return (
     <div className="flex flex-col justify-start items-center h-[53px] w-full">
-      <p className="text-center font-extralight text-[12px]">Date</p>
-      <div className="flex items-center">
+      <p className="text-center font-extralight text-[12px] leading-[14px]">
+        Date
+      </p>
+      <div className="flex items-center w-[150px] justify-between sm:justify-center">
         <MdChevronLeft
           onClick={() => getResultByDate("prev")}
-          className="text-[24px] font-[400] block sm:hidden"
+          className="text-[24px] font-[400] block md:hidden"
         />
-        <ResultDatePicker className="sm:hidden">
-          <div>
-            <p className="text-center font-bold text-[14px]">{date}</p>
+        <ResultDatePicker className="md:hidden">
+          <div className="flex flex-col justify-start items-center h-[38px]">
+            <p className="text-center font-bold text-[14px] leading-[19px]">
+              {date}
+            </p>
             <p className="text-center font-bold text-[14px]">({day})</p>
           </div>
         </ResultDatePicker>
-        <div className="hidden sm:block">
+        <div className="hidden md:block">
           <p className="text-center font-bold text-[14px]">{date}</p>
           <p className="text-center font-bold text-[14px]">({day})</p>
         </div>
         <MdChevronRight
           onClick={() => getResultByDate("next")}
-          className="text-[24px] font-[400] block sm:hidden"
+          className="text-[24px] font-[400] block md:hidden"
         />
       </div>
     </div>
@@ -118,16 +140,22 @@ const ResultCardHeaderInfoCard = ({
   showTimeSelection,
 }: ResultCardHeaderInfoCardProps) => {
   return (
-    <div className="rounded-lg shadow-md bg-white w-full h-[72px] p-1">
-      <div className="flex h-full">
+    <div className="rounded-lg shadow-md bg-white w-full h-fit p-1">
+      <div className="flex h-fit">
         <ResultHeaderDateInfo date={date} day={day} type={type} />
         <hr className="h-[30px] border-l  border-gray-300 m-auto" />
         {showTimeSelection && (
           <ResultTimeSelection onUpdateSelectedTime={onUpdateSelectedTime} />
         )}
         <div className="w-full h-[53px] flex flex-col justify-between">
-          <p className="text-center font-extralight text-[12px]">Draw No.</p>
-          <p className="text-center font-bold">{drawNo || "----"}</p>
+          <p className="text-center leading-[14.62px] font-extralight text-[12px]">
+            Draw No.
+          </p>
+          <div className="h-[38px] flex justify-center items-center">
+            <p className="text-center font-bold text-[16px] leading-[19px]">
+              {drawNo || "----"}
+            </p>
+          </div>
         </div>
       </div>
     </div>

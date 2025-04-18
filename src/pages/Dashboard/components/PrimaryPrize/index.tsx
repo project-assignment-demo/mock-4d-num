@@ -1,6 +1,6 @@
 interface primaryPrize {
   key: string;
-  position: string;
+  position: string | null;
   value: string;
 }
 
@@ -24,7 +24,7 @@ const LotteryPrimaryPrize = (props: LotteryPrimaryPrizeProps) => {
         {titles.map((title) => (
           <div
             key={title}
-            className="max-w-[109px] w-full rounded-lg px-[6px] py-[6px]"
+            className="md:max-w-[109px] h-[39px] w-full rounded-lg"
             style={{ backgroundColor: backgroundColor }}
           >
             <div className="w-full h-full flex justify-center items-center">

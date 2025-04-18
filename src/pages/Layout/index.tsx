@@ -79,16 +79,17 @@ const Layout = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <>
-      {/* main */}
-   
+    // <div className="max-w-[2560px] w-full left-[50%] -translate-x-[50%] mx-auto absolute">
+
+    // </div>
+    <div className="max-w-[2560px] w-full left-[50%] -translate-x-[50%] mx-auto absolute bg-[rgb(243,243,243)]">
       <DataInitializer>
-        {/*  */}
-        <main className="w-full h-full md:h-[calc(100dvh-80px)] bg-[rgb(243,243,243)]">
+        {/* bg-[rgb(243,243,243)] */}
+        <main className="w-full h-[100dvh] md:h-[calc(100dvh-80px)]">
           {/* h-[calc(-5rem+100dvh)] sm:h-[calc(-5rem+100dvh)] */}
           <div
             ref={containerRef}
-            className="overflow-y-auto h-full md:mt-20 2xl:mx-[206px]"
+            className="overflow-y-auto h-full md:mt-20 xl:mx-[206px] overflow-scroll"
           >
             <Outlet />
           </div>
@@ -98,35 +99,13 @@ const Layout = () => {
           <SideBar />
           <Nav />
           <SpecialDrawDateSection />
-          <ScrollToTopButton scrollRef={containerRef}/>
+          <ScrollToTopButton scrollRef={containerRef} />
         </div>
       </DataInitializer>
-      {/* absolute group */}
-    </>
-  );
-};
-
-const SpecialDrawResultSection = () => {
-  const specialDrawResults = useSiteStore((state) => state.specialDrawResults);
-  return (
-    <div className="w-[206px] h-auto my-auto hidden">
-      <div className="flex flex-col justify-center items-center w-full">
-        <p className="text-center">Special Draw Date</p>
-        <p className="text-center">Upcoming Special Draw Date</p>
-        {specialDrawResults.length && (
-          <ul>
-            {specialDrawResults.map((r) => (
-              <li className="flex">
-                <p>{r}</p>
-                <span>( {dayjs(new Date(r)).format("ddd")} )</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
     </div>
   );
 };
+
 
 const Loading = () => {
   return <div>Loading...</div>;

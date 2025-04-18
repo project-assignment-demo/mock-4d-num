@@ -14,7 +14,7 @@ const Dashboard = () => {
           {lotteries.map((lottery) => {
             const { type } = lottery;
             return (
-              <div key={type} id={type} className="w-[400px]">
+              <div key={type} id={type} className="w-[370px] lg:w-[400px]">
                 <LotteryCard
                   lotteryKey={type as LotteryKey}
                   lotteryData={lottery}
@@ -25,7 +25,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="block md:hidden">
+      <div className="block md:hidden overflow-auto">
         <SwiperWrapper>
           {lotteries.map((lottery) => {
             const { type } = lottery;
