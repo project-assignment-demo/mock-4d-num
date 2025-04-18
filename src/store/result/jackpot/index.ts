@@ -1,4 +1,5 @@
 import { useCompanies, useSiteStore } from "../..";
+import { getCompanies } from "../../company";
 import { JackpotResultChild, Result, ResultType } from "../type";
 import { getDaMaCaiJackpot } from "./daMaCai";
 import { getEightLuckyJackpot } from "./eightLucky";
@@ -50,7 +51,7 @@ function getJackpot({ type, companies, results }: MapJackpotConfig): Result {
 
 function getJackpots(): Result[] {
   const results = useSiteStore.getState().sourceResults;
-  const companies = useCompanies("/jackpot");
+  const companies = getCompanies("/jackpot");
     const jackpotTypes: JackpotKey[] = ["M", "PMP", "ST", "SG", "EE", "H", "WB"];
 
   const jackpots = jackpotTypes.map((type) =>

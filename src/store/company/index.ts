@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useSiteStore } from "..";
 import { CompanyDTO } from "../../api/companyIcon/type";
 import type { Company, MapCompaniesConfig } from "./type";
@@ -74,9 +75,8 @@ function mapToCompaniesWithLabel(companies: CompanyDTO[]): Company[] {
   });
 }
 
-function useCompanies(currentPath: string) {
-  // const companies = useSiteStore((state) => state.companies);
-  const companies = useSiteStore.getState().companies;
+function useCompanies(currentPath?: string) {
+  const companies = useSiteStore((state) => state.companies);
   return mapCompanies({ currentPath, companies });
 }
 
@@ -88,7 +88,6 @@ function getCompanies(currentPath?: string) {
 function getNumberAnalysisCompanies() {
   const companies = getCompanies();
 
-  
   return [permutation, ...companies].map((company) => {
     if (company.id === "permutation") {
       return {

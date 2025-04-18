@@ -37,7 +37,7 @@ const ResultCardHeader = ({
               openDrawerHandler?.();
               updateDrawer(true);
             }}
-            className="md:hidde"
+            className="md:hidden"
             type="button"
           >
             <img src="https://4dnum.com/assets/menu-696a0cd6.svg" />
@@ -52,7 +52,7 @@ const ResultCardHeader = ({
           <p className="text-center text-white font-bold my-1">{title}</p>
         </div>
         <div className="absolute right-[25px] top-[25px] h-full flex flex-col items-center">
-          <button onClick={refreshHandler} className="md:hidde" type="button">
+          <button onClick={refreshHandler} className="md:hidden" type="button">
             <img src="https://4dnum.com/assets/whiteRefresh-c1df0ea8.svg" />
           </button>
           <button

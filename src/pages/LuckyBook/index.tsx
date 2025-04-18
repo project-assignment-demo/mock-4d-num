@@ -11,35 +11,37 @@ interface LuckCategory {
   label: string;
 }
 
+export const categories: LuckCategory[] = [
+  {
+    image:
+      "https://share.4dnum.com/assets/lucky-book/TuaPekKongWanNoText.png",
+    fullInfoImage:
+      "https://share.4dnum.com/assets/lucky-book/TuaPekKongWan.png",
+    bannerImage: "https://share.4dnum.com/assets/lucky-book/hoverTPKW.png",
+    id: "WZT",
+    label: "Tua Pek Kong (Wan) Dictionary",
+  },
+  {
+    image: "https://share.4dnum.com/assets/lucky-book/GuanYinQianNoText.png",
+    fullInfoImage:
+      "https://share.4dnum.com/assets/lucky-book/GuanYinQian.png",
+    bannerImage: "https://share.4dnum.com/assets/lucky-book/hoverGYQ.png",
+    id: "GZT",
+    label: "Guan Yin Ma Dictionary",
+  },
+  {
+    image:
+      "https://share.4dnum.com/assets/lucky-book/TuaPekKongQianNoText.png",
+    fullInfoImage:
+      "https://share.4dnum.com/assets/lucky-book/TuaPekKongQian.png",
+    bannerImage: "https://share.4dnum.com/assets/lucky-book/hoverTPKQ.png",
+    id: "QZT",
+    label: "Tua Pek Kong (Qian) Dictionary",
+  },
+];
+
 const LuckyBook = () => {
-  const categories: LuckCategory[] = [
-    {
-      image:
-        "https://share.4dnum.com/assets/lucky-book/TuaPekKongWanNoText.png",
-      fullInfoImage:
-        "https://share.4dnum.com/assets/lucky-book/TuaPekKongWan.png",
-      bannerImage: "https://share.4dnum.com/assets/lucky-book/hoverTPKW.png",
-      id: "WZT",
-      label: "Tua Pek Kong (Wan) Dictionary",
-    },
-    {
-      image: "https://share.4dnum.com/assets/lucky-book/GuanYinQianNoText.png",
-      fullInfoImage:
-        "https://share.4dnum.com/assets/lucky-book/GuanYinQian.png",
-      bannerImage: "https://share.4dnum.com/assets/lucky-book/hoverGYQ.png",
-      id: "GZT",
-      label: "Guan Yin Ma Dictionary",
-    },
-    {
-      image:
-        "https://share.4dnum.com/assets/lucky-book/TuaPekKongQianNoText.png",
-      fullInfoImage:
-        "https://share.4dnum.com/assets/lucky-book/TuaPekKongQian.png",
-      bannerImage: "https://share.4dnum.com/assets/lucky-book/hoverTPKQ.png",
-      id: "QZT",
-      label: "Tua Pek Kong (Qian) Dictionary",
-    },
-  ];
+
 
   const updateLuckyBookSearchCategory = useSiteStore(
     (state) => state.updateLuckyBookSearchCategory
