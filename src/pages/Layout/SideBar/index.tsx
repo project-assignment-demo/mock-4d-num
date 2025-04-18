@@ -143,7 +143,7 @@ const SideBar = () => {
         <div className="absolute inset-0 bg-black opacity-40" />
         <div
           className={`
-        absolute top-0 bottom-0 left-0 w-[206px] bg-white rounded-r-[50px] pt-[20px] h-full
+        absolute top-0 bottom-0 left-0 w-[280px] bg-white rounded-r-[50px] pt-[20px] h-full
         transition-transform duration-300 transform
         ${openDrawer ? "translate-x-0" : "-translate-x-full"}
         pointer-events-auto
