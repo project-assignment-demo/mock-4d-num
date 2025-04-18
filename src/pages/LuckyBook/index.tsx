@@ -50,13 +50,15 @@ const LuckyBook = () => {
     updateLuckyBookSearchCategory("all"); 
   });
 
+  const updateDrawer = useSiteStore(state => state.updateDrawer);
+
   return (
     <div className="w-full md:w-fit h-full md:h-[calc(-95px-0.5rem+100dvh)] md:max-h-[calc(1345px-0.5rem)] flex flex-col items-center bg-white md:mx-auto md:mt-[65px] xl:mt-[15px] rounded-[10px]">
       <div className="w-full md:w-[760px] h-[150px] md:h-[163px] bg-[rgb(38,76,170)] rounded-t-[0px] md:rounded-t-[12px] rounded-b-[34px] md:pb-[43px] relative flex justify-center items-center">
         <p className="text-center text-white font-[700] text-[22px] md:text-[30px] leading-[26px]">
           Lucky Book
         </p>
-        <button className="absolute top-[20px] left-[20px] md:hidden"> 
+        <button onClick={() => updateDrawer(true)} className="absolute top-[20px] left-[20px] md:hidden"> 
           <img src="https://4dnum.com/assets/menu-696a0cd6.svg"/>
         </button>
       </div>

@@ -4,6 +4,7 @@ import DashbaordIcon from "./assets/dashboard.svg?react";
 import cs from "classnames";
 import { JSX, ReactElement } from "react";
 import { useCurrentRoute } from "../../../routes";
+import { useSiteStore } from "../../../store";
 
 const messages = defineMessages({
   dashboard: {
@@ -65,14 +66,6 @@ const messages = defineMessages({
 });
 
 const SideBar = () => {
-  const version = " v3.1.0.5";
-  const logoSrc = "https://4dnum.com/assets/logo-223c3117.png";
-  const logoTitleSrc = "https://4dnum.com/assets/4dnumText-a6b770e8.svg";
-  const intl = useIntl();
-
-  const currentRoute = useCurrentRoute();
-
-  console.log("current route", currentRoute);
   const sidebarData: {
     title: string;
     actions: {
@@ -130,45 +123,36 @@ const SideBar = () => {
       ],
     },
   ];
-
-  const navigate = useNavigate();
-
-  function toHomePage() {
-    navigate("/");
-  }
+  const openDrawer = useSiteStore((state) => state.openDrawer);
+  const updateDrawer = useSiteStore((state) => state.updateDrawer);
 
   return (
-    <div className="hidden bg-[rgb(255,255,255)] xl:flex xl:flex-col w-[206px] rounded-r-[50px] pt-[20px] absolute z-[9999] top-[0px] bottom-[0px] left-[0px]">
-      <div className="pl-[25px] relative">
-        <div
-          onClick={toHomePage}
-          className="flex flex-row items-center gap-[10px] mb-[20px] cursor-pointer"
-        >
-          <img
-            className="w-[35.6px] rounded-full"
-            src={logoSrc}
-            alt="4DNum Logo"
-          />
-          <img className="" src={logoTitleSrc} alt="4DNum" />
+    <>
+      <div className="hidden xl:block">
+        <div className="bg-white xl:flex xl:flex-col w-[206px] rounded-r-[50px] pt-[20px] absolute z-[9999] top-0 bottom-0 left-0">
+          <SideBarContent sidebarData={sidebarData} />
         </div>
-        {sidebarData.map((data) => {
-          return (
-            <SideBarSection
-              title={data.title}
-              actions={data.actions.map<SidebarAction>((action) => ({
-                name: intl.formatMessage(action.value),
-                icon: action.icon,
-                isActive: currentRoute.path === action.path,
-                onClick: () => navigate(action.path),
-              }))}
-            />
-          );
-        })}
       </div>
-      <div className="w-[90%] mt-auto">
-        <p className="text-center text-gray-400 opacity-50 font-medium my-3">{version}</p>
+
+      <div
+        onClick={() => updateDrawer(!openDrawer)}
+        className={`fixed inset-0 z-[9999] block xl:hidden ${
+          openDrawer ? "w-full" : `w-0`
+        }`}
+      >
+        <div className="absolute inset-0 bg-black opacity-40" />
+        <div
+          className={`
+        absolute top-0 bottom-0 left-0 w-[206px] bg-white rounded-r-[50px] pt-[20px] h-full
+        transition-transform duration-300 transform
+        ${openDrawer ? "translate-x-0" : "-translate-x-full"}
+        pointer-events-auto
+      `}
+        >
+          <SideBarContent sidebarData={sidebarData} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -205,6 +189,74 @@ const SideBarSection = ({ title, actions }: SideBarSectionProps) => {
           </div>
         );
       })}
+    </>
+  );
+};
+
+const SideBarContent = ({
+  sidebarData,
+}: {
+  sidebarData: {
+    title: string;
+    actions: {
+      value: {
+        id: string;
+        defaultMessage: string;
+      };
+      path: string;
+      icon: JSX.Element;
+    }[];
+  }[];
+}) => {
+  const currentRoute = useCurrentRoute();
+
+  const intl = useIntl();
+
+  const navigate = useNavigate();
+  const version = " v3.1.0.5";
+  const logoSrc = "https://4dnum.com/assets/logo-223c3117.png";
+  const logoTitleSrc = "https://4dnum.com/assets/4dnumText-a6b770e8.svg";
+
+  function toHomePage() {
+    navigate("/");
+  }
+
+  return (
+    <>
+      <div className="pl-[25px] relative">
+        <div
+          onClick={() => {
+            toHomePage();
+          }}
+          className="md:flex flex-row items-center gap-[10px] mb-[20px] cursor-pointer hidden"
+        >
+          <img
+            className="w-[35.6px] rounded-full"
+            src={logoSrc}
+            alt="4DNum Logo"
+          />
+          <img src={logoTitleSrc} alt="4DNum" />
+        </div>
+        {sidebarData.map((data) => (
+          <SideBarSection
+            key={data.title}
+            title={data.title}
+            actions={data.actions.map<SidebarAction>((action) => ({
+              name: intl.formatMessage(action.value),
+              icon: action.icon,
+              isActive: currentRoute.path === action.path,
+              onClick: () => {
+                navigate(action.path);
+              },
+            }))}
+          />
+        ))}
+      </div>
+      <div className="w-[90%] mt-auto">
+        <p className="text-center text-gray-400 opacity-50 font-medium my-3">
+          {version}
+        </p>
+      </div>
     </>
   );
 };

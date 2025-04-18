@@ -30,7 +30,7 @@ const LuckyBookContainer = ({
           <p className="text-[22px] leading-[26px] font-[900] place-content-center text-white md:text-[30px]">
             {title}
           </p>
-          <div className="absolute top-[20px] left-[20px] z-2 hidden md:block">{navIcon}</div>
+          <div className="absolute top-[20px] left-[20px] z-2">{navIcon}</div>
         </div>
 
         {action}

@@ -89,7 +89,7 @@ const Layout = () => {
           {/* h-[calc(-5rem+100dvh)] sm:h-[calc(-5rem+100dvh)] */}
           <div
             ref={containerRef}
-            className="overflow-y-auto h-full md:mt-20 xl:mx-[206px] overflow-scroll"
+            className="overflow-y-auto h-full md:mt-[65px] xl:mx-[206px] overflow-scroll md:p-[20px]"
           >
             <Outlet />
           </div>

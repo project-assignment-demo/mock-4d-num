@@ -2,13 +2,16 @@ import { useSiteStore } from "../../store";
 import LuckyBookContainer from "../LuckyBook/components/LuckyBookContainer";
 
 const SpecialDate = () => {
-  return (
+
+  const updateDrawer = useSiteStore(state => state.updateDrawer);
+
+  return (    
     <div className="w-full max-w-[760px] md:w-fit h-full flex justify-center items-center mx-auto">
       <LuckyBookContainer
         title="Special Date Draw"
         className="bg-white h-full"
         navIcon={
-          <button>
+          <button className="md:hidden" onClick={() => updateDrawer(true)}>
             <img src="https://4dnum.com/assets/menu-696a0cd6.svg" />
           </button>
         }

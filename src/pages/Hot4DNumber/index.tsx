@@ -11,6 +11,7 @@ import { getHotNumbers } from "../../api/hotNumbers";
 import LuckyBookContainer from "../LuckyBook/components/LuckyBookContainer";
 import HotFourDNumberSecondaryFilter from "./components/HotFourDSecondaryFilter";
 import Champion from "../.../../../assets/champion.svg?react";
+import { useSiteStore } from "../../store";
 const Hot4DNumber = () => {
   const [hotFourDNumberConfig, setHotFourDNumberConfig] =
     useState<HotFourDNumberConfig>({
@@ -57,11 +58,18 @@ const Hot4DNumber = () => {
     }));
   }
 
+  const updateDrawer = useSiteStore((state) => state.updateDrawer);
+
   return (
     <div className="w-full max-w-[760px] md:w-fit h-full flex items-start mx-auto">
       <LuckyBookContainer
         title="Hot 4D Number"
         className="bg-white rounded-b-[34px]"
+        navIcon={
+          <button className="md:hidden" onClick={() => updateDrawer(true)}>
+            <img src="https://4dnum.com/assets/menu-696a0cd6.svg" />
+          </button>
+        }
         action={
           <div className="bg-white rounded-b-[34px] h-full lg:h-[calc(-95px-0.5rem+100dvh)]">
             <div className="relative -top-10 left-1/2 -translate-x-1/2 w-[85%] max-w-[700px] flex flex-col justify-center items-center h-[calc(100%-135px)]">

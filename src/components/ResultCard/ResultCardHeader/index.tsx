@@ -23,6 +23,8 @@ const ResultCardHeader = ({
   sharedHandler,
   refreshHandler,
 }: ResultCardHeaderProps) => {
+  const updateDrawer = useSiteStore((state) => state.updateDrawer);
+
   return (
     <div
       className="mb-[80px] h-[170px] w-full rounded-b-2xl md:rounded-t-[25px] relative"
@@ -30,7 +32,14 @@ const ResultCardHeader = ({
     >
       <div className="flex items-center justify-center w-full relative">
         <div className="absolute left-[25px] top-[25px]">
-          <button onClick={openDrawerHandler} className="md:hidde" type="button">
+          <button
+            onClick={() => {
+              openDrawerHandler?.();
+              updateDrawer(true);
+            }}
+            className="md:hidde"
+            type="button"
+          >
             <img src="https://4dnum.com/assets/menu-696a0cd6.svg" />
           </button>
         </div>
@@ -46,7 +55,11 @@ const ResultCardHeader = ({
           <button onClick={refreshHandler} className="md:hidde" type="button">
             <img src="https://4dnum.com/assets/whiteRefresh-c1df0ea8.svg" />
           </button>
-          <button onClick={sharedHandler} className="mx-auto mt-8 md:mt-0" type="button">
+          <button
+            onClick={sharedHandler}
+            className="mx-auto mt-8 md:mt-0"
+            type="button"
+          >
             <img src="https://4dnum.com/assets/share-4617e513.svg" />
           </button>
         </div>
