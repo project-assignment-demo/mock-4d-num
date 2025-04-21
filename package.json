@@ -17,6 +17,8 @@
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
     "dinero.js": "^1.9.1",
+    "framer-motion": "^12.7.4",
+    "html2canvas": "^1.4.1",
     "locale-data": "link:@formatjs/intl-numberformat/locale-data",
     "path": "^0.12.7",
     "react": "^19.0.0",

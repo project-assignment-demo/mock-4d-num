@@ -6,6 +6,7 @@ import { en, ms, zh } from "./locale/index.ts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SwiperProvider } from "./context/SwiperContext.tsx";
 import { renderRoute, ROUTES } from "./routes/index.tsx";
+import Modal from "./components/Modal/index.tsx";
 
 const messages: Record<string, any> = {
   en: en,
@@ -28,7 +29,10 @@ const App = () => {
         defaultLocale="en"
       >
         <BrowserRouter>
-          <SwiperProvider>{routes}</SwiperProvider>
+          <SwiperProvider>
+            {routes}
+            <Modal />
+          </SwiperProvider>
         </BrowserRouter>
       </IntlProvider>
     </QueryClientProvider>

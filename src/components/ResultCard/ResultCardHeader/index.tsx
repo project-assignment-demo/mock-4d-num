@@ -24,6 +24,7 @@ const ResultCardHeader = ({
   refreshHandler,
 }: ResultCardHeaderProps) => {
   const updateDrawer = useSiteStore((state) => state.updateDrawer);
+  const openModal = useSiteStore(state => state.openModal);
 
   return (
     <div
@@ -56,7 +57,12 @@ const ResultCardHeader = ({
             <img src="https://4dnum.com/assets/whiteRefresh-c1df0ea8.svg" />
           </button>
           <button
-            onClick={sharedHandler}
+            onClick={() => {
+              console.log('open dialog')
+              sharedHandler?.();
+              openModal();
+             
+            }}
             className="mx-auto mt-8 md:mt-0"
             type="button"
           >
@@ -156,7 +162,7 @@ const ResultCardHeaderInfoCard = ({
     <div className="rounded-lg shadow-md bg-white w-full h-fit p-1">
       <div className="flex h-fit">
         <ResultHeaderDateInfo date={date} day={day} type={type} />
-        <hr className="h-[30px] border-l  border-gray-300 m-auto" />
+        {/* <hr className="w-[1px] h-[30px] bg-gray-300 m-auto" ></hr> */}
         {showTimeSelection && (
           <ResultTimeSelection onUpdateSelectedTime={onUpdateSelectedTime} />
         )}
@@ -239,7 +245,7 @@ const ResultTimeSelection = ({
         )}
       </div>
 
-      <hr className="h-[30px] border-l border-gray-300 m-auto" />
+      <div className="h-[30px] border-l border-gray-300 m-auto"></div>
     </>
   );
 };
