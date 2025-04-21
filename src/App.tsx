@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter } from "react-router";
 
 import { IntlProvider } from "react-intl";
 import { useSiteStore } from "./store/index.ts";

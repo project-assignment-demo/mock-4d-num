@@ -5,7 +5,6 @@ import Next from "../../../assets/next.svg?react";
 import LuckyBookSearchSection from "../../LuckyBook/components/LuckBookSearchBar";
 import LuckyBookFilter from "../../LuckyBook/components/LuckyBookFilter";
 import ChangeLocaleDropDown from "../../../components/LocaleDropDownButton";
-import { useSwiperControl } from "../../../context/SwiperContext";
 import { Link, useLocation, useNavigate, useParams } from "react-router";
 import { useSiteStore } from "../../../store";
 import { useMemo } from "react";
@@ -18,7 +17,7 @@ const useNavigateIcon = (location: string) => {
     return "https://4dnum.com/assets/jackpotIcon-0c38e317.svg";
   } else if (location === "/special-date") {
     return "https://4dnum.com/assets/calendar-290949a5.svg";
-  } else if (location === "/number-analysis") {
+  } else if (location.includes("analysis")) {
     return "https://4dnum.com/assets/analysis-2918ebbf.svg";
   } else if (location === "/spin-my-luck") {
     return "https://4dnum.com/assets/spin-ae7fa84f.svg";
@@ -107,7 +106,7 @@ const Nav = () => {
       <div className="flex justify-center items-center">
         <Refresh />
       </div>
-      <div className="flex">
+      <div className="flex xl:hidden">
         <ChangeLocaleDropDown />
       </div>
     </div>

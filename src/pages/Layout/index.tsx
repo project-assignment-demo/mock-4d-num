@@ -85,7 +85,7 @@ const Layout = () => {
     <div className="max-w-[2560px] w-full left-[50%] -translate-x-[50%] mx-auto absolute bg-[rgb(243,243,243)]">
       <DataInitializer>
         {/* bg-[rgb(243,243,243)] */}
-        <main className="w-full h-[100dvh] md:h-[calc(100dvh-80px)]">
+        <main className="w-full h-[100dvh] md:h-[calc(100dvh-65px)]">
           {/* h-[calc(-5rem+100dvh)] sm:h-[calc(-5rem+100dvh)] */}
           <div
             ref={containerRef}

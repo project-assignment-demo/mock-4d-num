@@ -3,6 +3,7 @@ import { ResultDTO } from "../api/result/type";
 import { CompanyDTO } from "../api/companyIcon/type";
 import { useCompanies } from "./company";
 import { LuckyBookFilterData } from "../pages/LuckyBook/components/LuckyBookFilter";
+import { Company } from "./company/type";
 
 export type SupportLocales = "zh" | "ms" | "en";
 
@@ -10,7 +11,10 @@ export const LuckyBookSearchCategories = ["all", "wzt", "gzt", "qzt"] as const;
 
 export type LuckyBookSearchCategory = typeof LuckyBookSearchCategories[number];
 
-// export type LuckyBookSearchCategory = "all" | "wzt" | "gzt" | "qzt";
+interface AnalysisConfig {
+  keyword: string;
+  categories: Company[];
+}
 
 interface LuckyBookFilterPointerData extends LuckyBookFilterData {
   pointer: number;
@@ -25,6 +29,7 @@ type SiteState = {
   sourceResults: ResultDTO[];
   specialDrawResults: string[];
   luckyBookFilterPointer: LuckyBookFilterPointerData;
+  analysisConfig: AnalysisConfig;
 };
 
 type SiteAction = {
@@ -47,6 +52,8 @@ type SiteAction = {
   decrementLuckyBookFilterPointer: () => void;
 
   resetLuckyBookFilterPointer: () => void;
+
+  updateAnalysisConfig: (config: AnalysisConfig) => void;
 };
 
 const useSiteStore = create<SiteState & SiteAction>((set, get) => ({
@@ -56,6 +63,10 @@ const useSiteStore = create<SiteState & SiteAction>((set, get) => ({
   specialDrawResults: [],
   selectedDate: new Date(),
   luckyBookFilterPointer: { start: 0, end: 499, index: 0, pointer: 0 },
+  analysisConfig: {
+    keyword: "",
+    categories: []
+  },
   updateResults: (results) => {
     set({ sourceResults: results });
   },
@@ -86,6 +97,8 @@ const useSiteStore = create<SiteState & SiteAction>((set, get) => ({
     set({
       luckyBookFilterPointer: { start: 0, end: 499, index: 0, pointer: 0 },
     }),
+
+    updateAnalysisConfig: (config) => (set({analysisConfig: config}))
 }));
 
 export { useSiteStore, useCompanies };

@@ -8,10 +8,11 @@ import Hot4DNumber from "../pages/Hot4DNumber";
 import LuckyBook from "../pages/LuckyBook";
 import LuckyBookCategoryList from "../pages/LuckyBook/LuckyBookCategoryList";
 import LuckyBookSearchResult from "../pages/LuckyBook/LuckBookSearchResult";
+import Analysis from '../pages/NumberAnalysis/Analysis';
 import NotFound from "../pages/NotFound";
 import Layout from "../pages/Layout";
 
-import { BrowserRouter, Route, Routes, useLocation } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 
 interface RoutesType {
   path: string;
@@ -34,8 +35,13 @@ const ROUTES: Record<string, RoutesType> = {
       { path: "/special-date", name: "SpecialDate", component: SpecialDate },
       {
         path: "/number-analysis",
-        name: "/NumberAnalysis",
+        name: "NumberAnalysis",
         component: NumberAnalysis,
+      },
+      {
+        path: '/analysis',
+        name: 'Analysis',
+        component:Analysis,
       },
       { path: "/spin-my-luck", name: "SpinMyLuck", component: SpinMyLuck },
       { path: "/hot-dddd-num", name: "Hot4DNumber", component: Hot4DNumber },

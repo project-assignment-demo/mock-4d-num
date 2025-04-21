@@ -1,16 +1,19 @@
 import { useState } from "react";
 import NumberAnalysisList from "./components/NumberAnalysisList";
 import NumberAnalysisSearch from "./components/NumberAnalysisSearch";
-import { AnalysisSearchSectionProps } from "./type";
 import { getNumberAnalysisCompanies } from "../../../../store/company";
 import { Company } from "../../../../store/company/type";
 import LuckyBookContainer from "../../../LuckyBook/components/LuckyBookContainer";
 import { useSiteStore } from "../../../../store";
+import { useNavigate } from "react-router";
 
-const AnalysisSearchSection = ({
-  onUpdateConfig,
-}: AnalysisSearchSectionProps) => {
+const AnalysisSearchSection = () => {
+
+  const navigate = useNavigate();
+
   const [companies, setCompanies] = useState(getNumberAnalysisCompanies());
+
+  const updateAnalysisConfig = useSiteStore(state => state.updateAnalysisConfig);
 
   const handleSearchCompletion = (keyword: string) => {
     const selectedCategories = companies
@@ -20,7 +23,8 @@ const AnalysisSearchSection = ({
         label: company.label,
         source: company.source,
       }));
-    onUpdateConfig({ keyword, categories: selectedCategories });
+      updateAnalysisConfig({ keyword, categories: selectedCategories });
+      navigate('/analysis')
   };
 
   const updateDrawer = useSiteStore((state) => state.updateDrawer);

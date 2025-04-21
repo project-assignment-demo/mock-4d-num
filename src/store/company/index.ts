@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useSiteStore } from "..";
 import { CompanyDTO } from "../../api/companyIcon/type";
 import type { Company, MapCompaniesConfig } from "./type";
@@ -92,12 +91,12 @@ function getNumberAnalysisCompanies() {
     if (company.id === "permutation") {
       return {
         ...company,
-        selected: false,
+        selected: true,
       };
     }
     return {
       ...company,
-      selected: false,
+      selected: true,
     };
   });
 }
