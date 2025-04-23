@@ -28,14 +28,15 @@ const SpinContainer = ({ children, title, totalDigit }: SlotMachineProps) => {
           {title}
         </p>
       </div>
-      <div className="relative flex border-[2px] border-[rgb(38,76,170)] rounded-[26.14px] bg-white -mt-6 px-4 md:px-10 w-[290px] md:w-[450px] h-[180px] md:h-[210px]">
+      <div className="relative flex flex-col justify-center border-[2px] border-[rgb(38,76,170)] rounded-[26.14px] bg-white -mt-6 px-4 md:px-10 w-[290px] md:w-[450px] h-[180px] md:h-[210px]">
         <div className="flex flex-col absolute left-2.5 py-2.5 h-full justify-between">
           <div className="h-[11.77px] w-[11.77px] bg-[rgb(255,184,2)] rounded-full"></div>
           <div className="h-[11.77px] w-[11.77px] bg-[rgb(255,184,2)] rounded-full"></div>
         </div>
-        <div className="flex items-center justify-center w-full font-bold scale-90">
-          {children?.({ digits, rollKey })}
-        </div>
+        {children?.({ digits, rollKey })}
+
+        {/* <div className="flex items-center justify-center w-full font-bold scale-90">
+        </div> */}
         <div className="flex flex-col absolute right-2.5 py-2.5 h-full justify-between">
           <div className="h-[11.77px] w-[11.77px] bg-[rgb(255,184,2)] rounded-full"></div>
           <div className="h-[11.77px] w-[11.77px] bg-[rgb(255,184,2)] rounded-full"></div>

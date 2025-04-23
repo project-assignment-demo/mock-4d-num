@@ -193,7 +193,7 @@ const SpinSlot: React.FC<SlotProps> = ({
   }, [rollingKey]);
 
   return (
-    <div className="flex-shrink-0 relative w-[35px] md:w-[70px] h-[56px] md:h-[65px] overflow-hidden rounded-xl border-2 border-blue-700 bg-white mx-1 flex justify-center">
+    <div className="w-[35px] md:w-[70px] h-[56px] md:h-[65px] overflow-hidden rounded-xl border-2 border-blue-700 bg-white mx-1 flex justify-center">
       {twoDigit ? (
         <>
           <motion.div
