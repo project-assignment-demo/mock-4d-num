@@ -39,7 +39,6 @@ const TotalWinHistoryCard = ({ totalWinHistory }: TotalWinHistoryCardProps) => {
           {totalWinHistory
             .filter((h) => h.type === "image")
             .map((history) => {
-              console.log(history);
               const imageClassname = cs(
                 "w-[35px] h-[35px] md:w-[60px] md:h-[60px] xl:w-[40px] xl:h-[40px]",
                 history.totalWin ? "" : "grayscale-[1]"

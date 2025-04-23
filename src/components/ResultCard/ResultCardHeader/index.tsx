@@ -78,7 +78,6 @@ const ResultCardHeader = ({
               </button>
               <button
                 onClick={() => {
-                  console.log("open dialog");
                   sharedHandler?.();
                   openModal();
                 }}
@@ -184,7 +183,6 @@ const ResultCardHeaderInfoCard = ({
   type,
   onUpdateSelectedTime,
   showTimeSelection,
-  isScreenshot,
 }: ResultCardHeaderInfoCardProps) => {
   return (
     <div className="rounded-lg shadow-md bg-white w-full h-fit p-1">

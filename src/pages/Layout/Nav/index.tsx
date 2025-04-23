@@ -124,7 +124,6 @@ const CompanyIconNavBar = () => {
       await navigate("/");
     }
     const element = document.getElementById(id);
-    console.log(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }

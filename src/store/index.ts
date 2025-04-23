@@ -109,7 +109,6 @@ const useSiteStore = create<SiteState & SiteAction>((set, get) => ({
     if (filterData.pointer >= 20) {
       filterData.pointer -= 20;
     }
-    console.log(filterData.pointer);
     set({ luckyBookFilterPointer: filterData });
   },
   resetLuckyBookFilterPointer: () =>

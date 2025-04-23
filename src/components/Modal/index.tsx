@@ -6,6 +6,8 @@ import Share from "../../assets/share.svg?react";
 import { useMemo } from "react";
 import dayjs from "dayjs";
 
+import type { ShareInfoConfig, DownloadImageConfig } from "./type";
+
 const Modal = () => {
   const date = useSiteStore((state) => state.selectedDate);
   const closeModal = useSiteStore((state) => state.closeModal);
@@ -27,26 +29,30 @@ const Modal = () => {
     return modalContent?.title ?? "";
   }, [modalContent]);
 
-  const handleDownload = async (imageUrl: string | undefined) => {
+  const handleDownload = async ({
+    imageUrl,
+    title,
+    date,
+  }: DownloadImageConfig) => {
     if (!imageUrl) return;
+    const formattedDate = dayjs(date).format("YYYY_MM_DD");
     const response = await fetch(imageUrl, { mode: "cors" });
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = "image.jpg";
+    link.download = `${formattedDate}_${title}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
   };
 
-  const shareInfo = () => {
+  const handleShareInfo = async ({ shareUrl, title, date }: ShareInfoConfig) => {
     if ("share" in navigator && typeof navigator.share === "function") {
-      navigator.share({
-        title: "React Web Share",
-        text: "Check out this cool app!",
-        url: "https://reactjs.org",
+      await navigator.share({
+        title: `${title} ${dayjs(date).format("YYYY-MM-DD")}`,
+        url: '',
       });
     }
   };
@@ -65,10 +71,7 @@ const Modal = () => {
             </p>
           </div>
           <button
-            onClick={() => {
-              console.log("cancel");
-              closeModal();
-            }}
+            onClick={closeModal}
             className="min-w-10 h-10 flex justify-center items-center leading-[1.2] font-semibold text-md px-4 py-6 bg-[rgb(241,241,241)] rounded-full whitespace-nowrap outline outline-transparent"
           >
             <Cancel className="w-4 h-4 text-black" />
@@ -87,7 +90,9 @@ const Modal = () => {
           </div>
           <div className="flex gap-2 justify-center w-fit bg-[rgb(233,233,233)] rounded-[50px] p-4 m-auto">
             <button
-              onClick={() => handleDownload(imageSource)}
+              onClick={() =>
+                handleDownload({ imageUrl: imageSource, title, date })
+              }
               disabled={modalContent == null}
               className="flex justify-center items-center select-none leading-[1.2] font-semibold h-10 min-w-10 text-md px-4 disabled:bg-gray-400 bg-[rgb(34,34,34)] text-white whitespace-nowrap outline outline-transparent rounded-[100px]"
             >
@@ -97,7 +102,13 @@ const Modal = () => {
               {"Download"}
             </button>
             <button
-              onClick={shareInfo}
+              onClick={() =>
+                handleShareInfo({
+                  title,
+                  date,
+                  shareUrl: imageSource ?? "",
+                })
+              }
               disabled={modalContent == null}
               className="flex justify-center items-center select-none leading-[1.2] font-semibold h-10 min-w-10 text-md px-4 disabled:bg-gray-400 bg-[rgb(34,34,34)] text-white whitespace-nowrap outline outline-transparent rounded-[100px]"
             >
