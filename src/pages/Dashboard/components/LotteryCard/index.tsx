@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { LotteryKey } from "../../../../store/result/lottery/type";
 import { Result } from "../../../../store/result/type";
 import ResultCardHeader from "../../../../components/ResultCard/ResultCardHeader";
@@ -26,6 +26,8 @@ import NineWinBoxLotteryInfo from "../Lottery/NineWinBoxLotteryInfo";
 import { resultColorMap } from "../../../../utils";
 import { useSiteStore } from "../../../../store";
 import { getLotteries } from "../../../../store/result";
+import cs from "classnames";
+import { toPng } from "html-to-image";
 
 interface LotteryCardProps {
   lotteryKey: LotteryKey;
@@ -71,6 +73,8 @@ const LotteryCard = (props: LotteryCardProps) => {
   const Component = lotteryComponentMap[lotteryKey];
   const colors = resultColorMap[lotteryKey];
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     setLotteryData(source);
   }, [source]);
@@ -84,11 +88,19 @@ const LotteryCard = (props: LotteryCardProps) => {
     return lotteryData.children[childIndex];
   }, [lotteryData, childIndex]);
 
-  // const [resultChild, setResultChild] = useState(lotteryData.children[0]);
+  const showModal = useSiteStore((state) => state.showModal);
+  // const showModal = true;
+  const updateModalContent = useSiteStore((state) => state.updateModalContent);
+
+  const containerStyles = cs(
+    "w-full bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full overflow-auto",
+    showModal ? "" : "md:rounded-[25px]"
+  );
 
   return (
-    <div className="w-full md:rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full overflow-auto">
+    <div ref={containerRef} className={containerStyles}>
       <ResultCardHeader
+        isScreenshot={showModal}
         type={lotteryData.type}
         title={lotteryData.title}
         logo={lotteryData.logo}
@@ -98,10 +110,22 @@ const LotteryCard = (props: LotteryCardProps) => {
         drawNo={data.drawNo}
         showTimeSelection={lotteryData.children.length > 1}
         onUpdateSelectedTime={(index: number) => setChildIndex(index)}
+        sharedHandler={async () => {
+          try {
+            if (containerRef.current) {
+              const image = await toPng(containerRef.current);
+              const title = lotteryData.title;
+              updateModalContent({ image, title });
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        }}
       />
 
       <div className="mt-[-35px] flex flex-col gap-[10px] px-5">
         <Component
+          isScreenshot={showModal}
           title={lotteryData.title}
           logo={lotteryData.logo}
           data={data as any}

@@ -41,18 +41,43 @@ const resultColorMap: ResulCardMap = {
   P: {
     primaryColor: "#1E68A2",
     secondaryColor: "#EC2024",
-  }
+  },
 };
 
-const getResultCountry = (type: string): "mysg" | "other" =>  {
-const mySgList = ['M', 'PMP', 'ST', 'SG', 'EE'];
-const isMySg = mySgList.includes(type) || mySgList.some(matchType=> type.startsWith(`${matchType}T`) || type.startsWith(`${matchType}JP`) || type.startsWith(`${matchType}JPT`)) ;
+const getResultCountry = (type: string): "mysg" | "other" => {
+  const mySgList = ["M", "PMP", "ST", "SG", "EE"];
+  const isMySg =
+    mySgList.includes(type) ||
+    mySgList.some(
+      (matchType) =>
+        type.startsWith(`${matchType}T`) ||
+        type.startsWith(`${matchType}JP`) ||
+        type.startsWith(`${matchType}JPT`)
+    );
   if (isMySg) {
-    return 'mysg';
+    return "mysg";
   }
-  return 'other';
-}
+  return "other";
+};
 
-const lotteryIconAccTemplate: string[] = ["M", "PMP", "ST", "SG", "STC", "EE","CS", "H",  "WB", "P"]
+const getImgByProxy = (url: string) => `https://corsproxy.io/?url=${url}`;
 
-export { resultColorMap, getResultCountry , lotteryIconAccTemplate}
+const lotteryIconAccTemplate: string[] = [
+  "M",
+  "PMP",
+  "ST",
+  "SG",
+  "STC",
+  "EE",
+  "CS",
+  "H",
+  "WB",
+  "P",
+];
+
+export {
+  resultColorMap,
+  getResultCountry,
+  getImgByProxy,
+  lotteryIconAccTemplate,
+};

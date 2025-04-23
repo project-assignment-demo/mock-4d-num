@@ -23,6 +23,7 @@ interface LuckyBookFilterPointerData extends LuckyBookFilterData {
 
 interface ShareContent {
   image: string;
+  title: string;
 }
 
 type SiteState = {

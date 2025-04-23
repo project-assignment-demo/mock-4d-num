@@ -8,6 +8,7 @@ interface LotteryComponentProps <T extends LotteryResultChild> {
     secondaryColor: string;
     textColor?: string;
     selectedTime?: string;
+    isScreenshot: boolean;
 }
 
 export type { LotteryComponentProps }
