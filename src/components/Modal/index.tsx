@@ -10,18 +10,25 @@ const Modal = () => {
   const closeModal = useSiteStore((state) => state.closeModal);
   const isOpen = useSiteStore((state) => state.showModal);
 
-  const downloadImage = (url: string) => {
+  const handleDownload = async () => {
+    const imageUrl = "https://share.4dnum.com/LIGHT20250420DaMaCai_3DEN.png";
+    const response = await fetch(imageUrl, { mode: "cors" });
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = `${type}_${date}.png`; // desired file name
+    link.download = "image.jpg";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
   };
   const modalContent = useSiteStore((state) => state.modalContent);
 
+  const imageSrc = "https://share.4dnum.com/LIGHT20250420DaMaCai_3DEN.png";
+
   const shareInfo = () => {
-    if (navigator.canShare()) {
+    if ("share" in navigator && typeof navigator.share === "function") {
       navigator.share({
         title: "React Web Share",
         text: "Check out this cool app!",
@@ -55,7 +62,7 @@ const Modal = () => {
         </div>
         <div className="flex h-full justify-evenly flex-col md:gap-5">
           <div className="flex justify-center items-center">
-            {modalContent === null ? (
+            {/* {modalContent === null ? (
               <p>Loading</p>
             ) : (
               <img
@@ -63,15 +70,15 @@ const Modal = () => {
                 src={modalContent.image}
                 //   src="https://share.4dnum.com/LIGHT20250420DaMaCai_3DEN.png"
               />
-            )}
+            )} */}
+            <img
+              className="border-none w-auto max-h-[55vh] shadow-md"
+              src={imageSrc}
+            />
           </div>
           <div className="flex gap-2 justify-center w-fit bg-[rgb(233,233,233)] rounded-[50px] p-4 m-auto">
             <button
-              onClick={() =>
-                downloadImage(
-                  "https://share.4dnum.com/LIGHT20250420DaMaCai_3DEN.png"
-                )
-              }
+              onClick={handleDownload}
               className="flex justify-center items-center select-none leading-[1.2] font-semibold h-10 min-w-10 text-md px-4 bg-[rgb(34,34,34)] text-white whitespace-nowrap outline outline-transparent rounded-[100px]"
             >
               <span className="flex items-center shrink-0 mr-2">

@@ -11,7 +11,6 @@ import { SingaporeFourDJackpot } from "../../../../store/result/jackpot/Singapor
 import { SabahFourDJackpot } from "../../../../store/result/jackpot/sabahFourD/type";
 import { NineWinJackpot } from "../../../../store/result/jackpot/nineWin/type";
 import { EightLuckyJackpot } from "../../../../store/result/jackpot/eightLucky/type";
-import html2canvas from 'html2canvas';
 
 import {
   MagnumInfo,
@@ -69,22 +68,7 @@ const JackpotCard = (props: JackpotCardProps) => {
     <div ref={cardRef} onClick={async () => {
       // set 
       console.log('share le')
-      console.log(cardRef.current);
-     
-      if (cardRef.current) {
-        const canvas = await html2canvas(cardRef.current, {
-          useCORS: true,
-          backgroundColor: 'white',
-          removeContainer:true,
-        });
-        console.log(canvas.toDataURL());
-        updateContent({image: canvas.toDataURL()})
-        // const canvas = await html2canvas(ref.current);
-        // console.log(canvas);
-        // const base64Image = canvas.toDataURL();
-        // console.log(base64Image);
-      }
-     
+      console.log(cardRef.current);     
     }} className="w-full md:rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full overflow-auto">
       <ResultCardHeader
         type={jackpotData.type}
