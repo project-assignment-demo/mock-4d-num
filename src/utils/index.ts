@@ -75,9 +75,37 @@ const lotteryIconAccTemplate: string[] = [
   "P",
 ];
 
+const getResultTypeName = (type: string, isJp?: boolean, time?: string) => {
+  switch (type) {
+    case "M":
+      return `${isJp ? "jp_" : ""}Magnum_4D`;
+    case "PMP":
+      return `${isJp ? "jp_" : ""}DaMaCai_3D`;
+    case "ST":
+      return `${isJp ? "jp_" : ""}SportsToto_4D`;
+    case "SG":
+      return `${isJp ? "jp_" : ""}Singapore_4D`;
+    case "CS":
+      return "Special_CashSweep";
+    case "STC":
+      return "Sandakan_4D";
+    case "EE":
+      return `${isJp ? "jp_" : ""}Sabah_88_4D`;
+    case "H":
+      return `${isJp ? "jp_" : ""}LuckyHariHariHT${time}`;
+    case "WB":
+      return `${isJp ? "jp_" : ""}9WinboxWBT${time}`;
+    case "P":
+      return `PerdanaLotteryPT${time}`;
+    default:
+      throw Error("invalid result type");
+  }
+};
+
 export {
   resultColorMap,
   getResultCountry,
   getImgByProxy,
+  getResultTypeName,
   lotteryIconAccTemplate,
 };
