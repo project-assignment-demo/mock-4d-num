@@ -23,11 +23,13 @@ import SabahFourDLotteryInfo from "../Lottery/SabahFourDLotteryInfo";
 import EightLuckyLotteryInfo from "../Lottery/EightLuckyLotteryInfo";
 import PerdanaLotteryInfo from "../Lottery/PerdanaLotteryInfo";
 import NineWinBoxLotteryInfo from "../Lottery/NineWinBoxLotteryInfo";
-import { getImgByProxy, resultColorMap } from "../../../../utils";
+import { getImgByProxy, getResultTypeName, resultColorMap } from "../../../../utils";
 import { useSiteStore } from "../../../../store";
 import { getLotteries } from "../../../../store/result";
 import cs from "classnames";
-import { toPng } from "html-to-image";
+import { toJpeg } from "html-to-image";
+import { checkResultShareImageExist, uploadResultShareImage } from "../../../../api/result";
+import dayjs from "dayjs";
 
 interface LotteryCardProps {
   lotteryKey: LotteryKey;
@@ -112,7 +114,7 @@ const LotteryCard = (props: LotteryCardProps) => {
         onUpdateSelectedTime={(index: number) => setChildIndex(index)}
         sharedHandler={async () => {
           if (containerRef.current) {
-            const image = await toPng(containerRef.current, {
+            const image = await toJpeg(containerRef.current, {
               fetchRequestInit: {
                 cache: "no-cache",
               },
@@ -120,7 +122,26 @@ const LotteryCard = (props: LotteryCardProps) => {
               cacheBust: true,
             });
             const title = lotteryData.title;
-            updateModalContent({ image, title });
+            const type = getResultTypeName(lotteryData.type);
+            const date = dayjs(data.date).format('YYYYMMDD')
+            const checkingResult = await checkResultShareImageExist({
+              type,
+              date,
+              language: 'en',
+              mode: 'light'
+
+            })
+
+            const result = await uploadResultShareImage({
+              type,
+              date,
+              image,
+            });
+
+            
+             updateModalContent({ image: result.s3_url, title });
+
+            // updateModalContent({image: image, title})
           }
         }}
       />
