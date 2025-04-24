@@ -11,7 +11,7 @@ import { SingaporeFourDJackpot } from "../../../../store/result/jackpot/Singapor
 import { SabahFourDJackpot } from "../../../../store/result/jackpot/sabahFourD/type";
 import { NineWinJackpot } from "../../../../store/result/jackpot/nineWin/type";
 import { EightLuckyJackpot } from "../../../../store/result/jackpot/eightLucky/type";
-
+import cs from "classnames";
 import {
   MagnumInfo,
   DaMaCaiInfo,
@@ -61,10 +61,16 @@ const JackpotCard = (props: JackpotCardProps) => {
     return jackpotData.children[childIndex];
   }, [jackpotData, childIndex]);
 
+    const containerStyles = cs(
+      "w-full bg-white shadow-2xl flex flex-col justify-start pb-[30px]",
+      showModal ? "h-fit" : "md:rounded-[25px] h-full overflow-auto"
+    );
+  
+
   return (
     <div
       ref={cardRef}
-      className="w-full md:rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full overflow-auto"
+      className={containerStyles}
     >
       <ResultCardHeader
         isScreenshot={showModal}

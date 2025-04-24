@@ -3,9 +3,12 @@ import SwiperWrapper from "../../components/Swiper";
 import { JackpotKey } from "../../store/result/jackpot/type";
 import JackpotCard from "./components/JackpotCard";
 import { getJackpots } from "../../store/result/jackpot";
+import { getCompanies } from "../../store/company";
+import { useLocation } from "react-router";
 
 const Jackpot = () => {
   const jackpots = getJackpots();
+  const companies = getCompanies(useLocation().pathname);
 
   return (
     <>
@@ -25,7 +28,7 @@ const Jackpot = () => {
         </div>
       </div>
       <div className="block md:hidden overflow-auto">
-        <SwiperWrapper>
+        <SwiperWrapper companies={companies}>
           {jackpots.map((jackpot) => {
             const { type } = jackpot;
             return (

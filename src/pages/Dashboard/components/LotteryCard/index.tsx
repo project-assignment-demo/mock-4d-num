@@ -96,7 +96,7 @@ const LotteryCard = (props: LotteryCardProps) => {
 
   const containerStyles = cs(
     "w-full bg-white shadow-2xl flex flex-col justify-start pb-[30px]",
-    showModal ? "h-fit" : "md:rounded-[25px] h-full"
+    showModal ? "h-fit" : "md:rounded-[25px] h-full overflow-auto"
   );
 
   return (
@@ -124,24 +124,24 @@ const LotteryCard = (props: LotteryCardProps) => {
             const title = lotteryData.title;
             const type = getResultTypeName(lotteryData.type);
             const date = dayjs(data.date).format('YYYYMMDD')
-            const checkingResult = await checkResultShareImageExist({
-              type,
-              date,
-              language: 'en',
-              mode: 'light'
+            // const checkingResult = await checkResultShareImageExist({
+            //   type,
+            //   date,
+            //   language: 'en',
+            //   mode: 'light'
 
-            })
+            // })
 
-            const result = await uploadResultShareImage({
-              type,
-              date,
-              image,
-            });
+            // const result = await uploadResultShareImage({
+            //   type,
+            //   date,
+            //   image,
+            // });
 
             
-             updateModalContent({ image: result.s3_url, title });
+            //  updateModalContent({ image: result.s3_url, title });
 
-            // updateModalContent({image: image, title})
+             updateModalContent({image: image, title})
           }
         }}
       />

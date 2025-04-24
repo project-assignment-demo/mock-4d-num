@@ -29,7 +29,7 @@ const ResultCardHeader = ({
   const openModal = useSiteStore((state) => state.openModal);
 
   const wrapperStyle = cs(
-    "mb-[80px] h-[170px] w-full  relative",
+    "mb-[80px] h-[220px] md:h-[170px] w-full pt-[55px] md:pt-0 relative",
     isScreenshot ? "" : "rounded-b-2xl md:rounded-t-[25px]"
   );
 
@@ -97,7 +97,7 @@ const ResultCardHeader = ({
           )}
         </div>
       </div>
-      <div className="px-5 absolute top-3/4 w-full h-full">
+      <div className="px-5 absolute top-[85%] md:top-3/4 w-full h-full">
         <ResultCardHeaderInfoCard
           date={date}
           day={day}

@@ -4,7 +4,6 @@ import { IntlProvider } from "react-intl";
 import { useSiteStore } from "./store/index.ts";
 import { en, ms, zh } from "./locale/index.ts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SwiperProvider } from "./context/SwiperContext.tsx";
 import { renderRoute, ROUTES } from "./routes/index.tsx";
 import Modal from "./components/Modal/index.tsx";
 
@@ -29,10 +28,8 @@ const App = () => {
         defaultLocale="en"
       >
         <BrowserRouter>
-          <SwiperProvider>
-            {routes}
-            <Modal />
-          </SwiperProvider>
+          {routes}
+          <Modal />
         </BrowserRouter>
       </IntlProvider>
     </QueryClientProvider>
