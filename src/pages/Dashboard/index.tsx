@@ -3,9 +3,19 @@ import LotteryCard from "./components/LotteryCard";
 import { LotteryKey } from "../../store/result/lottery/type";
 import SwiperWrapper from "../../components/Swiper";
 import { getLotteries } from "../../store/result";
+import { useRef } from "react";
+
+// import html2canvas from 'html2canvas-pro';
+// import { toPng } from 'html-to-image';
+// import { useSiteStore } from "../../store";
 
 const Dashboard = () => {
   const lotteries = getLotteries();
+
+  // testing
+  // const lotteryRef=  useRef<HTMLDivElement | null>(null);
+  // const updateModalContent = useSiteStore((state) => state.updateModalContent);
+  // const openModal = useSiteStore(state => state.openModal);
 
   return (
     <>
@@ -42,6 +52,32 @@ const Dashboard = () => {
       </div>
     </>
   );
+
+  // return <div onClick={async () => {
+  //   if (lotteryRef.current) {
+  //     // const canvas = await html2canvas(lotteryRef.current, {
+  //     //   backgroundColor: '#ffffff',
+  //     //     removeContainer: true,
+  //     // });
+
+  //     // const image =  canvas.toDataURL('image/png');
+
+  //     const image = await toPng(lotteryRef.current);
+
+  //     updateModalContent({image});
+  //     openModal();
+
+  //   }
+  // }}  className="flex items-center justify-center w-full h-full">
+  //   <div ref={lotteryRef} className="w-[400px] shadow-md bg-white rounded-lg h-[700px]">
+  //     <div className="flex flex-col w-full">
+  //       <div className="bg-red-400 h-[400px]">
+
+  //       </div>
+  //     </div>
+  //   </div>
+  // </div>
+
 };
 
 export default Dashboard;

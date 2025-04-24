@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { LotteryKey } from "../../../../store/result/lottery/type";
 import { Result } from "../../../../store/result/type";
 import ResultCardHeader from "../../../../components/ResultCard/ResultCardHeader";
@@ -23,9 +23,13 @@ import SabahFourDLotteryInfo from "../Lottery/SabahFourDLotteryInfo";
 import EightLuckyLotteryInfo from "../Lottery/EightLuckyLotteryInfo";
 import PerdanaLotteryInfo from "../Lottery/PerdanaLotteryInfo";
 import NineWinBoxLotteryInfo from "../Lottery/NineWinBoxLotteryInfo";
-import { resultColorMap } from "../../../../utils";
+import { getImgByProxy, getResultTypeName, resultColorMap } from "../../../../utils";
 import { useSiteStore } from "../../../../store";
 import { getLotteries } from "../../../../store/result";
+import cs from "classnames";
+import { toJpeg } from "html-to-image";
+import { checkResultShareImageExist, uploadResultShareImage } from "../../../../api/result";
+import dayjs from "dayjs";
 
 interface LotteryCardProps {
   lotteryKey: LotteryKey;
@@ -71,6 +75,8 @@ const LotteryCard = (props: LotteryCardProps) => {
   const Component = lotteryComponentMap[lotteryKey];
   const colors = resultColorMap[lotteryKey];
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     setLotteryData(source);
   }, [source]);
@@ -84,11 +90,19 @@ const LotteryCard = (props: LotteryCardProps) => {
     return lotteryData.children[childIndex];
   }, [lotteryData, childIndex]);
 
-  // const [resultChild, setResultChild] = useState(lotteryData.children[0]);
+  const showModal = useSiteStore((state) => state.showModal);
+  // const showModal = true;
+  const updateModalContent = useSiteStore((state) => state.updateModalContent);
+
+  const containerStyles = cs(
+    "w-full bg-white shadow-2xl flex flex-col justify-start pb-[30px]",
+    showModal ? "h-fit" : "md:rounded-[25px] h-full"
+  );
 
   return (
-    <div className="w-full md:rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full overflow-auto">
+    <div ref={containerRef} className={containerStyles}>
       <ResultCardHeader
+        isScreenshot={showModal}
         type={lotteryData.type}
         title={lotteryData.title}
         logo={lotteryData.logo}
@@ -98,10 +112,43 @@ const LotteryCard = (props: LotteryCardProps) => {
         drawNo={data.drawNo}
         showTimeSelection={lotteryData.children.length > 1}
         onUpdateSelectedTime={(index: number) => setChildIndex(index)}
+        sharedHandler={async () => {
+          if (containerRef.current) {
+            const image = await toJpeg(containerRef.current, {
+              fetchRequestInit: {
+                cache: "no-cache",
+              },
+              includeQueryParams: true,
+              cacheBust: true,
+            });
+            const title = lotteryData.title;
+            const type = getResultTypeName(lotteryData.type);
+            const date = dayjs(data.date).format('YYYYMMDD')
+            const checkingResult = await checkResultShareImageExist({
+              type,
+              date,
+              language: 'en',
+              mode: 'light'
+
+            })
+
+            const result = await uploadResultShareImage({
+              type,
+              date,
+              image,
+            });
+
+            
+             updateModalContent({ image: result.s3_url, title });
+
+            // updateModalContent({image: image, title})
+          }
+        }}
       />
 
       <div className="mt-[-35px] flex flex-col gap-[10px] px-5">
         <Component
+          isScreenshot={showModal}
           title={lotteryData.title}
           logo={lotteryData.logo}
           data={data as any}
@@ -109,6 +156,11 @@ const LotteryCard = (props: LotteryCardProps) => {
           selectedTime={undefined}
         />
       </div>
+      {
+        showModal && <div className="flex justify-center items-center w-full pt-5">
+        <img className="w-[50px] h-[50px]" src={getImgByProxy("https://4dnum.com/assets/logo-223c3117.png")} />
+      </div>
+      }
     </div>
   );
 };

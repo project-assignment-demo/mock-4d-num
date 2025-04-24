@@ -11,10 +11,11 @@ interface ResultCardHeaderProps {
   primaryColor: string;
   showTimeSelection: boolean;
   type: string;
+  isScreenshot:boolean;
   onUpdateSelectedTime: (index: number) => void;
   openDrawerHandler?: () => void;
   refreshHandler?: () => void;
-  sharedHandler?: () => void
+  sharedHandler?: () => void;
 }
 
 export type { ResultCardHeaderRef, ResultCardHeaderProps };

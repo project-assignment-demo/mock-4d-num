@@ -4,13 +4,13 @@ import LotteryInfoVideoSection from "../../VideoSection";
 import { BaseLotteryInfoProps } from "./type";
 
 const BaseLotteryInfo = (props: BaseLotteryInfoProps) => {
-  const { data, primaryColor, secondaryColor, primaryPrizeLabelTextColor } = props;
+  const { data, primaryColor, secondaryColor, primaryPrizeLabelTextColor, isScreenshot } = props;
 
   const { primaryPrizes, specials, consolations, video } = data;
 
   return (
     <>
-      { video && <LotteryInfoVideoSection url={video}/> }
+      { (video && !isScreenshot) && <LotteryInfoVideoSection url={video}/> }
       <LotteryPrimaryPrize
         prizes={primaryPrizes}
         backgroundColor={secondaryColor}

@@ -16,7 +16,6 @@ const LuckyBookAction = () => {
     );
   
     const isShowLoadPrevious = useMemo(() => {
-      console.log(luckyBookFilterPointer);
       return Boolean(luckyBookFilterPointer.index);
     }, [luckyBookFilterPointer]);
   

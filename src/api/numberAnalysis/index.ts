@@ -89,11 +89,9 @@ function getFourDNumberAnalysisResultotalWinHistory(
       type: "text",
     },
   ];
-  console.log(source.detail_type);
   const hisotries = lotteryIconAccTemplate.map((lottery) => {
 
     const detail = source.detail_type.find((detail) => detail.type === lottery);
-    console.log('detail', detail)
     return {
       source: detail?.image ?? "",
       type: "image" as const,

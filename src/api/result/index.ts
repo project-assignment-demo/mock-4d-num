@@ -49,13 +49,17 @@ const getPrexOrNextResultByDate = async ({
 const uploadResultShareImage = async (
   payload: UploadShareResultImagePayload
 ) => {
-  return api.post<ShareResultImageDto>("baseToUrl", payload);
+
+  
+  const result = await api.post<ShareResultImageDto>("baseToUrl", payload);
+  return result.data;
 };
 
 const checkResultShareImageExist = async (
   payload: ShareResultImageExistPayload
 ) => {
-  return api.post<ShareResultImageExistDto>("image-exist", payload);
+  const result = await api.post<ShareResultImageExistDto>("image-exist", payload);
+  return result.data;
 };
 
 export {

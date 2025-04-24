@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { PropsWithChildren, ReactNode } from "react";
+import { getImgByProxy } from "../../../../../../utils";
 
 export interface JackpotTableProps extends PropsWithChildren {
   title: string;
@@ -27,7 +28,7 @@ const JackpotTable = (props: JackpotTableProps) => {
           >
             <div className="bg-white p-1 rounded-full">
               <img
-                src={props.icon}
+                src={getImgByProxy(props.icon)}
                 alt=""
               />
             </div>

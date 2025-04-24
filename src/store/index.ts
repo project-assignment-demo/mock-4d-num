@@ -9,7 +9,8 @@ export type SupportLocales = "zh" | "ms" | "en";
 
 export const LuckyBookSearchCategories = ["all", "wzt", "gzt", "qzt"] as const;
 
-export type LuckyBookSearchCategory = typeof LuckyBookSearchCategories[number];
+export type LuckyBookSearchCategory =
+  (typeof LuckyBookSearchCategories)[number];
 
 interface AnalysisConfig {
   keyword: string;
@@ -20,10 +21,17 @@ interface LuckyBookFilterPointerData extends LuckyBookFilterData {
   pointer: number;
 }
 
+interface ShareContent {
+  image: string;
+  title: string;
+}
+
 type SiteState = {
   locale: SupportLocales;
   luckyBookSearchCategory: LuckyBookSearchCategory;
   openDrawer: boolean;
+  showModal: boolean;
+  modalContent: ShareContent | null,
   companies: CompanyDTO[];
   selectedDate: Date;
   sourceResults: ResultDTO[];
@@ -35,9 +43,15 @@ type SiteState = {
 type SiteAction = {
   updateLocale: (locale: SupportLocales) => void;
 
+  updateModalContent: (content: ShareContent) => void;
+
   updateLuckyBookSearchCategory: (category: LuckyBookSearchCategory) => void;
 
   updateDrawer: (val: boolean) => void;
+
+  openModal: () => void;
+
+  closeModal: () => void;
 
   upateCompanies: (companies: CompanyDTO[]) => Promise<void>;
 
@@ -62,11 +76,13 @@ const useSiteStore = create<SiteState & SiteAction>((set, get) => ({
   sourceResults: [],
   specialDrawResults: [],
   selectedDate: new Date(),
+  modalContent: null,
   luckyBookFilterPointer: { start: 0, end: 499, index: 0, pointer: 0 },
   analysisConfig: {
     keyword: "",
-    categories: []
+    categories: [],
   },
+  updateModalContent: (content) => set({modalContent: content}),
   updateResults: (results) => {
     set({ sourceResults: results });
   },
@@ -74,6 +90,9 @@ const useSiteStore = create<SiteState & SiteAction>((set, get) => ({
     set({ luckyBookSearchCategory: category }),
   updateLocale: (locale: SupportLocales) => set({ locale }),
   openDrawer: false,
+  showModal: false,
+  openModal: () => set({ showModal: true }),
+  closeModal: () => set({ showModal: false, modalContent: null }),
   updateDrawer: (val: boolean) => set({ openDrawer: val }),
   companies: [],
   upateCompanies: async (companies) =>
@@ -90,7 +109,6 @@ const useSiteStore = create<SiteState & SiteAction>((set, get) => ({
     if (filterData.pointer >= 20) {
       filterData.pointer -= 20;
     }
-    console.log(filterData.pointer);
     set({ luckyBookFilterPointer: filterData });
   },
   resetLuckyBookFilterPointer: () =>
@@ -98,7 +116,7 @@ const useSiteStore = create<SiteState & SiteAction>((set, get) => ({
       luckyBookFilterPointer: { start: 0, end: 499, index: 0, pointer: 0 },
     }),
 
-    updateAnalysisConfig: (config) => (set({analysisConfig: config}))
+  updateAnalysisConfig: (config) => set({ analysisConfig: config }),
 }));
 
 export { useSiteStore, useCompanies };

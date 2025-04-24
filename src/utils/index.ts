@@ -41,18 +41,71 @@ const resultColorMap: ResulCardMap = {
   P: {
     primaryColor: "#1E68A2",
     secondaryColor: "#EC2024",
+  },
+};
+
+const getResultCountry = (type: string): "mysg" | "other" => {
+  const mySgList = ["M", "PMP", "ST", "SG", "EE"];
+  const isMySg =
+    mySgList.includes(type) ||
+    mySgList.some(
+      (matchType) =>
+        type.startsWith(`${matchType}T`) ||
+        type.startsWith(`${matchType}JP`) ||
+        type.startsWith(`${matchType}JPT`)
+    );
+  if (isMySg) {
+    return "mysg";
+  }
+  return "other";
+};
+
+const getImgByProxy = (url: string) => `https://corsproxy.io/?url=${url}`;
+
+const lotteryIconAccTemplate: string[] = [
+  "M",
+  "PMP",
+  "ST",
+  "SG",
+  "STC",
+  "EE",
+  "CS",
+  "H",
+  "WB",
+  "P",
+];
+
+const getResultTypeName = (type: string, isJp?: boolean, time?: string) => {
+  switch (type) {
+    case "M":
+      return `${isJp ? "jp_" : ""}Magnum_4D`;
+    case "PMP":
+      return `${isJp ? "jp_" : ""}DaMaCai_3D`;
+    case "ST":
+      return `${isJp ? "jp_" : ""}SportsToto_4D`;
+    case "SG":
+      return `${isJp ? "jp_" : ""}Singapore_4D`;
+    case "CS":
+      return "Special_CashSweep";
+    case "STC":
+      return "Sandakan_4D";
+    case "EE":
+      return `${isJp ? "jp_" : ""}Sabah_88_4D`;
+    case "H":
+      return `${isJp ? "jp_" : ""}LuckyHariHariHT${time}`;
+    case "WB":
+      return `${isJp ? "jp_" : ""}9WinboxWBT${time}`;
+    case "P":
+      return `PerdanaLotteryPT${time}`;
+    default:
+      throw Error("invalid result type");
   }
 };
 
-const getResultCountry = (type: string): "mysg" | "other" =>  {
-const mySgList = ['M', 'PMP', 'ST', 'SG', 'EE'];
-const isMySg = mySgList.includes(type) || mySgList.some(matchType=> type.startsWith(`${matchType}T`) || type.startsWith(`${matchType}JP`) || type.startsWith(`${matchType}JPT`)) ;
-  if (isMySg) {
-    return 'mysg';
-  }
-  return 'other';
-}
-
-const lotteryIconAccTemplate: string[] = ["M", "PMP", "ST", "SG", "STC", "EE","CS", "H",  "WB", "P"]
-
-export { resultColorMap, getResultCountry , lotteryIconAccTemplate}
+export {
+  resultColorMap,
+  getResultCountry,
+  getImgByProxy,
+  getResultTypeName,
+  lotteryIconAccTemplate,
+};

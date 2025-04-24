@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import ResultCardHeader from "../../../../components/ResultCard/ResultCardHeader";
 import { JackpotKey } from "../../../../store/result/jackpot/type";
@@ -24,13 +24,16 @@ import {
 import { resultColorMap } from "../../../../utils";
 import { useSiteStore } from "../../../../store";
 import { getJackpots } from "../../../../store/result";
+import { toPng } from "html-to-image";
 
 interface JackpotCardProps {
   jackpotKey: JackpotKey;
   jackpotData: Result;
 }
 
-const   JackpotCard = (props: JackpotCardProps) => {
+const JackpotCard = (props: JackpotCardProps) => {
+  const cardRef = useRef<HTMLDivElement | null>(null);
+
   const { jackpotKey, jackpotData: source } = props;
 
   const sourcesResults = useSiteStore((state) => state.sourceResults);
@@ -40,6 +43,10 @@ const   JackpotCard = (props: JackpotCardProps) => {
 
   const Component = jackpotComponentMap[jackpotKey];
   const colors = resultColorMap[jackpotKey];
+
+  const showModal = useSiteStore((state) => state.showModal);
+
+  const updateModalContent = useSiteStore((state) => state.updateModalContent);
 
   useEffect(() => {
     setJackpotData(source);
@@ -51,17 +58,16 @@ const   JackpotCard = (props: JackpotCardProps) => {
   }, [sourcesResults]);
 
   const data = useMemo(() => {
-    if (jackpotKey === "ST") {
-      console.log("update memo");
-      console.log(jackpotData.children[childIndex]);
-    }
-
     return jackpotData.children[childIndex];
   }, [jackpotData, childIndex]);
 
   return (
-    <div className="w-full md:rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full overflow-auto">
+    <div
+      ref={cardRef}
+      className="w-full md:rounded-[25px] bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full overflow-auto"
+    >
       <ResultCardHeader
+        isScreenshot={showModal}
         type={jackpotData.type}
         title={jackpotData.title}
         logo={jackpotData.logo}
@@ -71,6 +77,17 @@ const   JackpotCard = (props: JackpotCardProps) => {
         drawNo={data.drawNo}
         showTimeSelection={jackpotData.children.length > 1}
         onUpdateSelectedTime={(index) => setChildIndex(index)}
+        sharedHandler={async () => {
+          try {
+            if (cardRef.current) {
+              const image = await toPng(cardRef.current);
+              const title = jackpotData.title;
+              updateModalContent({ image, title });
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        }}
       />
       <div className="flex flex-col gap-[40px] px-5">
         <Component
@@ -99,7 +116,6 @@ const jackpotComponentMap: {
   [K in keyof JackpotComponentMap]: React.FC<JackpotComponentMap[K]>;
 } = {
   M: (props) => {
-    console.log(props);
     return <MagnumInfo {...props} />;
   },
   PMP: (props) => <DaMaCaiInfo {...props} />,
@@ -108,7 +124,6 @@ const jackpotComponentMap: {
   EE: (props) => <SabahFourDInfo {...props} />,
   H: (props) => <EightLuckyInfo {...props} />,
   WB: (props) => <NineWinBoxInfo {...props} />,
-  
 };
 
 export default JackpotCard;

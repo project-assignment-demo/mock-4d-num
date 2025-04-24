@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { LuckyBookDto } from "../../../../../api/luckyBook/type";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getLuckyBook } from "../../../../../api/luckyBook";
-import ScrollToTopButton from "../../../../../components/ScrollToTopButton";
 import { useSiteStore } from "../../../../../store";
 
 interface UseOnScreenOptions {
@@ -58,9 +57,6 @@ const LuckyBookContent = ({ id }: { id: string }) => {
   );
 
   const [page, setPage] = useState<number>(luckyBookFilterPointer.pointer);
-  // const loaderRef = useRef(null);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  // const [isRefReady, setIsRefReady] = useState(false);
   const { data, isLoading, isError } = useQuery<LuckyBookDto[], Error>({
     queryKey: ["items", page, id],
     placeholderData: keepPreviousData,
@@ -86,7 +82,6 @@ const LuckyBookContent = ({ id }: { id: string }) => {
 
   useEffect(() => {
     if (isIntersecting) {
-      console.log("load more");
       setPage((page) => (page += 20));
       // observer?.disconnect();
     }

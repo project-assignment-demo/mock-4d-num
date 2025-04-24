@@ -5,9 +5,10 @@ import classNames from "classnames";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { getPrexOrNextResultByDate } from "../../../api/result";
 import ResultDatePicker from "../../LotteryDatePicker";
-import { getResultCountry } from "../../../utils";
+import { getImgByProxy, getResultCountry } from "../../../utils";
 import { useSiteStore } from "../../../store";
 import { getMergedResults } from "../../../store/result/utils";
+import cs from "classnames";
 
 const ResultCardHeader = ({
   title,
@@ -17,6 +18,7 @@ const ResultCardHeader = ({
   drawNo,
   primaryColor,
   showTimeSelection,
+  isScreenshot,
   type,
   onUpdateSelectedTime,
   openDrawerHandler,
@@ -24,44 +26,75 @@ const ResultCardHeader = ({
   refreshHandler,
 }: ResultCardHeaderProps) => {
   const updateDrawer = useSiteStore((state) => state.updateDrawer);
+  const openModal = useSiteStore((state) => state.openModal);
+
+  const wrapperStyle = cs(
+    "mb-[80px] h-[170px] w-full  relative",
+    isScreenshot ? "" : "rounded-b-2xl md:rounded-t-[25px]"
+  );
 
   return (
-    <div
-      className="mb-[80px] h-[170px] w-full rounded-b-2xl md:rounded-t-[25px] relative"
-      style={{ backgroundColor: primaryColor }}
-    >
+    <div className={wrapperStyle} style={{ backgroundColor: primaryColor }}>
       <div className="flex items-center justify-center w-full relative">
         <div className="absolute left-[25px] top-[25px]">
-          <button
-            onClick={() => {
-              openDrawerHandler?.();
-              updateDrawer(true);
-            }}
-            className="md:hidden"
-            type="button"
-          >
-            <img src="https://4dnum.com/assets/menu-696a0cd6.svg" />
-          </button>
+          {!isScreenshot && (
+            <button
+              onClick={() => {
+                openDrawerHandler?.();
+                updateDrawer(true);
+              }}
+              className="md:hidden"
+              type="button"
+            >
+              <img
+                src={getImgByProxy(
+                  "https://4dnum.com/assets/menu-696a0cd6.svg"
+                )}
+              />
+            </button>
+          )}
         </div>
         <div className="flex w-full flex-col justify-start mt-[15px] mb-[50px]">
           <div className="flex justify-center items-center">
             <div className="w-[70px] h-[70px] bg-white rounded-full p-1">
-              <img src={logo} alt="" />
+              <img src={getImgByProxy(logo)} alt="" />
             </div>
           </div>
           <p className="text-center text-white font-bold my-1">{title}</p>
         </div>
         <div className="absolute right-[25px] top-[25px] h-full flex flex-col items-center">
-          <button onClick={refreshHandler} className="md:hidden" type="button">
-            <img src="https://4dnum.com/assets/whiteRefresh-c1df0ea8.svg" />
-          </button>
-          <button
-            onClick={sharedHandler}
-            className="mx-auto mt-8 md:mt-0"
-            type="button"
-          >
-            <img src="https://4dnum.com/assets/share-4617e513.svg" />
-          </button>
+          {!isScreenshot && (
+            <>
+              <button
+                onClick={refreshHandler}
+                className="md:hidden"
+                type="button"
+              >
+                <img
+                  src={getImgByProxy(
+                    "https://4dnum.com/assets/whiteRefresh-c1df0ea8.svg"
+                  )}
+                />
+              </button>
+              <button
+                onClick={() => {
+                  openModal();
+                 setTimeout(() => {
+                  sharedHandler?.();
+                 }, 1000);
+                 
+                }}
+                className="mx-auto mt-8 md:mt-0"
+                type="button"
+              >
+                <img
+                  src={getImgByProxy(
+                    "https://4dnum.com/assets/share-4617e513.svg"
+                  )}
+                />
+              </button>
+            </>
+          )}
         </div>
       </div>
       <div className="px-5 absolute top-3/4 w-full h-full">
@@ -72,6 +105,7 @@ const ResultCardHeader = ({
           type={type}
           showTimeSelection={showTimeSelection}
           onUpdateSelectedTime={onUpdateSelectedTime}
+          isScreenshot={isScreenshot}
         />
       </div>
     </div>
@@ -85,6 +119,7 @@ interface ResultCardHeaderInfoCardProps {
   type: string;
   onUpdateSelectedTime: (index: number) => void;
   showTimeSelection: boolean;
+  isScreenshot: boolean;
 }
 
 const ResultHeaderDateInfo = ({
@@ -156,7 +191,7 @@ const ResultCardHeaderInfoCard = ({
     <div className="rounded-lg shadow-md bg-white w-full h-fit p-1">
       <div className="flex h-fit">
         <ResultHeaderDateInfo date={date} day={day} type={type} />
-        <hr className="h-[30px] border-l  border-gray-300 m-auto" />
+        <hr className="w-[1px] h-[30px] bg-gray-300 m-auto"></hr>
         {showTimeSelection && (
           <ResultTimeSelection onUpdateSelectedTime={onUpdateSelectedTime} />
         )}
@@ -209,7 +244,7 @@ const ResultTimeSelection = ({
         <div>
           <img
             className="w-[46px] h-[46px]"
-            src={timeSelections[selectedTimeIndex].value}
+            src={getImgByProxy(timeSelections[selectedTimeIndex].value)}
             alt=""
           />
         </div>
@@ -230,7 +265,7 @@ const ResultTimeSelection = ({
                     setShowSelection(false);
                   }}
                   className={cs}
-                  src={selection.value}
+                  src={getImgByProxy(selection.value)}
                   alt=""
                 />
               );
@@ -239,7 +274,7 @@ const ResultTimeSelection = ({
         )}
       </div>
 
-      <hr className="h-[30px] border-l border-gray-300 m-auto" />
+      <div className="h-[30px] border-l border-gray-300 m-auto"></div>
     </>
   );
 };

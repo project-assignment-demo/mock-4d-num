@@ -103,8 +103,6 @@ const renderRoute = (
 const useCurrentRoute = () => {
   const location = useLocation();
   const currentPath = location.pathname;
-  console.log(currentPath);
-
   const findRoute = (routes: RoutesType[], path: string): RoutesType | null => {
     for (const route of routes) {
       if (route.path.includes(path)) {
