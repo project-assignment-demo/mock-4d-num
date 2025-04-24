@@ -92,7 +92,7 @@ const useSiteStore = create<SiteState & SiteAction>((set, get) => ({
   openDrawer: false,
   showModal: false,
   openModal: () => set({ showModal: true }),
-  closeModal: () => set({ showModal: false }),
+  closeModal: () => set({ showModal: false, modalContent: null }),
   updateDrawer: (val: boolean) => set({ openDrawer: val }),
   companies: [],
   upateCompanies: async (companies) =>

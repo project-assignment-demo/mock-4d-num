@@ -23,7 +23,7 @@ import SabahFourDLotteryInfo from "../Lottery/SabahFourDLotteryInfo";
 import EightLuckyLotteryInfo from "../Lottery/EightLuckyLotteryInfo";
 import PerdanaLotteryInfo from "../Lottery/PerdanaLotteryInfo";
 import NineWinBoxLotteryInfo from "../Lottery/NineWinBoxLotteryInfo";
-import { resultColorMap } from "../../../../utils";
+import { getImgByProxy, resultColorMap } from "../../../../utils";
 import { useSiteStore } from "../../../../store";
 import { getLotteries } from "../../../../store/result";
 import cs from "classnames";
@@ -93,8 +93,8 @@ const LotteryCard = (props: LotteryCardProps) => {
   const updateModalContent = useSiteStore((state) => state.updateModalContent);
 
   const containerStyles = cs(
-    "w-full bg-white shadow-2xl flex flex-col justify-start pb-[30px] h-full overflow-auto",
-    showModal ? "" : "md:rounded-[25px]"
+    "w-full bg-white shadow-2xl flex flex-col justify-start pb-[30px]",
+    showModal ? "h-fit" : "md:rounded-[25px] h-full"
   );
 
   return (
@@ -111,14 +111,16 @@ const LotteryCard = (props: LotteryCardProps) => {
         showTimeSelection={lotteryData.children.length > 1}
         onUpdateSelectedTime={(index: number) => setChildIndex(index)}
         sharedHandler={async () => {
-          try {
-            if (containerRef.current) {
-              const image = await toPng(containerRef.current);
-              const title = lotteryData.title;
-              updateModalContent({ image, title });
-            }
-          } catch (e) {
-            console.error(e);
+          if (containerRef.current) {
+            const image = await toPng(containerRef.current, {
+              fetchRequestInit: {
+                cache: "no-cache",
+              },
+              includeQueryParams: true,
+              cacheBust: true,
+            });
+            const title = lotteryData.title;
+            updateModalContent({ image, title });
           }
         }}
       />
@@ -133,6 +135,11 @@ const LotteryCard = (props: LotteryCardProps) => {
           selectedTime={undefined}
         />
       </div>
+      {
+        showModal && <div className="flex justify-center items-center w-full pt-5">
+        <img className="w-[50px] h-[50px]" src={getImgByProxy("https://4dnum.com/assets/logo-223c3117.png")} />
+      </div>
+      }
     </div>
   );
 };

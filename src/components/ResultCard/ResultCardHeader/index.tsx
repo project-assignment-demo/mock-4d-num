@@ -78,8 +78,11 @@ const ResultCardHeader = ({
               </button>
               <button
                 onClick={() => {
-                  sharedHandler?.();
                   openModal();
+                 setTimeout(() => {
+                  sharedHandler?.();
+                 }, 1000);
+                 
                 }}
                 className="mx-auto mt-8 md:mt-0"
                 type="button"

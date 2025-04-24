@@ -5,9 +5,9 @@ import SwiperWrapper from "../../components/Swiper";
 import { getLotteries } from "../../store/result";
 import { useRef } from "react";
 
-import html2canvas from 'html2canvas-pro';
-import { toPng } from 'html-to-image';
-import { useSiteStore } from "../../store";
+// import html2canvas from 'html2canvas-pro';
+// import { toPng } from 'html-to-image';
+// import { useSiteStore } from "../../store";
 
 const Dashboard = () => {
   const lotteries = getLotteries();
